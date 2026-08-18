@@ -1,0 +1,26 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Statistics for Medical Engineers"
+  author: "Adam S. Darwich"
+  date: "8/6/2026"
+  chapters:
+    - index.qmd
+    - part_01.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+#   html:
+#     theme:
+#       - cosmo
+#       - brand
+  pdf:
+    documentclass: scrreprt
+
+
+

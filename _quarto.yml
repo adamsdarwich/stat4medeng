@@ -2,21 +2,23 @@ project:
   type: website
   output-dir: docs
 
-book:
+website:
   title: "Statistics for Medical Engineers"
-  author: "Adam S. Darwich"
-  date: "8/6/2026"
-  chapters:
-    - index.qmd
-    - part_01.qmd
-    - summary.qmd
-    - references.qmd
-
-bibliography: references.bib
+  sidebar:
+    style: "floating"
+    search: true
+    contents:
+      - text: "Home"
+        href: index.qmd
+      - section: "Part1"
+        href: part_01.qmd
+        contents:
+          - href: summary.qmd
+          - href: references.qmd
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: cosmo
+    css: styles.css
+    toc: true
   

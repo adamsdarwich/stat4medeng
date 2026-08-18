@@ -2,20 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>part_01</title>
+<title>part_01 – Statistics for Medical Engineers</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -62,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -73,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -106,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -135,16 +139,133 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_01.html">Part1</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for Medical Engineers</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part_01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Part1</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#part-one" id="toc-part-one" class="nav-link active" data-scroll-target="#part-one">Part One</a></li>
+  <li><a href="#l1-1-introduction" id="toc-l1-1-introduction" class="nav-link" data-scroll-target="#l1-1-introduction">L1-1 Introduction</a>
+  <ul class="collapse">
+  <li><a href="#why-should-i-learn-about-statistics" id="toc-why-should-i-learn-about-statistics" class="nav-link" data-scroll-target="#why-should-i-learn-about-statistics">Why should I learn about statistics?</a></li>
+  <li><a href="#ok-but-how-should-i-make-use-of-statistics" id="toc-ok-but-how-should-i-make-use-of-statistics" class="nav-link" data-scroll-target="#ok-but-how-should-i-make-use-of-statistics">Ok, but how should I make use of statistics?</a></li>
+  </ul></li>
+  <li><a href="#l1-2-probability" id="toc-l1-2-probability" class="nav-link" data-scroll-target="#l1-2-probability">L1-2 Probability</a>
+  <ul class="collapse">
+  <li><a href="#what-is-statistics-about" id="toc-what-is-statistics-about" class="nav-link" data-scroll-target="#what-is-statistics-about">What is statistics about?</a></li>
+  </ul></li>
+  <li><a href="#l1-3-data-types-and-distributions" id="toc-l1-3-data-types-and-distributions" class="nav-link" data-scroll-target="#l1-3-data-types-and-distributions">L1-3 Data Types and Distributions</a>
+  <ul class="collapse">
+  <li><a href="#the-normal-or-gaussian-distribution" id="toc-the-normal-or-gaussian-distribution" class="nav-link" data-scroll-target="#the-normal-or-gaussian-distribution">The Normal or Gaussian Distribution</a></li>
+  <li><a href="#the-lognormal-distribution" id="toc-the-lognormal-distribution" class="nav-link" data-scroll-target="#the-lognormal-distribution">The Lognormal Distribution</a></li>
+  <li><a href="#the-exponential-distribution" id="toc-the-exponential-distribution" class="nav-link" data-scroll-target="#the-exponential-distribution">The Exponential Distribution</a></li>
+  <li><a href="#the-uniform-distribution" id="toc-the-uniform-distribution" class="nav-link" data-scroll-target="#the-uniform-distribution">The Uniform Distribution</a></li>
+  <li><a href="#the-binomial-distribution" id="toc-the-binomial-distribution" class="nav-link" data-scroll-target="#the-binomial-distribution">The Binomial Distribution</a></li>
+  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution">The Poisson Distribution</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
+  <li><a href="#l1-4-sampling-from-distributions" id="toc-l1-4-sampling-from-distributions" class="nav-link" data-scroll-target="#l1-4-sampling-from-distributions">L1-4 Sampling from Distributions</a></li>
+  <li><a href="#l1-5-hypothesis-testing" id="toc-l1-5-hypothesis-testing" class="nav-link" data-scroll-target="#l1-5-hypothesis-testing">L1-5 Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#parametric-t-tests" id="toc-parametric-t-tests" class="nav-link" data-scroll-target="#parametric-t-tests">Parametric t-tests</a>
+  <ul class="collapse">
+  <li><a href="#parametric-t-tests-the-normality-assumption" id="toc-parametric-t-tests-the-normality-assumption" class="nav-link" data-scroll-target="#parametric-t-tests-the-normality-assumption">Parametric t-tests: The Normality Assumption</a></li>
+  <li><a href="#parametric-t-tests-the-equal-variances-assumption" id="toc-parametric-t-tests-the-equal-variances-assumption" class="nav-link" data-scroll-target="#parametric-t-tests-the-equal-variances-assumption">Parametric t-tests: The Equal Variances Assumption</a></li>
+  <li><a href="#parametric-t-tests-paired-or-unpaired-tests" id="toc-parametric-t-tests-paired-or-unpaired-tests" class="nav-link" data-scroll-target="#parametric-t-tests-paired-or-unpaired-tests">Parametric t-tests: Paired or unpaired tests</a></li>
+  <li><a href="#what-is-the-meaning-of-the-p-value" id="toc-what-is-the-meaning-of-the-p-value" class="nav-link" data-scroll-target="#what-is-the-meaning-of-the-p-value">What is the Meaning of the p-value</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#l1-6-nonparametric-statistical-tests" id="toc-l1-6-nonparametric-statistical-tests" class="nav-link" data-scroll-target="#l1-6-nonparametric-statistical-tests">L1-6 Nonparametric Statistical Tests</a>
+  <ul class="collapse">
+  <li><a href="#the-sign-test" id="toc-the-sign-test" class="nav-link" data-scroll-target="#the-sign-test">The Sign Test</a></li>
+  <li><a href="#the-wilcowon-signed-rank-test" id="toc-the-wilcowon-signed-rank-test" class="nav-link" data-scroll-target="#the-wilcowon-signed-rank-test">The Wilcowon Signed Rank Test</a></li>
+  <li><a href="#side-note-back-to-arbuthnots-experiment" id="toc-side-note-back-to-arbuthnots-experiment" class="nav-link" data-scroll-target="#side-note-back-to-arbuthnots-experiment">Side Note: Back to Arbuthnot’s Experiment</a></li>
+  <li><a href="#the-permutation-test" id="toc-the-permutation-test" class="nav-link" data-scroll-target="#the-permutation-test">The Permutation Test</a></li>
+  <li><a href="#bootstrapping" id="toc-bootstrapping" class="nav-link" data-scroll-target="#bootstrapping">Bootstrapping</a></li>
+  <li><a href="#the-wilcoxon-rank-sum-test" id="toc-the-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#the-wilcoxon-rank-sum-test">The Wilcoxon Rank-Sum Test</a></li>
+  </ul></li>
+  <li><a href="#l1-7-selection-of-statistical-tests" id="toc-l1-7-selection-of-statistical-tests" class="nav-link" data-scroll-target="#l1-7-selection-of-statistical-tests">L1-7 Selection of Statistical Tests</a>
+  <ul class="collapse">
+  <li><a href="#simulating-the-relative-power-1---beta-of-two-statistical-tests" id="toc-simulating-the-relative-power-1---beta-of-two-statistical-tests" class="nav-link" data-scroll-target="#simulating-the-relative-power-1---beta-of-two-statistical-tests">Simulating the Relative Power (1 - Beta) of Two Statistical Tests</a></li>
+  <li><a href="#simulation-experiments-of-the-significance-level-alpha" id="toc-simulation-experiments-of-the-significance-level-alpha" class="nav-link" data-scroll-target="#simulation-experiments-of-the-significance-level-alpha">Simulation Experiments of the Significance Level (Alpha)</a></li>
+  <li><a href="#conclusions-1" id="toc-conclusions-1" class="nav-link" data-scroll-target="#conclusions-1">Conclusions</a></li>
+  </ul></li>
+  <li><a href="#l1-8-study-design-i" id="toc-l1-8-study-design-i" class="nav-link" data-scroll-target="#l1-8-study-design-i">L1-8 Study Design (I)</a></li>
+  <li><a href="#recommended-reading-and-key-literature" id="toc-recommended-reading-and-key-literature" class="nav-link" data-scroll-target="#recommended-reading-and-key-literature">Recommended Reading and Key Literature</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
@@ -499,9 +620,6 @@ See @knuth84 for additional discussion of literate programming.
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'MASS' was built under R version 4.6.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'MASS'</code></pre>
 </div>
@@ -510,43 +628,41 @@ Attaching package: 'MASS'</code></pre>
 
     select</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for adult males</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>n_height <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>Height))</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>nhanes_height <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nhanes_subset<span class="sc">$</span>Height)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the package MASS to fit a normal distribution to the data</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># This will make use of the closed form solution</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>normal_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"normal"</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Distributions like the Weibull require numerical optimisation</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># we can test this out as well (note that this may be sensitive to initial estimates)</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>weibull_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"weibull"</span>, <span class="fu">list</span>(<span class="at">shape =</span> <span class="dv">20</span>, <span class="at">scale =</span> <span class="dv">200</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for adult males</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>n_height <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>Height))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>nhanes_height <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nhanes_subset<span class="sc">$</span>Height)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the package MASS to fit a normal distribution to the data</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># This will make use of the closed form solution</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>normal_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"normal"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Distributions like the Weibull require numerical optimisation</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># we can test this out as well (note that this may be sensitive to initial estimates)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>weibull_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"weibull"</span>, <span class="fu">list</span>(<span class="at">shape =</span> <span class="dv">20</span>, <span class="at">scale =</span> <span class="dv">200</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
 Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can then produce a plot of the data and the two pdfs of the fitted distributions</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First we need to specify a few things...</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set inputs for pdfs</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>height_min <span class="ot">&lt;-</span> <span class="fu">min</span>(nhanes_height)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>height_max <span class="ot">&lt;-</span> <span class="fu">max</span>(nhanes_height)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>x_pdf <span class="ot">&lt;-</span> <span class="fu">seq</span>(height_min, height_max, <span class="dv">1</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we sample from the pdfs using the parameter estimates</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>y_norm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_pdf, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>], normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>y_weib <span class="ot">&lt;-</span> <span class="fu">dweibull</span>(x_pdf, weibull_params<span class="sc">$</span>estimate[<span class="st">"shape"</span>], weibull_params<span class="sc">$</span>estimate[<span class="st">"scale"</span>])</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># we start with a histogram, specifying to plot the density (freq = FALSE)</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_height, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">main =</span> <span class="st">"NHANES height"</span>)</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_norm, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_weib, <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>,<span class="st">"Weibull"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can then produce a plot of the data and the two pdfs of the fitted distributions</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First we need to specify a few things...</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set inputs for pdfs</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>height_min <span class="ot">&lt;-</span> <span class="fu">min</span>(nhanes_height)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>height_max <span class="ot">&lt;-</span> <span class="fu">max</span>(nhanes_height)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>x_pdf <span class="ot">&lt;-</span> <span class="fu">seq</span>(height_min, height_max, <span class="dv">1</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we sample from the pdfs using the parameter estimates</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>y_norm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_pdf, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>], normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>y_weib <span class="ot">&lt;-</span> <span class="fu">dweibull</span>(x_pdf, weibull_params<span class="sc">$</span>estimate[<span class="st">"shape"</span>], weibull_params<span class="sc">$</span>estimate[<span class="st">"scale"</span>])</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># we start with a histogram, specifying to plot the density (freq = FALSE)</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_height, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">main =</span> <span class="st">"NHANES height"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_norm, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_weib, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>,<span class="st">"Weibull"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -559,22 +675,22 @@ Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
 <p>Then we can carry out multiple sampling from the two distributional models and compare our results. Here we can specify in R how many samples we want to sample from these distributions.</p>
 <p>To sample from a normal distribution, we use the <em>rnorm</em> function together with our estimated parameters for the mean and the standard deviation. We can do the same for the Weibull distribution using this <em>rweibull</em> function. Super straightforward. Here I overlaid the two histograms of the simulated sampled data for the normal and the Weibull.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Distribution Sampling</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to sample from distributions we can use the rnorm and rweibull functions, super easy:</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>norm_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_samples, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>], normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>weib_sample <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(n_samples, weibull_params<span class="sc">$</span>estimate[<span class="st">"shape"</span>], weibull_params<span class="sc">$</span>estimate[<span class="st">"scale"</span>])</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># we can then plot these as two overlaying histograms</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>color1 <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">20</span>, <span class="dv">23</span>, <span class="dv">219</span>, <span class="at">max =</span> <span class="dv">255</span>, <span class="at">alpha =</span> <span class="dv">100</span>) <span class="co"># blue</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>color2 <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">219</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="at">max =</span> <span class="dv">255</span>, <span class="at">alpha =</span> <span class="dv">100</span>) <span class="co"># red</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>h1 <span class="ot">&lt;-</span> <span class="fu">hist</span>(norm_sample, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>h2 <span class="ot">&lt;-</span> <span class="fu">hist</span>(weib_sample, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h1, <span class="at">col =</span> color1, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">main =</span> <span class="st">"Sampling"</span>)</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h2, <span class="at">col =</span> color2, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>,<span class="st">"Weibull"</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Distribution Sampling</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to sample from distributions we can use the rnorm and rweibull functions, super easy:</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>norm_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_samples, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>], normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>weib_sample <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(n_samples, weibull_params<span class="sc">$</span>estimate[<span class="st">"shape"</span>], weibull_params<span class="sc">$</span>estimate[<span class="st">"scale"</span>])</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># we can then plot these as two overlaying histograms</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>color1 <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">20</span>, <span class="dv">23</span>, <span class="dv">219</span>, <span class="at">max =</span> <span class="dv">255</span>, <span class="at">alpha =</span> <span class="dv">100</span>) <span class="co"># blue</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>color2 <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">219</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="at">max =</span> <span class="dv">255</span>, <span class="at">alpha =</span> <span class="dv">100</span>) <span class="co"># red</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>h1 <span class="ot">&lt;-</span> <span class="fu">hist</span>(norm_sample, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>h2 <span class="ot">&lt;-</span> <span class="fu">hist</span>(weib_sample, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h1, <span class="at">col =</span> color1, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">main =</span> <span class="st">"Sampling"</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h2, <span class="at">col =</span> color2, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>,<span class="st">"Weibull"</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -600,30 +716,30 @@ Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
 <p>The original yield data is quite small, so we can easily load it into R manually as two vectors. We want to test the difference in means compared to the variability within both groups, we then calculate the t-metric. For a simple t-test this is quite easy to do by hand or we can use the built in function <em>t.test()</em>.</p>
 <p>We need to specify if we want a two-sided t-test, if the data is paired, if we assume equal variances, and the significance level.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Student's t-test Guinness data</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>yield_nkd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1903</span>, <span class="dv">1935</span>, <span class="dv">1910</span>, <span class="dv">2496</span>, <span class="dv">2108</span>, <span class="dv">1961</span>, <span class="dv">2060</span>, <span class="dv">1444</span>, <span class="dv">1612</span>, <span class="dv">1316</span>, <span class="dv">1511</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>yield_kd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1915</span>, <span class="dv">2011</span>, <span class="dv">2463</span>, <span class="dv">2180</span>, <span class="dv">1925</span>, <span class="dv">2122</span>, <span class="dv">1482</span>, <span class="dv">1542</span>, <span class="dv">1443</span>, <span class="dv">1535</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>n_nkd <span class="ot">&lt;-</span> <span class="fu">length</span>(yield_nkd)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>x_nkd <span class="ot">&lt;-</span> <span class="fu">mean</span>(yield_nkd)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>sigma_nkd <span class="ot">&lt;-</span> <span class="fu">sd</span>(yield_nkd)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>n_kd <span class="ot">&lt;-</span> <span class="fu">length</span>(yield_kd)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>x_kd <span class="ot">&lt;-</span> <span class="fu">mean</span>(yield_kd)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>sigma_kd <span class="ot">&lt;-</span> <span class="fu">sd</span>(yield_kd)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> n_kd <span class="sc">+</span> n_nkd <span class="sc">-</span> <span class="dv">2</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>var_tot <span class="ot">&lt;-</span> ((n_nkd <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>sigma_nkd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (n_kd <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>sigma_kd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n_nkd <span class="sc">+</span> n_kd <span class="sc">-</span> <span class="dv">2</span>)</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>tstat <span class="ot">&lt;-</span> (x_nkd <span class="sc">-</span> x_kd) <span class="sc">/</span>(<span class="fu">sqrt</span>(var_tot<span class="sc">*</span>((<span class="dv">1</span><span class="sc">/</span>n_nkd)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>n_kd))))</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># at the degrees of freedom (df=20) we get a t-statistics of 0.234</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># compared to the t-distribution table at 95% two-sided, 0.234 is smaller than</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.086. In fact, 0.234 is smaller than 50%. So, the p-value is larger than</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.50. Therefore, we do not reject the null hypothesis.</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># table: https://en.wikipedia.org/wiki/Student%27s_t-distribution</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># we can also retrieve the p-value using the following function:</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fu">abs</span>(tstat), df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's verify our calculations using R's built-in function (or the other way around :-) ):</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>stat_res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(yield_kd,yield_nkd, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co"># comment: indeed, we get a p-value of 0.8173 and can therefore not reject the null hypothesis.</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>stat_res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Student's t-test Guinness data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>yield_nkd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1903</span>, <span class="dv">1935</span>, <span class="dv">1910</span>, <span class="dv">2496</span>, <span class="dv">2108</span>, <span class="dv">1961</span>, <span class="dv">2060</span>, <span class="dv">1444</span>, <span class="dv">1612</span>, <span class="dv">1316</span>, <span class="dv">1511</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>yield_kd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1915</span>, <span class="dv">2011</span>, <span class="dv">2463</span>, <span class="dv">2180</span>, <span class="dv">1925</span>, <span class="dv">2122</span>, <span class="dv">1482</span>, <span class="dv">1542</span>, <span class="dv">1443</span>, <span class="dv">1535</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>n_nkd <span class="ot">&lt;-</span> <span class="fu">length</span>(yield_nkd)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>x_nkd <span class="ot">&lt;-</span> <span class="fu">mean</span>(yield_nkd)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>sigma_nkd <span class="ot">&lt;-</span> <span class="fu">sd</span>(yield_nkd)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>n_kd <span class="ot">&lt;-</span> <span class="fu">length</span>(yield_kd)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>x_kd <span class="ot">&lt;-</span> <span class="fu">mean</span>(yield_kd)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>sigma_kd <span class="ot">&lt;-</span> <span class="fu">sd</span>(yield_kd)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> n_kd <span class="sc">+</span> n_nkd <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>var_tot <span class="ot">&lt;-</span> ((n_nkd <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>sigma_nkd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (n_kd <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>sigma_kd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n_nkd <span class="sc">+</span> n_kd <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>tstat <span class="ot">&lt;-</span> (x_nkd <span class="sc">-</span> x_kd) <span class="sc">/</span>(<span class="fu">sqrt</span>(var_tot<span class="sc">*</span>((<span class="dv">1</span><span class="sc">/</span>n_nkd)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>n_kd))))</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># at the degrees of freedom (df=20) we get a t-statistics of 0.234</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># compared to the t-distribution table at 95% two-sided, 0.234 is smaller than</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.086. In fact, 0.234 is smaller than 50%. So, the p-value is larger than</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.50. Therefore, we do not reject the null hypothesis.</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># table: https://en.wikipedia.org/wiki/Student%27s_t-distribution</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co"># we can also retrieve the p-value using the following function:</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fu">abs</span>(tstat), df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's verify our calculations using R's built-in function (or the other way around :-) ):</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>stat_res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(yield_kd,yield_nkd, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># comment: indeed, we get a p-value of 0.8173 and can therefore not reject the null hypothesis.</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>stat_res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -670,25 +786,25 @@ mean of x mean of y
 <h3 class="anchored" data-anchor-id="parametric-t-tests-the-normality-assumption">Parametric t-tests: The Normality Assumption</h3>
 <p>The best-known assumption of the parametric t-test is approximate normality. This applies to the outcome within each group for an independent-samples test and to the within-pair differences for a paired test. Normality should ideally be considered when planning the analysis, but it can also be assessed visually using Q–Q plots, histograms and box plots.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To better understand data in an exploratory fashion we can visualise it:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## normality</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's take a look at the height data in NHANES again</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for adult males</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>n_height <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>Height))</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>nhanes_height <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nhanes_subset<span class="sc">$</span>Height)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># summary statistics</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nhanes_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To better understand data in an exploratory fashion we can visualise it:</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">## normality</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's take a look at the height data in NHANES again</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for adult males</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>n_height <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>Height))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>nhanes_height <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nhanes_subset<span class="sc">$</span>Height)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># summary statistics</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nhanes_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   149.4   171.0   175.7   175.8   180.6   200.4 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># q-q plot: there are many functions for these, for example:</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># q-q plot: there are many functions for these, for example:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: carData</code></pre>
 </div>
@@ -701,8 +817,8 @@ Attaching package: 'car'</code></pre>
 
     recode</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(nhanes_height, <span class="at">xlab =</span> <span class="st">"normal quantiles"</span>,</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span><span class="st">"NHANES: height [cm]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(nhanes_height, <span class="at">xlab =</span> <span class="st">"normal quantiles"</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span><span class="st">"NHANES: height [cm]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -713,9 +829,9 @@ Attaching package: 'car'</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  144 3472</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(nhanes_height, <span class="at">xlab =</span> <span class="st">"NHANES: adult males"</span>,</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Height [cm]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(nhanes_height, <span class="at">xlab =</span> <span class="st">"NHANES: adult males"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Height [cm]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -723,18 +839,18 @@ Attaching package: 'car'</code></pre>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># histogram</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>normal_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"normal"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>height_min <span class="ot">&lt;-</span> <span class="fu">min</span>(nhanes_height)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>height_max <span class="ot">&lt;-</span> <span class="fu">max</span>(nhanes_height)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>x_pdf <span class="ot">&lt;-</span> <span class="fu">seq</span>(height_min, height_max, <span class="dv">1</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>y_norm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_pdf, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>],</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_height, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>,</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">main =</span> <span class="st">"NHANES height"</span>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_norm, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>),</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># histogram</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>normal_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"normal"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>height_min <span class="ot">&lt;-</span> <span class="fu">min</span>(nhanes_height)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>height_max <span class="ot">&lt;-</span> <span class="fu">max</span>(nhanes_height)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>x_pdf <span class="ot">&lt;-</span> <span class="fu">seq</span>(height_min, height_max, <span class="dv">1</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>y_norm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_pdf, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>],</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_height, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">main =</span> <span class="st">"NHANES height"</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_norm, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>),</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -867,31 +983,31 @@ Attaching package: 'car'</code></pre>
 </ol>
 <p>Let’s go through an example. We generate two groups of 15 observations from a strongly skewed lognormal distribution and introduce a specified difference between the groups. We then compare the performance of a parametric unpaired t-test with that of the Wilcoxon–Mann–Whitney test.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>x_contr <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>sd_contr <span class="ot">&lt;-</span> <span class="fl">0.49</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>n_control <span class="ot">&lt;-</span> <span class="dv">15</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>x_exp <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>sd_exp <span class="ot">&lt;-</span> <span class="fl">0.51</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>n_experiment <span class="ot">&lt;-</span> <span class="dv">15</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>pval_wmw <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>y_contr <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_control, x_contr, sd_contr)</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>y_exp <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_experiment, x_exp, sd_exp)</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(y_contr, y_exp)<span class="sc">$</span>p.value</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Power of Wilcoxon Mann Whitney:"</span>, <span class="fu">mean</span>(pval_wmw <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>x_contr <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>sd_contr <span class="ot">&lt;-</span> <span class="fl">0.49</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>n_control <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>x_exp <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>sd_exp <span class="ot">&lt;-</span> <span class="fl">0.51</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>n_experiment <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>pval_wmw <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>y_contr <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_control, x_contr, sd_contr)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>y_exp <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_experiment, x_exp, sd_exp)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(y_contr, y_exp)<span class="sc">$</span>p.value</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Power of Wilcoxon Mann Whitney:"</span>, <span class="fu">mean</span>(pval_wmw <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Power of Wilcoxon Mann Whitney: 0.8042 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pval_ttst <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>y_contr <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_control, x_contr, sd_contr)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>y_exp <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_experiment, x_exp, sd_exp)</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(y_contr,y_exp, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="at">var.equal =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>p.value</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Power of t-test:"</span>, <span class="fu">mean</span>(pval_ttst <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>pval_ttst <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>y_contr <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_control, x_contr, sd_contr)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>y_exp <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_experiment, x_exp, sd_exp)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(y_contr,y_exp, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="at">var.equal =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>p.value</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Power of t-test:"</span>, <span class="fu">mean</span>(pval_ttst <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Power of t-test: 0.7918 </code></pre>
 </div>
@@ -903,51 +1019,51 @@ Attaching package: 'car'</code></pre>
 <p>We can also use simulations to investigate whether the normal parametric t-test maintains its nominal significance level under non-normality. This is perhaps a bit more theoretical and not something we would typically explore, but I still think it is useful to see what the impact is. Under ideal conditions, the test statistic follows the theoretical t-distribution when the null hypothesis is true. If the data are strongly non-normal, however, the actual distribution of the test statistic may differ from the theoretical distribution. The calculated <em>p</em>-values may then be too small or too large, causing the type I error rate to deviate from the intended value.</p>
 <p>For example, suppose that we repeatedly generate samples from the same exponential distribution, so that the null hypothesis is true. We first generate two groups of 10 observations and then repeat the simulation with two groups of 30 observations. For each simulated dataset, we calculate the t-statistic and compare the resulting empirical distribution with the corresponding theoretical t-distribution.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>n_repeat <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>gamma_y <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n_samples <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">30</span>)) {</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the t-ratio for each simulated sample</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  t_y <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_repeat, {</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    y_dat <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n_samples, <span class="at">rate =</span> gamma_y)</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    x_y  <span class="ot">&lt;-</span> <span class="fu">mean</span>(y_dat)</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    sd_y <span class="ot">&lt;-</span> <span class="fu">sd</span>(y_dat)</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    (x_y <span class="sc">-</span> gamma_y) <span class="sc">/</span> (sd_y <span class="sc">/</span> <span class="fu">sqrt</span>(n_samples))</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the corresponding theoretical t-distribution</span></span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  df_y <span class="ot">&lt;-</span> n_samples <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  x_tdist <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  tdist_pdf <span class="ot">&lt;-</span> <span class="fu">dt</span>(x_tdist, <span class="at">df =</span> df_y)</span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the simulated t-ratios</span></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(</span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>    t_y,</span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="dv">50</span>,</span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="fu">paste0</span>(<span class="st">"t-ratio (n = "</span>, n_samples, <span class="st">")"</span>),</span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Density"</span>,</span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>),</span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
-<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
-<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">border =</span> <span class="st">"white"</span></span>
-<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Overlay the theoretical t-distribution</span></span>
-<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(</span>
-<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>    x_tdist,</span>
-<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>    tdist_pdf,</span>
-<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"red"</span>,</span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span></span>
-<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>n_repeat <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>gamma_y <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n_samples <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">30</span>)) {</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the t-ratio for each simulated sample</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  t_y <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_repeat, {</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    y_dat <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n_samples, <span class="at">rate =</span> gamma_y)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    x_y  <span class="ot">&lt;-</span> <span class="fu">mean</span>(y_dat)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    sd_y <span class="ot">&lt;-</span> <span class="fu">sd</span>(y_dat)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    (x_y <span class="sc">-</span> gamma_y) <span class="sc">/</span> (sd_y <span class="sc">/</span> <span class="fu">sqrt</span>(n_samples))</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the corresponding theoretical t-distribution</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  df_y <span class="ot">&lt;-</span> n_samples <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  x_tdist <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  tdist_pdf <span class="ot">&lt;-</span> <span class="fu">dt</span>(x_tdist, <span class="at">df =</span> df_y)</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the simulated t-ratios</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    t_y,</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="dv">50</span>,</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="fu">paste0</span>(<span class="st">"t-ratio (n = "</span>, n_samples, <span class="st">")"</span>),</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Density"</span>,</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>),</span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">border =</span> <span class="st">"white"</span></span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Overlay the theoretical t-distribution</span></span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(</span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>    x_tdist,</span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>    tdist_pdf,</span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1003,33 +1119,33 @@ Attaching package: 'car'</code></pre>
 <p>where (<span class="math inline">\(\mu_{Treatment} - \mu_{Control}\)</span>) is the difference in means that we want to detect and (<span class="math inline">\(\sigma_{Pooled}\)</span>) is the assumed common standard deviation.</p>
 <p>We can then conduct a power calculation using the <em>pwr.t.test()</em> function from the <em>pwr</em> package in R. We specify the effect size, desired power, significance level and type of t-test (alternatively, we can calculate power across a range of sample sizes and plot the resulting power curve):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr) </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Clozapine-induced tachycardia</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># According to Persson et al. 2024, heart rate as bpm is approximately normal</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The mean (sd) heart rate is 73 (9) bpm. Under that assumption we can</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># sample from the theorical distribution.</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal sampling</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>x_contr <span class="ot">&lt;-</span> <span class="dv">73</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>sd_contr <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>nc_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>bpm_contr <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nc_samples, x_contr, sd_contr)</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Data is continuous and approximately normal, suggesting suitability of a t-test.</span></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tachycardia means a bpm of 100, but not the whole day.</span></span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity, let's say we want to detect a difference 10 bpm.</span></span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>x_treat <span class="ot">&lt;-</span> <span class="dv">83</span></span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>sd_treat <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Cohen's d effect size</span></span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>sd_pooled <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((sd_treat<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>sd_contr<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>es_d <span class="ot">&lt;-</span> (x_treat <span class="sc">-</span> x_contr)<span class="sc">/</span>sd_pooled</span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate power over sample size</span></span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>p.t.two <span class="ot">&lt;-</span> <span class="fu">pwr.t.test</span>(<span class="at">d =</span> es_d, <span class="at">power =</span> <span class="fl">0.80</span>, <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.t.two, <span class="at">xlab =</span> <span class="st">"sample size per group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr) </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Clozapine-induced tachycardia</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># According to Persson et al. 2024, heart rate as bpm is approximately normal</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The mean (sd) heart rate is 73 (9) bpm. Under that assumption we can</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># sample from the theorical distribution.</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal sampling</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>x_contr <span class="ot">&lt;-</span> <span class="dv">73</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>sd_contr <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>nc_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>bpm_contr <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nc_samples, x_contr, sd_contr)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Data is continuous and approximately normal, suggesting suitability of a t-test.</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tachycardia means a bpm of 100, but not the whole day.</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity, let's say we want to detect a difference 10 bpm.</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>x_treat <span class="ot">&lt;-</span> <span class="dv">83</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>sd_treat <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Cohen's d effect size</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>sd_pooled <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((sd_treat<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>sd_contr<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>es_d <span class="ot">&lt;-</span> (x_treat <span class="sc">-</span> x_contr)<span class="sc">/</span>sd_pooled</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate power over sample size</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>p.t.two <span class="ot">&lt;-</span> <span class="fu">pwr.t.test</span>(<span class="at">d =</span> es_d, <span class="at">power =</span> <span class="fl">0.80</span>, <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.t.two, <span class="at">xlab =</span> <span class="st">"sample size per group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.

@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>part_01</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="part-one" class="level1">
+<h1>Part One</h1>
+<!--
+This is a book created from markdown and executable code.
+See @knuth84 for additional discussion of literate programming.
+-->
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Statistics supports learning from experimentation and data by connecting theory, prediction, observation and the continued refinement of our understanding.</p></li>
+<li><p>Statistical inference allows us to learn about a population from a sample while quantifying variability, measurement error and uncertainty; it cannot compensate for poor data or poor study design.</p></li>
+<li><p>Confirmatory data analysis (CDA) tests prespecified hypotheses using prespecified methods, whereas exploratory data analysis (EDA) aims at identifying patterns and generates new hypotheses; both are valuable, but their purposes and limitations must be considered and reported transparently.</p></li>
+<li><p>Probability describes uncertainty through experiments, outcomes, sample spaces and events. And, probability distributions are theoretical models used to approximate variability in observed data. The data type and scientific context help determine whether models such as the normal, lognormal, exponential, uniform, binomial or Poisson distribution are appropriate.</p></li>
+<li><p>Hypothesis tests evaluate how compatible the observed data are with a null hypothesis. P-values should be interpreted alongside effect sizes, confidence intervals, Type I and Type II error risks, and scientific or clinical relevance.</p></li>
+<li><p>Statistical methods should be selected according to the research question, data type, study design, estimand and assumptions, not through rigid rules about normality or sample size. Good study design additionally requires clear objectives, relevant outcomes, control of confounding and a justified sample size.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="l1-1-introduction" class="level1">
+<h1>L1-1 Introduction</h1>
+<section id="why-should-i-learn-about-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="why-should-i-learn-about-statistics">Why should I learn about statistics?</h2>
+<p>So, you’re here to learn about statistics. Luckily statistics is all about learning. You’re probably familiar with George Box, the scientist credited with the saying:</p>
+<p><em>“All models are wrong, but some are useful.”</em> George Box</p>
+<p>Box was a chemist turned statistician, and relevant to this course, much of his work was concerned with how we can learn through experimentation, experimental study design and how statistical modelling can support experimental design and learning.</p>
+<p>In one of Box’s educational books on statistics, Statistics for Experimenters, he framed the use of statistics as a hypothetico-deductive learning process. Meaning that, through deduction we form theory - theory then informs predictions about reality – we then observe the phenomenon in the real world and collect new data – the data is used to update our theory and our hypotheses about how the world works. This description of learning can be applied to science as well as other everyday situations.</p>
+<p>We can frame the very same hypothetico-deductive learning process as a feedback system. We have devised a model which could be a theory or theoretical framework about how the world works - We make a prediction or deduction about the behaviour of a real-world system. Collected data about the system is a filter of sorts of what we observe in the real-world, it will be subject to some noise (variability and measurement error). That data will be used to update our prior model. We can then go on to make new predictions. The point being that, statistical models is a cornerstone in how we understand, predict, learn and refine our understanding of real-world and experimental systems (See <strong>Figure 1.1</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_01.png" title="Learning and statistical modelling." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.1</strong> hypothetico-deductive learning through statistical modelling (adapted from Box GEP <em>et al.</em> 2005).</figcaption>
+</figure>
+</div>
+<p>Hiffenburgh, in the book Statistics in Medicine, brings up two areas of application where statistics is helpful:<br>
+</p>
+<ol type="1">
+<li>When we do experiments, we’re only observing a sample of the total underlying population. In order for our experiment to be useful we need to resolve the issue of how to make inferences about the overall population based on our smaller sample from the experiment.</li>
+<li>When we measure or collect data in an experiment (or study). This will be associated with variability and uncertainty. How do we account for this experimental uncertainty. Are there ways for us to control for that uncertainty.</li>
+</ol>
+<p>What statistic won’t help us do is completely eliminate that uncertainty. It won’t turn poor data into credible conclusions. You’ve probably heard the phrase garbage in, garbage out. A lot of responsibility is on the design of the experiment as well as the analysis.</p>
+<p>Back to George Box and the framing of the experimental system. You’ll be hearing the word <strong>experiment</strong> a lot through out this course, so it is best that I specify what is meant by it. In statistics, an experiment is a procedure that will produce an outcome. In theory, we can reproduce or repeat this experiment an infinite number of times giving us a set of outputs or outcomes. These outcomes could be random in what’s called a <strong>random experiment</strong>. Or they could be non-random or <strong>deterministic</strong> given a set of inputs or factors. One key challenge is that given a set of many factors (or inputs into a system), how do we deduce what factor(s) will produce what response(s)?</p>
+<p>Statistical modeling can help us resolve the above challenge. Here the models can be simple statistical regression models all the way to very complex structural equation models. Another important aspect of the experiment is the data and variables we choose to collect (or observe). In medicine (and most disciplines), these data is almost always and without exception associated with some noise from the inherent variability in the experiments (experimental errors) and biological variability. Statistics give us ways of describing and quantifying (explainable) variability and (unexplainable) error or noise. This then helps us to design new experiments. Finally, as experimenters, we want to understand causation (cause and effect), but often it’s not quite clear what is caused by an effector and what is simply an association. Again, here, statistics give us models for how to better understand how experimental systems could be operating, and then go on to try to quantify these relationships between variables. For instance, we could have a system where we have an input <em>x</em> and an output <em>y</em>, but there’s also an intermediate <em>W</em> that will affect the same response (See <strong>Figure 1.2</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_02.png" title="Learning and statistical modelling." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.2</strong> Statistical modelling can help us understand cause and effect and intermediaries (adapted from Box GEP <em>et al.</em> 2005).</figcaption>
+</figure>
+</div>
+<p>By modelling that intermediate we should better be able to understand causation. Importantly, statistics helps us to describe and quantifying uncertainty and probabilities. For example, we have an experiment where we’re rolling a set of two dice. What are the potential or possible outcomes of that experiment? What’s the likelihood of a given set of outcomes or an event to be occurring? We’ll talk more about this in the coming sections.</p>
+<p>For other benefits of the statistical approach we can turn to the prominent, current statistician Andrew Gelman. In one of his blog posts, Gelman discusses how statistics can help us connect data to the underlying objects that we’re trying to study in an experiment. More specifically, statistics can help us understand measurements and variables. For instance, the validity and reliability of measures and how these vary within subjects (so called intra-individual or inter-occasion variability) and between subjects (interindividual variability), and so on.</p>
+</section>
+<section id="ok-but-how-should-i-make-use-of-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="ok-but-how-should-i-make-use-of-statistics">Ok, but how should I make use of statistics?</h2>
+<p>That’s a good question (I’m glad you - or really I - asked), though I’m afraid there is no One correct answer. It all depends what you are trying to achieve. George Box gives quite a useful, high-level overview of how we can make use of statistics (See <strong>Figure 1.3</strong>). We will elaborate more on this throughout the course.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_03.png" title="Practices in statistical analysis." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.3</strong> A broad overview of good practices in statistical analysis (adapted from Box GEP <em>et al.</em> 2005).</figcaption>
+</figure>
+</div>
+<ul>
+<li>Before conducting an experiment (not only before analysis - it could already be too late by then!) we want to find out as much as we can about the problem. E.g., is there prior data from the same type of experiment that we can use for data modelling to better understand what we should measure, how often we should measure, and in how many samples or individuals.</li>
+<li>We shouldn’t forget the domain specific knowledge that is key to understanding the problem e.g., the theory of the given discipline. A statistical modeling exercise is rarely about satisfying the curiousity of the statistician or data modeller. It is therefore super important to involve domain experts, e.g., the medical profession for medical problems, etc. We can use this prior knowledge to construct models (or hypotheses) that we then go on to test.</li>
+<li>We then want to define objectives. This is a group effort within a research or development team. Ideally, the team is interdisciplinary enough that you will not forget any important study design aspects.</li>
+<li>Finally, Box raises the need to learn from each other across disciplines, from experimenters, domain experts, users and patients, statisticians, to data modelers, and more.</li>
+</ul>
+<p>This all sounds well and nice, but why is it important? One of the research has faced during the last decade is the replication crisis. The issue was first raised in psychology but it turns out it was not limited to psychology alone, in following studies the issue of lack of replicability has been seen in biology, medicine, engineering, and more. Part of the issue is due to publication bias. But there’s also an interesting angle here around the statistical approaches that we used and also how these were presented to have been used. We can view statistical methods as a spectrum of different ways of analysing and interpreting data. For example the more traditional approach, that most of you have experienced in conventional introductory statistics courses is referred to as confirmatory data analysis (CDA). This is when we aim to confirm or refute an a priori formulated hypothesis (or a set of hypotheses) using an a priori defined statistical analysis method.</p>
+<p>This is predicated on a set of rules and assumptions that should be met before we do this type of analysis. For instance, given the model or analysis methods, the key assumptions of that method need to be met. In CDA, we should pre specify our intended study power and what the sample size of that experiment should be. We only test one hypothesis. If we test multiple, we make sure to account for multiple testing. This rigid, somewhat formulaic, approach aims to reduce the risk of bias in the conclusions that we can draw. Most often, we find ourselves doing something in between a CDA and a more exploratory data analysis (EDA). Perhaps, rather than confirm or refute a hypothesis, we want to evaluate experimental data. Rather than looking for statistical significance, we’re looking to estimate effect size or a set of model parameters. We then might be asking - what’s the uncertainty in our parameter/effect size estimates? EDA was very much pioneered by John Tukey. During EDA we’re more interested in exploring patterns, perhaps in large datasets. We do not have an a priori hypothesis going into the analysis. You can see a summary of these approaches in <strong>Figure 1.4</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_04.png" title="CDA, rough CDA and EDA." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.4</strong> An overview of confirmatory data analysis (CDA), rough CDA and exploratory data analysis (EDA). Adapted from Tukey 1980 and Fife and Rogers 2021.</figcaption>
+</figure>
+</div>
+<p>This makes sense. Usually, we want to have some flexibility in the type of questions we ask given a dataset so we adapt the statistical approach to the data we are investigating so we can carry out the most suitable statistical analysis, right? No, stop, wait(!) - here is a potential big red flag. During EDA we’re introducing potential risk of bias in the conclusions that we draw. We can’t state with certainty that the conclusions that we draw during a rough CDA/EDA analysis will refute or confirm a hypothesis. These conclusions remain provisional pending further experiments and further statistical analysis. And, once we conduct EDA on a dataset, we cannot use the same datasets for a strict CDA approach. Because the choice of analysis would already be informed by the same dataset. In other words - a more exploratory approach will be excellent for finding potential avenues of further research, but we cannot draw any firm conclusions based on this analysis.</p>
+<p>Fife and Rogers (2021) explain the issue perfectly. Because of the limitations in the conclusions we can draw given EDA (or a rough CDA) it is super important that we are transparent in the way we present our statistical analysis to others (stakeholders, readers, etc.). By concealing our intentions and presenting an exploratory analysis as a strict CDA, we run the risk of performing p-hacking. That is when we find the optimal analytical methods to get the best possible p-value.</p>
+<p>In other instances we might run the risk of fishing - when we conduct multiple statistical analyses across the dataset and present only those that are statistically significant, through multiple testing the likelihood of obtaining a statistically significant result increases. If we are dubious in our methods, we risk HARKing so hypothesising after the results are already known.</p>
+<p>This all to say, there is merit to the classical strict CDA, EDA and everything in between. But we need to recognise the limitations of each approach and be transparent about our intentions in our analyses, experiments and how these are presented.</p>
+</section>
+</section>
+<section id="l1-2-probability" class="level1">
+<h1>L1-2 Probability</h1>
+<p>In the previous section I briefly brought up the concepts probability and uncertainty and their role in statistics. Probability theory and sampling distributions is very much central to classical statistics and important for understanding the random experiment. I will briefly describe probability to then delve further into distributions. For more details, see the recommeded reading (Lavin 2013, Chapter 1).</p>
+<section id="what-is-statistics-about" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-statistics-about">What is statistics about?</h2>
+<p>Probability, or uncertainty, is key part of what statistics is about. Probability can be described using four concepts:</p>
+<ul>
+<li><strong>The Experiment</strong> A procedure that we can repeat. In theory, an infinite number of times, and it will produce a well-defined set of outcomes. For example, we could consider an experiment consisting of rolling a die, the outcomes of which are a value of 1 to 6.</li>
+<li><strong>Sample Outcome (<em>s</em>)</strong> Each potential outcome is a sample outcome.</li>
+<li><strong>Sample Space (<em>S</em>)</strong> The totality of outcomes is the sample space.</li>
+<li><strong>Event</strong> A collection of sample outcomes. An event can occur if an experimental Outcome is a member of an event.</li>
+</ul>
+<p>Probabilities work different depending on if we are looking at discrete cases, such as counting the outcomes after rolling a die a number of times. Or, continuous measures (length, weight, volume, concentrations, amounts etc.) where we can use integrals to determine the probability of producing an outcome within a given range of values.</p>
+<p>As is done in Lavine 2013, let’s start by looking at the discrete case. We call these counting outcomes. That means that we have a number of set discrete outcomes. For example, when rolling a single die we can produce outcomes between 1 and 6. If we are rolling two dice, we can produce 6 times 6, or 36 potential outcomes. This is the complete sample space of rolling two dice, (or <em>S</em>).</p>
+<p>The probability of producing an outcome within the sample space <em>S</em> (the totality of outcomes) is one. While, the probability of producing the null set, a set containing none of the possible outcomes (also called an empty set or <span class="math inline">\(\emptyset\)</span>), is zero.</p>
+<p>In set theory we can have events that are made up of several sample outcomes (<em>s</em>). In Figure 1.5 I have marked two different events (sets of sample outcomes, <em>s</em>), event A in blue and event B in red. We can calculate the probability of these events given the set outcomes. For example, the probability of the unison ( <span class="math inline">\(\cup\)</span>), meaning producing an outcome from A or B, is equal to the probability of A plus B if A and B do not intersect, (A <span class="math inline">\(\cap\)</span> B = <span class="math inline">\(\emptyset\)</span>). In other words, the intersection between A and B is a null set that in effect is empty or impossible. To clarify, the intersect is empty because there is no overlap.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_05.png" title="Set theory." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.5</strong> The sample space (<em>S</em>) and events consisting of sample outcomes (<em>s</em>) marked by the blue and red box (adapted from Lavine 2013).</figcaption>
+</figure>
+</div>
+<p>Most medical, biological data tend to be continuous. A short side note: In the video I bring up one of the groundbreaking works in the field of systems biology where Ludwig von Bertalanffy defined a model of the length of sea creatures over age. The work by von Bertalanffy (and others in the 1920’s and 1930’s) layed the foundations for mathematical systems modelling in biology and medicine. If you find this interesting, I talk about this in more detail in Simulation course (CM2014).</p>
+<p>How do we treat probabilities for continuous data? here we can use the integrals of the probability density function (<em>pdf</em>) to determine the probability of ranges of values (outcomes). What is a <em>pdf</em> (other than a file format)? The pdf describes the likelihood of a continuous random variable falling within a particular range of values. For example, within the range of A to B (See Figure 1.6), what’s the probability of producing a value within that range. The <em>pdf</em> which is the derivative of the cumulative ditribution function (<em>cdf</em>) which gives the probability that a random value is less than or equal to a given, defined value. So, the <em>cdf</em> is the accumulated area under the probability density curve up to the given, defined value.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_06.png" title="Continuous probabilities." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.6</strong> Continuous probabilities and their properties (adapted from Lavine 2013).</figcaption>
+</figure>
+</div>
+<p><em>Pdf</em> functions have a set of properties. One of these is that the probability of <em>y</em> is over or equal to zero for all <em>y</em>, because otherwise, the probability of a value between A and B could potentially be negative. The other property of the pdf is that the probability of <em>Y</em> being a set of -<span class="math inline">\(\infty\)</span> to <span class="math inline">\(\infty\)</span> is one. Integrating over that range gives a probability of one. Another interesting property of the <em>pdf</em> is then if we integrate over a singular value, which can be viewed as an infinitesimally small range between <em>A</em> and <em>A</em>, or <em>A</em> and <em>B</em> (where <em>A=B</em>), this will give a probability of zero because the integral is the area under the curve. In other words, for a vertical line on the distribution curve the area is zero. The probability of a continuous random variable is given by the area under the pdf.</p>
+<p>The <em>cdf</em> gives us the probability of the random variable taking on a value less than or equal to a fixed real number. We can get the cdf by integrating the <em>pdf</em>. We can get the pdf by differentiating the <em>cdf</em>. These are two different representations of the probability distributions. We’ll look more at probability distributions in the coming section.</p>
+</section>
+</section>
+<section id="l1-3-data-types-and-distributions" class="level1">
+<h1>L1-3 Data Types and Distributions</h1>
+<p>Here I’ll cover of few common data types and their associated probability distributions, I’ll also start introducing some <em>R</em> scripts throughout the different examples. In the previous section I talked about probability as a way of understanding the likelihood of a set of outcomes (events) given some underlying distribution. Let’s take a closer look atdistributions.</p>
+<p>One way of parsing through different distributions is by exploring different data types, this is because our expectations change with regards to what the assumed (theoretical) distribution of the data is given the type of data. Data in this context is the observed output of the experiment, as examplified by experimental system presented in section L1-1. If we have an experimental system like the one that George Box presents, where we have a set of factors (<em>k</em>) and observed outputs (<em>p</em>) from the experiment, the output or response (<em>p</em>) is the data. Figure 1.7 presents a common approach to defining data types, as numerical and categorical, and the different subclasses.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_07.png" title="Data types." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.7</strong> Types of data examplified with different ways of measuring body temperature.</figcaption>
+</figure>
+</div>
+<p>A side note, Figure 1.7 highlights an interesting experimental design aspect. Given a research question (<em>e.g.</em>, how does body temperature differ between condition A and B?), what measure should be used? As data modellers we may have a saying in these decisions, the data type may certainly play a role along with other factors (such as, validation of instruments, the ability to aggregate data across studies, and more).</p>
+<p>We can conclude that different distributional models may be assumed based on the data type of an observed experimental output (among other considerations). But what is a distribution? A distribution, or probability distribution, is a Theoretical or Conceptual model of what we Think the underlying distribution of the data looks like. A distributional model (such as a normal, lognormal or uniform distribution) is not a natural law to be strictly adhered to or else suffer the consequences. These are theoretical models the we use to represent variability in data (samples of a population) to make inferences about an underlying population. We do not declare: “these data have been determined to be normally distributed!”. Rather, we may conclude that a normal distribution is a reasonable description of the observed data and an adequate approximation of the population distribution for the intended analysis. That is sufficient and good enough. So, the next time someone asks you for the hundreth time whether the data are normally distributed, you know what to say. :-)</p>
+<p>We can represent an underlying distributional model in different ways. The most straightforward way is to calculate summary statistics (<em>e.g.</em>, a mean, median, standard deviation, percentiles, etc.). Or, we can represent the distribution through a probability density function or probability mass function (<em>pmf</em>) if the data are discrete. The <em>cdf</em> or <em>pmf</em> can then be used to define the probability of obtaining a value within a set range. Another way of representing distributions is through the cumulative distribution function. The <em>cdf</em> gives the cumulative probability of obtaining a certain value up to <em>x</em>.</p>
+<p>Typically we represent data using parametric distributions. These are a class of distributions that can be defined by parameters. You’re probably familiar with many of these, for example the normal distribution can be defined by μ, the mean, and the σ², the variance. All parametric distributions are described using different shape parameters, these give useful approximations for representing and interpreting data. We will look at some of the most common parametric distributions here underneath.</p>
+<section id="the-normal-or-gaussian-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-normal-or-gaussian-distribution">The Normal or Gaussian Distribution</h2>
+<p>The normal, or Gaussian, distributional model is characterised by values being distributed symmetrically around the mean. Most values lie relatively close to the mean, while values become progressively less frequent as we move further away from the mean in either direction. This produces the characteristic bell-shaped curve of the normal distribution.</p>
+<p>The normal distribution is frequently used to describe continuous measurements in areas such as manufacturing, biology and the physical sciences. Examples may include measurement errors, variation in manufactured components, and certain biological characteristics such as height or blood pressure within a relatively homogeneous population. Importantly, don’t forget what I said a few paragraphs before this, the normal distribution is useful in instances where it provides a good approximation of our data. Below I plot a histogram adult male height data (in [cm]) from the United States National Health and Nutrition Survey (NHANES). The histogram displays how numerical data is distributed by binning it into intervals. From the histogram we can tell that the data exhibits the classic symmetric bell-shaped distribution, so a normal distributional model is a good approximation of how the data behaves.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal distribution</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We can load the US National Health and Nutrition Survey dataset</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load the dplyr package to filter the dataframe</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Let’s filter the data for adult males</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># It is reasonable to check N observations to make sure this is still substantial</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>n_height <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>Height))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Then, we can plot the height data as a histogram</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(nhanes_subset$Height)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_subset<span class="sc">$</span>Height, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"NHANES: Height (N="</span>, n_height, <span class="st">")"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using the distributional parameters we can perform calculations on the <em>pdf</em>. For a normal, or Gaussian, distribution we define a mean (central tendency), μ, and a standard deviation (measure of variability), σ, and create a vector of x values. We can then calculate the density function based on these three parameters and plot them out. In the R script this is straightforward, by defining the mathematical function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a normal distribution has two parameters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mu, the mean, and sigma^2, the variance:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># we device a vector of n x:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>xvec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="fl">0.01</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the pdf of a normal distribution:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>fx <span class="ot">&lt;-</span> ( <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>(xvec<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># we can then create a very simple line plot:</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xvec, fx, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"f(x)"</span>, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Modellers are some of the laziest (most time effective) people I know. So normally, we would not bother to define these functions manually as there are a multitude of trustworthy functions and packages in R for most of our statistical needs and pretty much everything is free, open source. We really shouldn’t reinvent the wheel when there are well-tested packages out there. In fact, this is why R is probably the <em>de facto</em> standard programming language in statistical modelling, statistical computing and data analysis (and the reason why I force you to use it on the course).</p>
+<p>For example, we can call the <em>pdf</em> of the Normal distribution by using this dnorm function along with the same input parameters. If we plot and overlay these two methods, then we see that indeed these give identical outputs. Similarly, we can call the pnorm function to calculate on the cumulative distribution function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># equally, we can use the built-in functions</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the pdf function:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>xpdf <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(xvec, mu, sigma)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># the cdf function:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>xcdf <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(xvec, mu, sigma)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create a simple plot of these – are they consistent?</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the built-in pdf function and the "home-made" version:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xvec, fx, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">ylab =</span> <span class="st">"p(x)"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">"x"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xvec, xpdf, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"fx"</span>,<span class="st">"pdf"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"blue"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting the cdf:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xvec, xcdf, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"p(x)"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-lognormal-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-lognormal-distribution">The Lognormal Distribution</h2>
+<p>The lognormal distribution is perhaps one of the most commonly assumed distributional models in medicine and biology. This is because it behaves similar to much of biological data. Just like biological data the lognormal distribution does not produce negative values (most biomarkers, like age, bodyweight, blood pressure etc. cannot be negative). The lognormal distribution is right skewed with a geometric mean skewed towards the left (lower values) and a longer right side tail.</p>
+<p>In medicine we often work with data that are products of many positive values. For instance, we take a set of biomarkers and we multiply these to create another variable. These data tend towards lognormal distribution. In the example below I plot a histogram from the NHANES data on body mass index (<span class="math inline">\(BMI = bodyweight[kg] / height[m]^2\)</span>). We can see that the BMI conforms roughly to a lognormal distribution.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># creating adult, male subset</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Lognormal distribution</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>n_bmi <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>BMI))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_subset<span class="sc">$</span>BMI, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(nhanes_subset<span class="sc">$</span>BMI, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(nhanes_subset<span class="sc">$</span>BMI, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">length.out =</span> <span class="dv">25</span>), <span class="at">xlab =</span> <span class="st">"BMI [kg/m^2]"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"NHANES: BMI (N ="</span>, n_bmi,<span class="st">")"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-exponential-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-exponential-distribution">The Exponential Distribution</h2>
+<p>For events that occur continuously and independently at a constant average rate, we can use the exponential distribution to explain these. For example, if we’re looking at survival time data. In Figure 1.8 we have a small dataset on survival times in lung cancer. If we plot the histogram of this we can see that this approximately conforms to an exponential distribution. The exponential distribution has the quality that the mean (<span class="math inline">\(1/\lambda\)</span>) and the variance (<span class="math inline">\(1/\lambda^2\)</span>)are dependent on the lambda parameter.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_08.png" title="The exponential distribution." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.8</strong> The exponential distribution.</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-uniform-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-uniform-distribution">The Uniform Distribution</h2>
+<p>Data can also be described using the uniform distribution, either at a continuous or a discrete scale. An example of data corresponding to a uniform discrete distribution would be the outcomes from rolling a die where the likelihood of any of the sample outcomes is the same.</p>
+<p>In clinical research, uniform distributional models are very useful when we want to randomise study participants into different study arms, and we want an equal, number of participants across all the arms.</p>
+</section>
+<section id="the-binomial-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-binomial-distribution">The Binomial Distribution</h2>
+<p>The binomial distribution describes successes of a fixed number of trials where each trial can either be a success or failure (so called Bernoulli trials, a sequence of Bernoulli trials is called a Bernoulli process). The probability of a successful trial is constant across all of these trials and the trials are independent. The distributional model requires two parameters, the number of trials (<em>n</em>) and the probability of success (<em>p</em>). We can use this to define the probability distribution given a set a fixed number of trials.</p>
+<p>In the example below I sample theoretical survival data based on Fazlinovic <em>et al.</em> 2021. In the study, the researchers examined survival outcomes 30 days after surgery. In 421 patients a survival of probability of approximately 0.981 was observed. We can sample from this distribution by specifying the number of trials (representing the number of patients going through surgery), and the survival probability.</p>
+<p>The binomial probability curve can be a bit tricky to interpret, on the y axis we see the probability <em>k</em> successes (<em>n</em>) on the x axis. In a hundred trials the probability of success is around 98%, in other words the probability of survival is very high.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Binomial distribution</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use the binomial pmf to generate data for the success of a</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># hypothetical surgery e.g., p: 0.981, n: 421 (based on Fazlinovic et al. 2021)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>surgery_stats <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">421</span>,<span class="dv">1</span>,<span class="fl">0.981</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>n_count <span class="ot">&lt;-</span> <span class="fu">length</span>(surgery_stats)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># we can plot the data using for example a bar plot grouped by successes and failures:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>count_outcome <span class="ot">&lt;-</span> <span class="fu">table</span>(surgery_stats)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(count_outcome, <span class="at">names=</span><span class="fu">c</span>(<span class="st">"deceased"</span>,<span class="st">"survived"</span>), <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"30-day outcome</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">(N="</span>,n_count,<span class="st">"patients)"</span>), <span class="at">xlab =</span> <span class="st">"Outcome"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can then get the proportions of the two outcomes</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>probs <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(count_outcome)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the probability of survival is then:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>p_success <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(probs[<span class="dv">2</span>])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we can then plot the probability mass function for a binomial distribution</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in this case, the probability of number of successes given 100 trials</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>pmf_binom <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">prob =</span> p_success)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, pmf_binom, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylab =</span><span class="st">"Probabilities"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-poisson-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-poisson-distribution">The Poisson Distribution</h2>
+<p>The Poisson distribution is a discrete probability distribution that expresses the probability of a given number of events occurring at a fixed time interval or for a fixed geographic area. The lambda represents the average number of events occurring within a time interval. As an example, the Poisson distribution is used to model patient arrival data at the emergency department. Here I sample a number of arrivals at an emergency department based on the work by Reboredo <em>et al.</em> 2023. We can then get an idea of the approximate number of patient arrivals over a full day at the emergency department.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Poisson distribution</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># we can simulate emergency department arrival data based on Reboredo et al. 2023</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The study indicates mean/gamma arrivals of 400.96 patients during 2015-2020</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>dat_arrival <span class="ot">&lt;-</span> <span class="fu">rpois</span>(n_samples, <span class="fl">400.96</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dat_arrival, <span class="at">xlab =</span> <span class="st">"Number entries"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"ED arrival data (N = "</span>,n_samples,<span class="st">")"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>We have looked at a few of the most commonly assumed probability distributions and examples of how we can make use of these. There are of course many other parametric distributional models, some more flexible and exotic than others, e.g., the Weibull and Beta distribution. In some cases, we might want to transform variables to make it more suitable for the assumptions of a statistical analysis. Typically what we try to do then is to somehow normalise the data. One way of doing that, for example, is if we have a dataset that behaves according to a lognormal distribution is to log-transform the data. This will produce approximately normally distributed data. There are also more flexible solutions like the Box–Cox transformation developed by George Box and David Cox, amongst others.</p>
+<p>Given the parametric distributions, there are implications of carrying out repeated samples from these. One of these principles is the law of large numbers, stating that as the sample size increases, the sample mean tends to get closer to the true population mean. In other words, averages calculated from larger samples generally provide more stable and reliable estimates than averages calculated from smaller samples.</p>
+<p>Another classic principle is the central limit theorem. It states that if we repeatedly take sufficiently large samples of independent and identically distributed observations from a population with a finite mean and variance, the distribution of the sample means will approach a normal distribution as the sample size increases—even if the original data are not normally distributed. The same applies to sample sums after appropriate centring and scaling. It’s used in a variety of places that require limiting theorems in probability. We’ll talk more about that later (it gets a bit controversial).</p>
+<p>Then there are those that assume, nonparametric distributions or distribution-free distributions. Meaning that we don’t assume any specific probability distribution. Rather, we describe the data at hand using, for example, histograms or kernel density estimators. But I will say this is the exception. In my community of pharmacological modeling, I can only think of two researchers over several years that were proponents of these approaches.</p>
+</section>
+</section>
+<section id="l1-4-sampling-from-distributions" class="level1">
+<h1>L1-4 Sampling from Distributions</h1>
+<p>Sampling from distributional models is an important methodological tool in statistical analysis and modelling, the approach is regularly used to inform experimental design, sample size estimation and not least for simulations. The foundation of Monte Carlo simulations (that are widely used across modelling disciplines) rely on univeriate and multivariate random sampling from distribution models.</p>
+<p>Here we will take a closer look at how we can sample from defined distributional models. But, before we can do that we usually have to estimate distributional parameters based on a set of observed data and an assumed distributional model. Let’s walk through an example, previously we took a look at the NHANES height data for adult males. The data appeared to be well-described with normal distribution. So, we have a set of data points <em>y</em> and we want to define <em>μ</em> and <em>σ²</em>. For some distributions we can calculate these using the closed-form maximum likelihood estimates (e.g., normal and lognormal distributions), for other distributions we optimise the parameters based on the log-likelihood (<em>ll</em>) function (<em>e.g.</em>,minimise the negative <em>ll</em> by searching for the optimal parameter values).</p>
+<p>In R, we can do this using the <em>fitdistr</em> function in the library MASS. Libraries of functions can easily be installed using the function <em>install.packages(“NameOfLibrary”)</em>, we can then load the library using the function <em>library(NameOfLibrary)</em>. Most libraries will also have quite extensive documentation on the implemented functions (or datasets), what algorithms are implemented and how to use these. You find this documentation in the library vignette. For example, you can view the MASS vignette here [<strong>ADD REF</strong>].</p>
+<p>Let’s test this out for the NHANES subset by estimating the parameters for the normal distribution (using the closed-form solutions) and the more Weibull distribution (estimated through numerical optimation). The Weibull distribution is quite useful in those cases where you need to fit a flexible parametric distribution that can fit a variety of data distributions by fitting the shape parameter (<em>k</em>) and the scale parameter (<em>lambda</em>). Sometimes you might find that many of these such functions will be sensitive to the initial inputs that you input (so you might have to play around with the initial estimates in some cases). We also make use of the <em>dplyr</em> library (extremely useful for data formatting), and of course <em>NHANES</em> (for loading the dataset).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Distribution Estimation &amp; Sampling</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  Let's use adult male height from NHANES:</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'MASS' was built under R version 4.6.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MASS'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for adult males</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>n_height <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>Height))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>nhanes_height <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nhanes_subset<span class="sc">$</span>Height)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the package MASS to fit a normal distribution to the data</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># This will make use of the closed form solution</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>normal_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"normal"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Distributions like the Weibull require numerical optimisation</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># we can test this out as well (note that this may be sensitive to initial estimates)</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>weibull_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"weibull"</span>, <span class="fu">list</span>(<span class="at">shape =</span> <span class="dv">20</span>, <span class="at">scale =</span> <span class="dv">200</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in densfun(x, parm[1], parm[2], ...): NaNs produced
+Warning in densfun(x, parm[1], parm[2], ...): NaNs produced</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can then produce a plot of the data and the two pdfs of the fitted distributions</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First we need to specify a few things...</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set inputs for pdfs</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>height_min <span class="ot">&lt;-</span> <span class="fu">min</span>(nhanes_height)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>height_max <span class="ot">&lt;-</span> <span class="fu">max</span>(nhanes_height)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>x_pdf <span class="ot">&lt;-</span> <span class="fu">seq</span>(height_min, height_max, <span class="dv">1</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Then we sample from the pdfs using the parameter estimates</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>y_norm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_pdf, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>], normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>y_weib <span class="ot">&lt;-</span> <span class="fu">dweibull</span>(x_pdf, weibull_params<span class="sc">$</span>estimate[<span class="st">"shape"</span>], weibull_params<span class="sc">$</span>estimate[<span class="st">"scale"</span>])</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># we start with a histogram, specifying to plot the density (freq = FALSE)</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_height, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">main =</span> <span class="st">"NHANES height"</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_norm, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_weib, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>,<span class="st">"Weibull"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Above we have a histogram of the observed height data in adult males, the blue curve describes the <em>pdf</em> assuming a normal distribution. And, the red curve describes the Weibull distribution. We also get the parameter estimates.</p>
+<p>Then we can carry out multiple sampling from the two distributional models and compare our results. Here we can specify in R how many samples we want to sample from these distributions.</p>
+<p>To sample from a normal distribution, we use the <em>rnorm</em> function together with our estimated parameters for the mean and the standard deviation. We can do the same for the Weibull distribution using this <em>rweibull</em> function. Super straightforward. Here I overlaid the two histograms of the simulated sampled data for the normal and the Weibull.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Distribution Sampling</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to sample from distributions we can use the rnorm and rweibull functions, super easy:</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>norm_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_samples, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>], normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>weib_sample <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(n_samples, weibull_params<span class="sc">$</span>estimate[<span class="st">"shape"</span>], weibull_params<span class="sc">$</span>estimate[<span class="st">"scale"</span>])</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># we can then plot these as two overlaying histograms</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>color1 <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">20</span>, <span class="dv">23</span>, <span class="dv">219</span>, <span class="at">max =</span> <span class="dv">255</span>, <span class="at">alpha =</span> <span class="dv">100</span>) <span class="co"># blue</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>color2 <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">219</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="at">max =</span> <span class="dv">255</span>, <span class="at">alpha =</span> <span class="dv">100</span>) <span class="co"># red</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>h1 <span class="ot">&lt;-</span> <span class="fu">hist</span>(norm_sample, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>h2 <span class="ot">&lt;-</span> <span class="fu">hist</span>(weib_sample, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h1, <span class="at">col =</span> color1, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">main =</span> <span class="st">"Sampling"</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h2, <span class="at">col =</span> color2, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>,<span class="st">"Weibull"</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Under the hood, they rely on quite different methods for how this sampling is carried out. For example, we can have inverse, transforming sampling for a normal distribution. This is a method for generating random numbers from pretty much any probability distribution by using its inverse cumulative cumulative distribution. Or, specifically for the normal distribution we have the box transformation, where we generate random samples in pairs. Then these will be converted to normally distributed data. But, we save this topic for another course.</p>
+</section>
+<section id="l1-5-hypothesis-testing" class="level1">
+<h1>L1-5 Hypothesis Testing</h1>
+<p>In this section we will take a closer look at hypothesis testing. Earlier, I talked about the hypothetico-deductive approach that George Box presents in his book on Statistics for Experimenters. The approach includes the generation of a hypothesis or theoretical model that is used to anticipate the experimental outcome. Then, we carry out the experiment, we make observations and we update our prior knowledge based on the new observations. Here we have a problem, the experiment is only carried out on a sample (or subset) of the full population of the real-world experimental system. We need to make inferences about the overall population based on the experimental sample. How do we go about doing that?</p>
+<p>This is where hypothesis testing comes in. William Gosset, a chemist at Guinness, was facing this exact problem in the early 1900s. At this time, the brewing industry was at the forefront of technological development (in a way it was the Silicon Valley of the early 1900s). Gosset was experimenting with different batches of barley and optimisation of the brewing process. But how could he make sure that he was making accurate inferences about the totality of crop based on a small experimental sample of barley?</p>
+<p>With the help of the polymath Karl Pearson, Gosset developed the t-test and Student’s t-test (Student was Gosset’s pen name in the original paper). And later on, Ronald Fisher made contributions to the development of the t-test (perhaps most notably, the p-value). That’s a lot of famous people working on a problem.</p>
+<p>Let’s take a look at the original dataset from Student 1908 paper. In the original dataset we have barley head corn per acre (in lbs of weight) and we are looking at non-kiln-dried (NKD) barley seeds vs kiln-dried (KD) barley seeds. We can formulate the:</p>
+<ul>
+<li>Research question, <em>e.g.</em>: Does kiln drying barley seeds impact barley crop yields?</li>
+<li>Null hypothesis (<span class="math inline">\(H_0\)</span>): the mean barley crop sizes do not differ between the two batches of seeds, (<span class="math inline">\(\mu_{yield,NKD} = \mu_{yield,KD}\)</span>).</li>
+<li>Alternative hypothesis (<span class="math inline">\(H_1\)</span>): the mean barley crop sizes differ between the two batches of seeds, (<span class="math inline">\(\mu_{yield,NKD} \neq \mu_{yield,KD}\)</span>).</li>
+<li>At a significance level of <span class="math inline">\(\alpha = 0.05\)</span> (we will go through this in more detail later).</li>
+</ul>
+<p>The original yield data is quite small, so we can easily load it into R manually as two vectors. We want to test the difference in means compared to the variability within both groups, we then calculate the t-metric. For a simple t-test this is quite easy to do by hand or we can use the built in function <em>t.test()</em>.</p>
+<p>We need to specify if we want a two-sided t-test, if the data is paired, if we assume equal variances, and the significance level.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Student's t-test Guinness data</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>yield_nkd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1903</span>, <span class="dv">1935</span>, <span class="dv">1910</span>, <span class="dv">2496</span>, <span class="dv">2108</span>, <span class="dv">1961</span>, <span class="dv">2060</span>, <span class="dv">1444</span>, <span class="dv">1612</span>, <span class="dv">1316</span>, <span class="dv">1511</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>yield_kd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">1915</span>, <span class="dv">2011</span>, <span class="dv">2463</span>, <span class="dv">2180</span>, <span class="dv">1925</span>, <span class="dv">2122</span>, <span class="dv">1482</span>, <span class="dv">1542</span>, <span class="dv">1443</span>, <span class="dv">1535</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>n_nkd <span class="ot">&lt;-</span> <span class="fu">length</span>(yield_nkd)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>x_nkd <span class="ot">&lt;-</span> <span class="fu">mean</span>(yield_nkd)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>sigma_nkd <span class="ot">&lt;-</span> <span class="fu">sd</span>(yield_nkd)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>n_kd <span class="ot">&lt;-</span> <span class="fu">length</span>(yield_kd)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>x_kd <span class="ot">&lt;-</span> <span class="fu">mean</span>(yield_kd)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>sigma_kd <span class="ot">&lt;-</span> <span class="fu">sd</span>(yield_kd)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> n_kd <span class="sc">+</span> n_nkd <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>var_tot <span class="ot">&lt;-</span> ((n_nkd <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>sigma_nkd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (n_kd <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>sigma_kd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n_nkd <span class="sc">+</span> n_kd <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>tstat <span class="ot">&lt;-</span> (x_nkd <span class="sc">-</span> x_kd) <span class="sc">/</span>(<span class="fu">sqrt</span>(var_tot<span class="sc">*</span>((<span class="dv">1</span><span class="sc">/</span>n_nkd)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>n_kd))))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># at the degrees of freedom (df=20) we get a t-statistics of 0.234</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># compared to the t-distribution table at 95% two-sided, 0.234 is smaller than</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.086. In fact, 0.234 is smaller than 50%. So, the p-value is larger than</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.50. Therefore, we do not reject the null hypothesis.</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># table: https://en.wikipedia.org/wiki/Student%27s_t-distribution</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># we can also retrieve the p-value using the following function:</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fu">abs</span>(tstat), df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's verify our calculations using R's built-in function (or the other way around :-) ):</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>stat_res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(yield_kd,yield_nkd, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co"># comment: indeed, we get a p-value of 0.8173 and can therefore not reject the null hypothesis.</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>stat_res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  yield_kd and yield_nkd
+t = 0.23413, df = 20, p-value = 0.8173
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -266.7581  334.2127
+sample estimates:
+mean of x mean of y 
+ 1875.182  1841.455 </code></pre>
+</div>
+</div>
+<p>When we calculate the t-statistic we get a value of 0.331. The get the p-value, we look this up in the t-table based on the degrees of freedom(the sample size minus two, for the two groups, in this case). We get a p-value of above 0.5, or more precisely 0.817. We do not reject the null hypothesis at an α or significance level of 0.05.</p>
+<p>We can generalise this approach to the following steps:</p>
+<ul>
+<li>Formulated the null and alternative hypothesis.</li>
+<li>Carry out the experiment and collect data.</li>
+<li>We carry out the t-tests and we calculate the t-statistic (the difference in group means over the standard error). The <em>t</em> is then the number of standard errors away from the mean.</li>
+<li>Look up what p-value the t-statistic corresponds to in the t-table.</li>
+<li>The p-value is the probability of obtaining the same results or a larger difference if the null hypothesis were to be true.</li>
+<li>Draw a set of conclusions with regards to the null and alternative hypothesis.</li>
+</ul>
+<p>In the Wikipedia image below (Figure 1.9), we can see that the t-distribution has heavier tails at smaller sample sizes (fewer degrees of freedom). The heavier tails reflect the greater uncertainty associated with estimating the population standard deviation from a small sample. Consequently, for a given observed t-statistic, a smaller sample generally produces a larger p-value and requires a more extreme t-statistic to reject the null hypothesis.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_09.png" title="The t-distribution." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.9</strong> The t-distribution.</figcaption>
+</figure>
+</div>
+<p><em>In other words, the t-statistic and its degrees of freedom determine the p-value: the probability, assuming that the null hypothesis is true, of obtaining a t-statistic at least as extreme as the one observed. For the same observed t-statistic, fewer degrees of freedom produce a larger p-value because the t-distribution has heavier tails. We therefore require stronger evidence to reject the null hypothesis when the sample size is small.</em></p>
+<section id="parametric-t-tests" class="level2">
+<h2 class="anchored" data-anchor-id="parametric-t-tests">Parametric t-tests</h2>
+<p>The standard t-test we are familiar with is a so called parametric t-test, this relates to the parametric distributions (distributions that can be described using parameters). We are assuming a parametric distribution of the data we are analysing, for most tests we are assuming that the data approximates the normal distribution (but not always).</p>
+<p>The parametric t-tests are subject to a number of assumptions and conditions, the flavour of t-test will depend on these characteristics. In R, we can use the same function, <em>t.test(…)</em> with different inputs to carry out any of these parametric t-tests. Figure 1.10 gives a summary of the conditions that need to be met and how to choose and appropriate t-test.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_10.png" title="Parametric t-tests." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.10</strong> The (normal) parametric t-tests and the key conditions and decision points to be determined.</figcaption>
+</figure>
+</div>
+<section id="parametric-t-tests-the-normality-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-t-tests-the-normality-assumption">Parametric t-tests: The Normality Assumption</h3>
+<p>The best-known assumption of the parametric t-test is approximate normality. This applies to the outcome within each group for an independent-samples test and to the within-pair differences for a paired test. Normality should ideally be considered when planning the analysis, but it can also be assessed visually using Q–Q plots, histograms and box plots.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To better understand data in an exploratory fashion we can visualise it:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## normality</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's take a look at the height data in NHANES again</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for adult males</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(Age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> Gender <span class="sc">==</span> <span class="st">"male"</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>n_height <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">complete.cases</span>(nhanes_subset<span class="sc">$</span>Height))</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>nhanes_height <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nhanes_subset<span class="sc">$</span>Height)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># summary statistics</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nhanes_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  149.4   171.0   175.7   175.8   180.6   200.4 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># q-q plot: there are many functions for these, for example:</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(nhanes_height, <span class="at">xlab =</span> <span class="st">"normal quantiles"</span>,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span><span class="st">"NHANES: height [cm]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  144 3472</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(nhanes_height, <span class="at">xlab =</span> <span class="st">"NHANES: adult males"</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Height [cm]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># histogram</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>normal_params <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(nhanes_height, <span class="st">"normal"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>height_min <span class="ot">&lt;-</span> <span class="fu">min</span>(nhanes_height)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>height_max <span class="ot">&lt;-</span> <span class="fu">max</span>(nhanes_height)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>x_pdf <span class="ot">&lt;-</span> <span class="fu">seq</span>(height_min, height_max, <span class="dv">1</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>y_norm <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_pdf, normal_params<span class="sc">$</span>estimate[<span class="st">"mean"</span>],</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>normal_params<span class="sc">$</span>estimate[<span class="st">"sd"</span>])</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nhanes_height, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Height [cm]"</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">main =</span> <span class="st">"NHANES height"</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_pdf, y_norm, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"normal"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="at">lty =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Above we investigate normality using the following methods:</p>
+<ul>
+<li>Summary statistics: we can get an indication of symmetry and spread by comparing the median and the mean, the interquartile range, maximum and minimum data points.</li>
+<li>Q-Q plot: for a normal Q-Q plot, we assess normality by how closely the data points follow the line of unity.</li>
+<li>Box plot: informative for visually assessing symmetry and variability based on the plotted quartiles.</li>
+<li>Histogram: visual assessment of distribution of data, we can also overlay a fitted <em>pdf</em> to assess normality.</li>
+<li>Skewness and kurtosis: these provide additional information about asymmetry and the “heavy-tailedness” of the data. To calculate these metrics we can use the functions <em>skewness(data)</em> and <em>kurtosis(data)</em> in the library <em>moments</em>.</li>
+</ul>
+<p>Formal normality tests such as Shapiro–Wilk are generally not necessary. In small samples, they often miss deviations from normality and in large samples they will find trivial deviations significant. Visual assessment is usually more informative. Statistical tests of normality have their use cases, for example when assessing whether measurements in the manufacturing process follow an approximately normal distribution as supporting evidence for quality control.</p>
+</section>
+<section id="parametric-t-tests-the-equal-variances-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-t-tests-the-equal-variances-assumption">Parametric t-tests: The Equal Variances Assumption</h3>
+<p>The conventional Student’s t-test also assumes equal variances between groups. When this assumption is doubtful, Welch’s t-test should be used. Again, there are statistical tests of homogeneity of variances across groups, but each test will carry the risk of producing false positives. In practice, assuming unequal variance is often a sensible default because reduces the number of assumptions regarding the data.</p>
+</section>
+<section id="parametric-t-tests-paired-or-unpaired-tests" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-t-tests-paired-or-unpaired-tests">Parametric t-tests: Paired or unpaired tests</h3>
+<p>Whether to use a paired or unpaired test is usually determined by the study design. When observations are genuinely paired, a paired test is preferable because it accounts for within-pair variation and often provides greater statistical power. Rather than comparing two group means directly, it tests whether the mean difference within pairs differs from zero.</p>
+</section>
+<section id="what-is-the-meaning-of-the-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-meaning-of-the-p-value">What is the Meaning of the p-value</h3>
+<p>The p-value is much talked about, but often misunderstood. It can be a bit tricky to wrap your head around, I have to remind myself on a regular basis what it means (probably because I spend very little time concerning myself with p-values when doing statistical modelling, but more on this another time). The p-value level of significance of 0.05 was originally defined by Ronald Fisher as a: <em>“limit in judging whether a deviation ought to be considered significant or not”</em> (the quote is from his original paper). What does <em>p</em> mean then? The <em>p</em>-value is the probability of obtaining the t-statistic, or a more extreme value, if the null hypothesis were to be true. Where the t-statistic is deviation from the mean for normal parametric t-test.</p>
+<p>We can also describe it with the help of Dr Andrew Gelman (a well-renowned Bayesian statistician of our time): <em>p</em> is the probability of <em>t</em>, upon repetition, being larger than the <em>t</em> that we got in our experiment if the null hypothesis were to be true.</p>
+<p>Statistical tests may produce either false-positive results (Type I errors) or false-negative results (Type II errors), as illustrated in Figure 1.11. The probability of a Type I error is determined by the significance level, α, for example, α=0.05 corresponds to a 5% risk of rejecting a true null hypothesis. The probability of a Type II error is denoted by β, while statistical power is 1−β. Thus, a power of 80% corresponds to a 20% risk of failing to reject the null hypothesis when the specified alternative hypothesis is true.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_11.png" title="Type I and II errors." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.11</strong> Alpha and power and the impact on Type I and Type II errors in statistical analysis.</figcaption>
+</figure>
+</div>
+<p>Multiple testing increases the family-wise error rate—the probability of making at least one Type I error across a set of tests. For m independent tests with α=0.05, this probability is <span class="math inline">\((1-0.5^{n,tests}\)</span>, for 10 tests this is approximately 40%. Corrections such as Bonferroni reduce this risk by using a threshold of α/n_tests, although this may also reduce power. Adjustment is particularly important when many unplanned comparisons are performed.</p>
+<p>Statistical significance should be considered alongside effect sizes and confidence intervals (Figure 1.12). Effect sizes describe the magnitude of a difference in a standardised form, while confidence intervals indicate its estimated precision. A 95% confidence-interval procedure will contain the true population parameter in 95% of repeated samples.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_12.png" title="Effect size and confidence intervals." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.12</strong> Examples on how to calculate and implement the following metrics in R - A: Effect size, B: Confidence intervals.</figcaption>
+</figure>
+</div>
+<p>Finally, statistical significance does not necessarily imply clinical significance. A small effect may be statistically significant in a large sample without being clinically meaningful. Clinical relevance must therefore be judged using domain knowledge and predefined thresholds. Hypothesis testing is only one part of the scientific process and should complement exploratory analysis, modelling and continued learning from data.</p>
+</section>
+</section>
+</section>
+<section id="l1-6-nonparametric-statistical-tests" class="level1">
+<h1>L1-6 Nonparametric Statistical Tests</h1>
+<p>Parametric tests assume a particular distribution of the analysed data (clarification according to the discussion above: parametric tests assume that the analysed data can Approximately be described according to a given distributional model, such as the normal distribution). Nonparametric tests are in general distribution-free tests, meaning that they do not assume any particular distribution for the underlying data that we are testing (they can be conditional based on other assumptions as we will see below).</p>
+<p>Classical nonparametric methods rely on either sign conversion of data, <em>i.e.</em>, if <em>X</em> is smaller than some value, then it’s counted as negative one (-1), if <em>X</em> is larger than some value, then it is assigned a positive value (+1); or, ranking of data (in order of size), or a combination of both approaches. But, the nonparametric methods are by no means limited to these techniques, modern techniques include permutation tests and bootstrapping. These are extremely flexible and useful techniques.</p>
+<section id="the-sign-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-sign-test">The Sign Test</h2>
+<p>The simplest nonparametric test is perhaps the sign test, a one-sample or paired test of medians. This test was developed by Dr John Arbuthnot in the early 1700s (Arbuthnot 1710) and therefore it predates the normal parametric statistical tests by almost exactly 200 years (Student 1908).</p>
+<p>Dr Arbuthnot was investigating the differences in birth rates between males and females in London based on christening records. Today there are more well-suited tests for the analysis. So instead, I am demonstrating the sign test on a naevus (mole) count data used to estimate the risk of melanoma (Based on Ribero <em>et al.</em> 2016). To determine the best method for mole count, the authors tested for a difference in mole count on the left vs right arm for a number of individuals. In statistical wording, this was a paired experiment, exploring the research question wether mole counts differ on the left and right arm, the tested hypotheses were therefore:</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: median mole count on the left arm equals the right arm.</li>
+<li><span class="math inline">\(H_1\)</span>: median mole count on the left arm differs from the right arm.</li>
+</ul>
+<p>We can calculate this sign based on the data, <em>i.e.</em> if the left arm has a higher mole count than the right arm we assign a value of +1, if the opposite is true then -1, and if equal then 0. We then sum up the number of successes, the negatives and the ones that are equal.</p>
+<p>Then we test the relative number of successes against the probability of 0.5, meaning the null hypothesis - that successes are as likely as failures. This is very straightforward to do in R using the <em>binom.test()</em> function, specifying the number of successes (+1) and trials (rows), so that: <em>binom.test(n_successes, n_trials, alternative = “two.sided”, conf.level = 0.95)</em>. For the mole count data we get a <em>p</em>-value of 0.61, meaning that we do not reject the null hypothesis.</p>
+</section>
+<section id="the-wilcowon-signed-rank-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-wilcowon-signed-rank-test">The Wilcowon Signed Rank Test</h2>
+<p>The Wilcoxon signed rank test is the preferred method over the much simpler sign test alone. The reason is that making use of additional information in the data differentiate between the groups. The calculated <em>t</em>-statistic is based on the sign and the rank. We calculate a <em>p</em>-<em>value by comparing </em>t* to its distribution under the null hypothesis. We also have an unpaired alternative here which is the Wilcoxon rank sum (also called the Mann–Whitney U test).</p>
+<p>We can use the Wilcoxon signed rank test for the same mole count data to test the median mole count on the right versus left arm. In R, we can do this using the function <em>wilcox.test(right_arm, left_arm, paired = TRUE, exact = TRUE)</em>. In this case we then get a <em>p</em>-value of 0.13, meaning that we do not reject the null hypothesis.</p>
+</section>
+<section id="side-note-back-to-arbuthnots-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="side-note-back-to-arbuthnots-experiment">Side Note: Back to Arbuthnot’s Experiment</h2>
+<p>Sorry to sidetrack you once again, but you may be curious about which statistical test would be suitable for John Arbuthnot’s research problem. If not, feel free to skip this section.</p>
+<p>I managed to find Arbuthnot’s original data from the early 1700s. He examined the annual numbers of male and female christenings, using christenings as a proxy for births. Using the sign test, Arbuthnot concluded that more boys than girls were born and that this pattern was consistent across the years.</p>
+<p>Today, we could refine the research question by asking whether the overall proportion of male christenings differed from 0.5. We can begin by plotting the annual proportions, which tend to remain above 0.5.</p>
+<p>We would then use a test of proportions to compare the observed proportion with the expected proportion of 0.5. Unlike the sign test, which considers only whether each year had more male or female christenings, the proportion test uses the actual numbers of christenings. The resulting <em>p</em>-value is sufficiently small to reject the null hypothesis. We therefore conclude that the observed proportion of male christenings differs significantly from 0.5 and is higher.</p>
+</section>
+<section id="the-permutation-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-permutation-test">The Permutation Test</h2>
+<p>Resampling methods allow us to perform highly flexible nonparametric analyses without specifying a particular probability distribution. Two important resampling methods are permutation testing and bootstrapping. Although they are related, they serve different purposes: permutation testing is primarily used for hypothesis testing, whereas bootstrapping is commonly used to estimate uncertainty and construct confidence intervals.</p>
+<p>To perform a permutation test, we first specify a null hypothesis and choose a test statistic. The useful thing about this approach is that the test statistic can be almost anything relevant to our research question, such as a difference in means, medians, proportions or 95th percentiles. This is actually quite cool!</p>
+<p>Assuming that the null hypothesis is true, we repeatedly rearrange—or permute—the group labels while leaving the observed outcomes unchanged. For each permutation, we recalculate the test statistic. This produces a permutation distribution showing the values of the test statistic that would be expected if there were no genuine difference between the groups.</p>
+<p>We can then calculate a p-value by determining the proportion of permuted test statistics that are at least as extreme as the statistic observed in the original data. Permutation tests rely on the observations being exchangeable under the null hypothesis. In a randomised experiment, this is supported by the random assignment of participants to groups. The correct permutation procedure must also reflect the study design <em>e.g.</em>, paired observations should be permuted within pairs rather than across all observations.</p>
+<p>Let us apply this approach to a simulated dataset from a paediatric psychiatric study. The outcome is the Children’s Global Assessment Scale, or CGAS, which provides an overall assessment of psychological and social functioning. We want to determine whether CGAS scores differ between a treatment group and a control group. Our null hypothesis is that the median CGAS score is the same in the two groups, while the alternative hypothesis is that the medians differ. We can define our test statistic as the absolute difference between the two group medians (Figure 1.13)</p>
+<p>We first calculate the observed median difference and then randomly permute the group labels many times—100,000 times in this example. After each permutation, we recalculate the absolute difference in medians.</p>
+<p>We compare the observed statistic with the resulting permutation distribution. This gives us a p-value of approximately 0.001, providing strong evidence against the null hypothesis of equal group medians. Note that we do not have to do this manually, again there are plenty of implemented functions and packages we can make use of, <em>e.g.</em>, <em>library(perm)</em>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_12.png" title="Permutation test." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.13</strong> Implementing a permutation test in R.</figcaption>
+</figure>
+</div>
+</section>
+<section id="bootstrapping" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping">Bootstrapping</h2>
+<p>The permutation test tells us whether the observed difference is unlikely under the null hypothesis, but it does not directly quantify the precision of the estimated difference. For that purpose, we can use bootstrapping.</p>
+<p>In bootstrapping, observations are repeatedly sampled with replacement, usually within each group. We calculate the difference in medians for every bootstrap sample and use the resulting distribution to construct a confidence interval. Using 10,000 bootstrap samples, we estimate a median difference of 10 CGAS points, with a 95% confidence interval from 6 to 13 points. Because this interval does not include zero, it is also consistent with a difference between the groups.</p>
+</section>
+<section id="the-wilcoxon-rank-sum-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-wilcoxon-rank-sum-test">The Wilcoxon Rank-Sum Test</h2>
+<p>We could apply a conventional nonparametric test to the same problem, such as the Wilcoxon rank-sum test, also known as the Mann–Whitney (U) test. This test is suitable for comparing two unpaired groups when the outcome is at least ordinal.</p>
+<p>The Mann–Whitney test examines whether observations from one group tend to be higher or lower than observations from the other. It is not generally a test of medians; it can be interpreted as a test of location or median differences only when the two distributions have similar shapes and differ mainly in their location.</p>
+<p>Running the test in R using <em>wilcox.test()</em> gives a p-value of approximately 0.0004. We therefore reject the null hypothesis and conclude that the distributions of CGAS scores differ between the treatment and control groups, with scores tending to be higher in one group.</p>
+<p>This concludes our introduction to nonparametric tests. There are of course many other nonparametric statistical testing methods out there, And for most parametric tests there are usually nonparametric alternatives, AND for of course the parametric methods are not just limited to the ones based on the normality assumption. There is lots to consider in other words, but it does not have to be that complicated. The next section will discuss method selection in statistical testing.</p>
+</section>
+</section>
+<section id="l1-7-selection-of-statistical-tests" class="level1">
+<h1>L1-7 Selection of Statistical Tests</h1>
+<p>So far, we have considered both parametric tests based on the normal distribution and nonparametric tests. In this section, I will share some thoughts on how to choose between them, focusing on the comparison between normal parametric t-tests and their nonparametric counterparts.</p>
+<p>Three widely used statements on selection of statistical tests follow below. These principles provide a useful starting point, but they are oversimplifications. Let us examine them more carefully:</p>
+<ol type="1">
+<li><p><strong>If data is normally distributed, use a normal parametric t-test</strong> rarely is real data normally distributed. However, t-tests are very robust to deviations from normality. Approximately normal is good enough. An approximately symmetric distribution without extreme outliers is often sufficient, particularly when the sample sizes are reasonably large and similar between groups. Remember that if our aim is to carry out a confirmatory data analysis, we should not let the data inform the analysis.</p></li>
+<li><p><strong>Nonparametric tests are always valid but not always efficient</strong> nonparametric test can often be applied to normally distributed data, but it may be less powerful than a parametric test when the assumptions of the parametric test are satisfied. Conversely, a nonparametric test may be more powerful when the data are strongly skewed or contain influential outliers. However, nonparametric tests are not automatically valid in every situation: they still make assumptions about matters such as independence, exchangeability and, depending on the intended interpretation, the shapes of the group distributions. Nevertheless, the choice should not be based on normality alone. Parametric and nonparametric tests may test different null hypotheses and describe different features of the data.</p></li>
+<li><p><strong>According to the central limit theorem parametric t-tests are generally robust for n &gt; 30 samples, regardless of the data type</strong> This is also an oversimplification. The central limit theorem states that, under suitable conditions, the sampling distribution of the mean approaches a normal distribution as the sample size increases. However, there is no universal sample size threshold at which this approximation suddenly becomes adequate. The required sample size depends on the shape of the underlying distribution. If the data are approximately symmetric, a relatively small sample may be sufficient. If data are strongly skewed, heavy-tailed or affected by extreme outliers, a much larger sample may be required. We should therefore avoid treating this n=30 as a rigid rule.</p></li>
+</ol>
+<p>What, then, is a reasonable approach to selecting a statistical test? Let’s define a set of recommendations here:</p>
+<ol type="1">
+<li><p><strong>Consider the data type</strong> For example, we would consider normal parametric t-tests for continuous data; The Wilcoxon Mann Whitney test is suitable for ordinal or continuous data, etc.</p></li>
+<li><p><strong>Consider the test statistic</strong> Consider which characteristic of the data is relevant to the research question. Are we interested in a difference in arithmetic means, geometric means, medians, distributions or something else? The test statistic and null hypothesis should correspond to the scientific question we actually want to answer. It may also be reasonable to transform the data. For example, if positive continuous data are approximately lognormally distributed, we could log-transform the observations and apply a t-test on the logarithmic scale. The assumptions must also match the study design, <em>i.e.</em>, for an independent-samples t-test, normality concerns the outcome distribution within each population or group; for a paired t-test, the normality assumption applies to the within-pair differences.</p></li>
+<li><p><strong>Consider prior data</strong> We can consider which methods have been used previously, what is known about the outcome distribution and what is standard practice within the discipline. Exploratory data analysis can help us understand the data, but in confirmatory research the main analysis should be prespecified. In uncertain situations, simulation can also help us investigate how candidate methods are likely to perform (in terms of power and robustness).</p></li>
+</ol>
+<section id="simulating-the-relative-power-1---beta-of-two-statistical-tests" class="level2">
+<h2 class="anchored" data-anchor-id="simulating-the-relative-power-1---beta-of-two-statistical-tests">Simulating the Relative Power (1 - Beta) of Two Statistical Tests</h2>
+<p>When we describe a statistical test as robust, we mean that it continues to perform reasonably well despite some violation of its assumptions. One important aspect of robustness is whether the test maintains the intended type I error rate, the probability of obtaining a statistically significant result when the null hypothesis cannot be rejected. We may also consider its power, which is the probability of detecting a specified effect when that effect is genuinely present.</p>
+<p>Simulations provide a method for examining test properties. We can explore the relative power of two tests by:</p>
+<ol type="1">
+<li><strong>Specifying a model and effect</strong> define a distributional properties of the data and an effect size.</li>
+<li><strong>Generate observations</strong> this can be done through resampling.</li>
+<li><strong>Test the hypothesis</strong> test two models.</li>
+<li><strong>Repeat and calculate power</strong> repeat the simulation experiment 10,000 times and calculate the power of the two tests (the proportion of significant outcomes per test is the power, (<span class="math inline">\(1 - \beta\)</span>)).</li>
+</ol>
+<p>Let’s go through an example. We generate two groups of 15 observations from a strongly skewed lognormal distribution and introduce a specified difference between the groups. We then compare the performance of a parametric unpaired t-test with that of the Wilcoxon–Mann–Whitney test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>x_contr <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>sd_contr <span class="ot">&lt;-</span> <span class="fl">0.49</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>n_control <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>x_exp <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>sd_exp <span class="ot">&lt;-</span> <span class="fl">0.51</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>n_experiment <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>pval_wmw <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>y_contr <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_control, x_contr, sd_contr)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>y_exp <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_experiment, x_exp, sd_exp)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(y_contr, y_exp)<span class="sc">$</span>p.value</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Power of Wilcoxon Mann Whitney:"</span>, <span class="fu">mean</span>(pval_wmw <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Power of Wilcoxon Mann Whitney: 0.8042 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pval_ttst <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>y_contr <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_control, x_contr, sd_contr)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>y_exp <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n_experiment, x_exp, sd_exp)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(y_contr,y_exp, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="at">var.equal =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>p.value</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Power of t-test:"</span>, <span class="fu">mean</span>(pval_ttst <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Power of t-test: 0.7918 </code></pre>
+</div>
+</div>
+<p>In this example, the Wilcoxon Mann Whitney test has a slight advantage in terms of power, although the performance of the two tests is fairly similar despite the considerable skewness of the data. This illustrates that the t-test can remain useful even when its normality assumption is not perfectly satisfied. However, these tests should not be viewed as interchangeable. The t-test evaluates a difference in means. The Wilcoxon–Mann–Whitney test more generally evaluates whether observations from one group tend to be higher or lower than observations from the other. It can be interpreted as a test of medians only under additional assumptions, when the two groups have similarly shaped distributions that differs in terms of central tendency.</p>
+</section>
+<section id="simulation-experiments-of-the-significance-level-alpha" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-experiments-of-the-significance-level-alpha">Simulation Experiments of the Significance Level (Alpha)</h2>
+<p>We can also use simulations to investigate whether the normal parametric t-test maintains its nominal significance level under non-normality. This is perhaps a bit more theoretical and not something we would typically explore, but I still think it is useful to see what the impact is. Under ideal conditions, the test statistic follows the theoretical t-distribution when the null hypothesis is true. If the data are strongly non-normal, however, the actual distribution of the test statistic may differ from the theoretical distribution. The calculated <em>p</em>-values may then be too small or too large, causing the type I error rate to deviate from the intended value.</p>
+<p>For example, suppose that we repeatedly generate samples from the same exponential distribution, so that the null hypothesis is true. We first generate two groups of 10 observations and then repeat the simulation with two groups of 30 observations. For each simulated dataset, we calculate the t-statistic and compare the resulting empirical distribution with the corresponding theoretical t-distribution.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>n_repeat <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>gamma_y <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n_samples <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">30</span>)) {</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the t-ratio for each simulated sample</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  t_y <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_repeat, {</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    y_dat <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n_samples, <span class="at">rate =</span> gamma_y)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    x_y  <span class="ot">&lt;-</span> <span class="fu">mean</span>(y_dat)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    sd_y <span class="ot">&lt;-</span> <span class="fu">sd</span>(y_dat)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    (x_y <span class="sc">-</span> gamma_y) <span class="sc">/</span> (sd_y <span class="sc">/</span> <span class="fu">sqrt</span>(n_samples))</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the corresponding theoretical t-distribution</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  df_y <span class="ot">&lt;-</span> n_samples <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  x_tdist <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  tdist_pdf <span class="ot">&lt;-</span> <span class="fu">dt</span>(x_tdist, <span class="at">df =</span> df_y)</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the simulated t-ratios</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>    t_y,</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="dv">50</span>,</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="fu">paste0</span>(<span class="st">"t-ratio (n = "</span>, n_samples, <span class="st">")"</span>),</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Density"</span>,</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>),</span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">border =</span> <span class="st">"white"</span></span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Overlay the theoretical t-distribution</span></span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(</span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>    x_tdist,</span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>    tdist_pdf,</span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With 10 observations per group, the empirical distribution of the t-statistics may show noticeable skewness relative to the theoretical distribution. With 30 observations per group, much of this discrepancy may have disappeared. In this particular example, the t-test therefore becomes increasingly robust as the sample size grows.</p>
+</section>
+<section id="conclusions-1" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions-1">Conclusions</h2>
+<p>The broader lesson is that no single rule can determine which statistical test will work best under a given circumstance. We should consider the research question, the data type, the effect we want to be able to detect, the study design, what distributional model that approximates the data, the sample size and the assumptions and interpretation of each candidate statistical test. Parametric t-tests are often quite robust (if not very robust!) when sample sizes are adequate and the data are not extremely skewed or dominated by outliers. Nonparametric or alternative modelling approaches may be preferable in other circumstances.</p>
+</section>
+</section>
+<section id="l1-8-study-design-i" class="level1">
+<h1>L1-8 Study Design (I)</h1>
+<p>This section concludes Part One of the course notes. Here, I will translate some of what we have learned into practical advice on study design. We will return to this topic again later on the course.</p>
+<p>The intellectual roots of systematic experimentation extend back more than two thousand years, including the work of Aristotle and other ancient scholars. Around the year 1000, Ibn al-Haytham combined systematic observation, controlled experimentation and mathematical reasoning in his influential studies of optics and the camera obscura, building on ideas found in earlier scientific traditions. Experimental science continued to develop through the work of Francis Bacon and many others, while modern statistical experimental design was largely established by Ronald A. Fisher in the twentieth century. Particularly relevant to clinical and epidemiological research were the influential studies of smoking and lung cancer conducted by Richard Doll, Austin Bradford Hill and others during the 1950s.</p>
+<p>For now, we will focus on a few fundamental study design aspects. A useful way to frame these is through George Box’s view of experimentation: if we want to understand what happens when we intervene in a system, we must actively study the consequences of that intervention.</p>
+<p>This leads us to two central questions. First, “what causes what?” Identifying an association is not the same as demonstrating causation. Second, “how do we account for variability?” Experimental outcomes vary for many reasons, and good study design aims to control, balance or measure the factors that may influence the system under investigation.</p>
+<p>Models can support study design in several ways, a topic we also consider in the simulation methods course. Strong theoretical and clinical frameworks can help us design studies that are more likely to identify causal effects while reducing the influence of confounding factors.</p>
+<p>One simple framework for developing a clinical research question is PICO:</p>
+<ul>
+<li><strong>Population:</strong> Who is the study intended to represent?</li>
+<li><strong>Intervention:</strong> What treatment or exposure is being investigated?</li>
+<li><strong>Comparator:</strong> What is the intervention being compared with?</li>
+<li><strong>Outcome:</strong> What will be measured, and is that measure valid and relevant?</li>
+</ul>
+<p>Although simple, PICO provides a useful structure during the early development of a study.</p>
+<p>Figure 1.14 provides a summary of some of the study design learnings so far. One aspect is the type of data collected and the statistical test that will be used. These choices affect both the interpretation of the results and the statistical power of the study.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L0101_Figure_09.png" title="Study design." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 1.14</strong> Study design aspects.</figcaption>
+</figure>
+</div>
+<p>When appropriate, a continuous quantitative outcome generally retains more information than converting the same outcome into categories. For example, measuring heart rate numerically will usually provide more information than classifying participants only as having or not having tachycardia. However, the outcome should ultimately be selected for its clinical relevance and measurement validity, not merely because continuous outcomes may offer greater statistical power.</p>
+<p>We must also reduce the risk of confounders. In randomised studies, random allocation helps balance both known and unknown confounding factors between treatment groups. Stratification, restriction or matching may also be used to improve balance for important factors such as age, sex and comorbidities. In observational studies, careful measurement and statistical adjustment for potential confounders become particularly important.</p>
+<p>Hypothesis testing also provides a useful framework for study design. A clearly stated hypothesis helps define the groups being compared, the outcome being measured, the effect of interest and the statistical analysis that will be performed (similar to the PICO above).</p>
+<p>Prior evidence can then inform our assumptions. We might use previous studies or pilot data to approximate the distribution and variability of the response. We must also decide what magnitude of change would be scientifically or clinically meaningful: how large a difference would we regret failing to detect?</p>
+<p>Prior to a study, plenty of work can be done to ensure that we maximise the learning in the study. This is both cost effective and ethical, clinical studies are often very expensive and we do not want expose individuals to experimental studies unnecessarily. Work can be done to approximate the distribution of the the response variable, define a meaningful change in the response (based on domain knowledge), propose statistical analysis, investigate the ability of to detect a meaningful change given assumed variability, and investigate the impact of study power and sample size.</p>
+<p>Simulations can be used to evaluate whether the proposed design and analysis are likely to detect the effect of interest under approximate conditions. Let’s take a look at a simple example involving clozapine and its potential to increase heart rate. Suppose historical data suggest that resting heart rate in the relevant control population is approximately normally distributed, with a mean of 73 beats per minute and a standard deviation of 9 beats per minute. We can use this information as an approximate model for the control population. We then define the increase in mean heart rate that would be clinically meaningful and that we want the study to be capable of detecting.</p>
+<p>If we assume that the two groups are approximately normally distributed, we can express the difference between their means as a standardised effect size using Cohen’s d:</p>
+<p>(<span class="math inline">\(d = (\mu_{Treatment} - \mu_{Control}) / \sigma_{Pooled}\)</span>)</p>
+<p>where (<span class="math inline">\(\mu_{Treatment} - \mu_{Control}\)</span>) is the difference in means that we want to detect and (<span class="math inline">\(\sigma_{Pooled}\)</span>) is the assumed common standard deviation.</p>
+<p>We can then conduct a power calculation using the <em>pwr.t.test()</em> function from the <em>pwr</em> package in R. We specify the effect size, desired power, significance level and type of t-test (alternatively, we can calculate power across a range of sample sizes and plot the resulting power curve):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34567</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr) </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Clozapine-induced tachycardia</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># According to Persson et al. 2024, heart rate as bpm is approximately normal</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The mean (sd) heart rate is 73 (9) bpm. Under that assumption we can</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># sample from the theorical distribution.</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal sampling</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>x_contr <span class="ot">&lt;-</span> <span class="dv">73</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>sd_contr <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>nc_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>bpm_contr <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nc_samples, x_contr, sd_contr)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Data is continuous and approximately normal, suggesting suitability of a t-test.</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tachycardia means a bpm of 100, but not the whole day.</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity, let's say we want to detect a difference 10 bpm.</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>x_treat <span class="ot">&lt;-</span> <span class="dv">83</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>sd_treat <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Cohen's d effect size</span></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>sd_pooled <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((sd_treat<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>sd_contr<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>es_d <span class="ot">&lt;-</span> (x_treat <span class="sc">-</span> x_contr)<span class="sc">/</span>sd_pooled</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate power over sample size</span></span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>p.t.two <span class="ot">&lt;-</span> <span class="fu">pwr.t.test</span>(<span class="at">d =</span> es_d, <span class="at">power =</span> <span class="fl">0.80</span>, <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p.t.two, <span class="at">xlab =</span> <span class="st">"sample size per group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the pwr package.
+  Please report the issue to the authors.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="part_01_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The above calculation indicates that 14 participants per group would provide 80% power to detect the prespecified difference at the chosen significance level. Under the assumptions used in the calculation, this would be our approximate minimum sample size.</p>
+<p>This conclusion depends entirely on the assumptions on which the analysis is based. If the true variability is greater, the effect is smaller, participants drop out or the assumptions of the proposed analysis are not satisfied, the actual power may be lower. Sample size calculations should therefore be based on realistic and clearly justified assumptions, and they may need to include an allowance for missing data or dropout.</p>
+<p>This is a simple but widely used approach to estimating the sample size required for a clinical or experimental study. More advanced designs may account for repeated measurements, longitudinal outcomes, clustering, multiple endpoints and other complexities.</p>
+<p>Later in the course, we will examine these issues in greater depth, including how repeated measurements and longitudinal studies can strengthen our understanding of change over time. We will also return to causal reasoning and consider Bradford Hill’s viewpoints, which were developed in the context of evaluating evidence about associations such as that between smoking and lung cancer.</p>
+<p>This concludes Part One of the course notes. I hope you have enjoyed it so far! Your feedback would be highly appreciated.</p>
+</section>
+<section id="recommended-reading-and-key-literature" class="level1">
+<h1>Recommended Reading and Key Literature</h1>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Recommended Reading
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Lavine, M. (2013). Introduction to Statistical Thought. <a href="https://www.example.com">Link text</a></li>
+</ul>
+<section id="key-citations" class="level2">
+<h2 class="anchored" data-anchor-id="key-citations">Key Citations</h2>
+<ul>
+<li>Box, G. E. P., Hunter, J. S., &amp; Hunter, W. G. (2005). Statistics for Experimenters: Design, Innovation, and Discovery (2nd ed.). Wiley.</li>
+<li>Riffenburgh, R. H., &amp; Gillen, D. L. (2020). Statistics in Medicine (4th ed.). Academic Press.</li>
+<li>Tukey, J. W. (1980). We need both exploratory and confirmatory. The American Statistician, 34, 23–25.</li>
+<li>Fife, D. A., &amp; Rodgers, J. L. (2022). Understanding the exploratory/confirmatory data analysis continuum: Moving beyond the “replication crisis.” American Psychologist, 77(3), 453–466.</li>
+<li>Student. (1908). The probable error of a mean. Biometrika, 6(1), 1–25.</li>
+<li>Arbuthnot, J. (1710). An argument for Divine Providence, taken from the constant regularity observed in the births of both sexes. Philosophical Transactions of the Royal Society of London, 27, 186–190.</li>
+</ul>
+</section>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

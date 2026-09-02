@@ -19,7 +19,9 @@ webr:
 
 ## Key Takeaways
 
-- Covariance, correlation and regression describe relationships between variables, but answer different questions. Correlation is a standardised measure of association, whereas regression models a dependent variable as a function of one or more predictors.
+- This second part of the course notebook will deal with relationships, linear regression models and multiple comparison. And, how regression models relate to *t*-tests and ANOVA. 
+
+- Covariance, correlation and regression describe relationships between variables, but answer different questions. Covariance is a scale-dependent measure of how two variables vary together. Correlation is a standardised measure of association. And, regression models a dependent variable as a function of one or more predictors.
 
 - In linear regression, the coefficients describe the expected change in the dependent variable associated with a change in a predictor. Standard errors describe uncertainty in those estimates, while residual errors (or residuals) describe the differences between observed and predicted values.
 
@@ -34,7 +36,7 @@ webr:
 :::
 
 # L2-1 On the Relationships Between Variables
-In this section, I will briefly introduce three ways of describing relationships between variables: covariance, correlation and regression. These concepts are related, but they are not interchangeable. Covariance and correlation describe how two variables vary together, whereas regression specifies an outcome variable and models how its expected value changes with one or more predictors.
+Here I will briefly introduce three ways of describing relationships between variables: covariance, correlation and regression. These concepts are related, but they are not interchangeable. Covariance and correlation describe how two variables vary together, whereas regression specifies an outcome variable and models how its expected value changes with one or more predictors.
 
 ## Covariance
 Covariance is a scale-dependent measure of how two variables, such as $X$ and $Y$, vary together. For a sample of $n$ paired observations, the sample covariance is:
@@ -97,7 +99,16 @@ library(corrplot)
 corrplot(nhanes_cor, method = "color", type = "upper")
 ```
 
-Pair plots are another useful first step. They show the variables plotted against one another and can reveal linear or nonlinear patterns, clusters and unusual observations.
+Pair plots are another useful first step. They show the variables plotted against one another. This is a really useful way of investigating linear or nonlinear relationships, clusters and unusual observations. We can easily to this in R using the function `pairs()`:
+```{r}
+#| message: false
+#| warning: false
+
+pairs(nhanes_variables)
+
+```
+
+Here we see several relationships that make a lot of sense, *e.g.* the impact of age on height and the relationship between height and weight. 
 
 ## From Association to Regression
 Linear regression models describe the relationship between a dependent variable, also called an outcome or response $Y$, and one or more independent variables or predictors $X$:
@@ -117,46 +128,60 @@ The intercept $\beta_0$ describes the expected value of $Y$ when $X=0$. The slop
 We usually assign the dependent variable to the effect or outcome that we want to study. The independent variables are then the exposures, treatments, characteristics or predictors that may explain variation in that outcome. Regression can therefore be used to estimate relationships in a sample and, subject to the study design and assumptions, make inferences about a population.
 
 # L2-2 Linear Regression
-Regression has a long history. Francis Galton used the term when analysing the heights of parents and their adult children in the 1886 publication, Regression towards Mediocrity in Hereditary Stature. Galton observed that taller parents tended to have taller children, but that the children's heights also tended to be closer to the population mean. Galton called this *regression towards mediocrity*; today, we refer to this as regression towards the mean.
+Regression has a long history. The perhaps earliest example, was Francis Galton's analysis of the heights of parents and their adult children in the 1886 publication, Regression towards Mediocrity in Hereditary Stature. Galton observed that taller parents tended to have taller children, but that the children's heights also tended to be closer to the population mean. Galton called this *regression towards mediocrity*. Today we refer to this phenomenon as regression towards the mean.
 
-Galton's research was also connected to the development of eugenics, an important and deeply problematic part of the early developments in statistics. His work influenced Karl Pearson and Ronald Fisher and contributed to what later became quantitative genetics. We can recognise the statistical importance of these methods while also acknowledging the context in which parts of this work were developed and applied.
+Francis Galton was related to Charles Darwin. Galton's research led to the development of eugenics, a problematic connection to the early developments in statistics. Galton's work influenced Karl Pearson and Ronald Fisher and contributed to what later became quantitative genetics. We can recognise the statistical importance of these methods while also acknowledging the context in which parts of this work were developed and applied.
 
 ## A Simple Regression Model
 We can use Galton's height data to ask the following research question:
 
 *To what degree does parents' average height explain variability in the height of their adult children?*
 
-The corresponding simple regression model is:
+The corresponding simple regression model is therefore:
 
 $$
 \widehat{\text{child height}}=\beta_0+\beta_1\times\text{parent height}.
 $$
 
-Here, $\widehat{\text{child height}}$ is the predicted or expected child height given the parents' average height. The intercept $\beta_0$ is the predicted child height when parent height is zero. That value is not scientifically meaningful because a parent height of zero is impossible. We can make the intercept more useful by centring parent height around a relevant value, such as its sample mean. The intercept would then represent the expected child height for parents of average height.
+Here, $\widehat{\text{child height}}$ is the predicted or expected child height given the parents' average height. The intercept $\beta_0$ is the predicted height of the adult child when parent height is zero. This interpetation is of course not very meaningful because a parent height of zero is impossible. Instead, we can make the intercept more useful by centering parent height around a relevant reference value, such as its sample mean. The intercept would then represent the expected child height for parents of average height.
 
 The slope $\beta_1$ is the expected change in child height associated with a one-unit increase in parent height. In the example presented in the slides, the estimated slope is approximately 0.52. This means that for every additional inch in parents' average height, the child's expected adult height increases by approximately 0.52 inches.
 
-In R, we can fit the model using the function `lm()`:
+In R, we can fit the model using the linear model function, `lm()`:
 
 ```{r}
-#| eval: false
-# The object height_df contains child_height and parent_height
+# Importing the data
+height_galt <- read.csv("Height_dat_Galton1886.csv")
+
+# Formatting the data
+library(dplyr)
+
+height_tbl <- height_galt %>% group_by(Family) %>% 
+  summarise(child_height=mean(Height),
+            parent_height=mean((Father+Mother)/2),
+            .groups = 'drop')
+
+height_df <- height_tbl %>% as.data.frame()
+
+# Defining an fitting the linear regression model:
 model_fit <- lm(child_height ~ parent_height, data = height_df)
+# Model summary output:
 summary(model_fit)
+
 ```
 
-The formula places the dependent variable on the left of `~` and the predictor on the right. The default summary output contains several types of information:
+For a more in-depth analysis, see the example code file for lecture series 2. However, we can take a look at the model summary output to see what we can learn from this:
+- **Residuals** here we can inspect the symmetry and of the residual errors and whether these are centred around zero. 
+- **Coefficient estimate** the estimated intercept or slope.
+- **Standard error** the uncertainty or sampling variability associated with a coefficient estimate.
+- ***t*-value** the coefficient estimate divided by its standard error.
+- **P-value** under the null hypothesis and model assumptions, the probability of obtaining a *t*-statistic at least as extreme as the observed value.
+- **Residual standard error** an estimate of the typical unexplained deviation of observations from the fitted line.
+- **Degrees of freedom** for this simple model, the number of observations minus the two estimated coefficients.
+- **$R^2$** the proportion of observed variation in the outcome explained by the fitted model.
+- **F-statistic** a comparison of the fitted model with a model containing only an intercept.
 
-- **Coefficient estimate:** the estimated intercept or slope.
-- **Standard error:** the uncertainty or sampling variability associated with a coefficient estimate.
-- ***t*-value:** the coefficient estimate divided by its standard error.
-- **P-value:** under the null hypothesis and model assumptions, the probability of obtaining a *t*-statistic at least as extreme as the observed value.
-- **Residual standard error:** an estimate of the typical unexplained deviation of observations from the fitted line.
-- **Degrees of freedom:** for this simple model, the number of observations minus the two estimated coefficients.
-- **$R^2$:** the proportion of observed variation in the outcome explained by the fitted model.
-- **F-statistic:** a comparison of the fitted model with a model containing only an intercept.
-
-For the Galton example in the slides, the fitted model is approximately:
+For the Galton data, the fitted model is approximately:
 
 $$
 \widehat{\text{child height}}=32.04+0.52\times\text{parent height}.
@@ -173,10 +198,9 @@ $$
 Residuals are central to regression diagnostics because they describe the part of the data that the model has not explained.
 
 ## Assumptions of Linear Regression
-Gelman and Hill order the assumptions and considerations for linear regression approximately as follows:
-
-1. **Validity:** the data and model map to the research question.
-2. **Additivity and linearity:** the deterministic relationship between the predictors and outcome is appropriately represented by an additive linear model.
+Much is written on the assumptions of linear regression and how these should be investigated to determine if they are satisfied. I think Gelman and Hill (@gelman&hill2007) provides an excellent summary where they order the assumptions and considerations for linear regression approximately as follows:
+1. **Validity:** the analysed data maps to the research question.
+2. **Additivity and linearity:** the relationship between the predictors and outcome is additive and linear.
 3. **Independence of errors:** the residual errors are independent, conditional on the predictors included in the model.
 4. **Homoscedasticity:** the residual errors have approximately constant variance across the fitted values.
 5. **Normality:** the residual errors are approximately normally distributed.
@@ -187,23 +211,22 @@ Validity concerns what the data actually represent. In the height example, we sh
 
 Linearity can first be assessed by plotting the outcome against the predictor. If the relationship is clearly nonlinear, possible solutions include transforming a variable, introducing polynomial or spline terms, or using another model that represents the scientific relationship more appropriately. Adding terms merely to improve a diagnostic plot, without considering the research question, is not a sufficient modelling strategy.
 
-The remaining assumptions mainly concern the residual error structure. The standard diagnostic plots produced by `plot(model_fit)` are:
+The remaining assumptions mainly concern the residual error structure. We can investigate our assumptions using the standard diagnostic plots produced by `plot(model_fit)` in R:
 
 ```{r}
-#| eval: false
 par(mfrow = c(2, 2))
 plot(model_fit)
 par(mfrow = c(1, 1))
 ```
 
 - **Residuals versus fitted values:** used to look for nonlinearity and non-constant variance. Ideally, the residuals form an approximately random band around zero.
-- **Normal Q-Q plot:** compares the standardised residuals with the theoretical quantiles of a normal distribution. Departures in the tails may indicate skewness, heavy tails or unusual observations.
+- **Normal Q-Q Residual plot:** compares the standardised residuals with the theoretical quantiles of a normal distribution. Departures in the tails may indicate skewness, heavy tailedness or unusual observations.
 - **Scale-location plot:** displays the spread of the root standardised residuals across fitted values and helps assess homoscedasticity.
 - **Residuals versus leverage:** helps identify observations that may have a large influence on the fitted coefficients. Cook's distance combines residual size and leverage as an indicator of influence.
 
-These plots are diagnostic tools, not pass-or-fail tests. An observation with high leverage has an unusual predictor value. It becomes particularly influential when it also has a substantial residual. Influential observations should be checked for data errors and scientific relevance, but they should not be removed automatically.
+These plots are diagnostic tools, not pass-or-fail tests. An observation with high leverage has an unusual predictor value. It becomes particularly influential when it also has a substantial residual. Influential observations should be investigated further, they should not be removed automatically.
 
-## Confidence and Prediction Intervals
+## Confidence Intervals and Prediction Intervals
 Regression can be used to estimate the mean outcome at a predictor value or to predict a future observation. These require different intervals.
 
 A confidence interval describes uncertainty in the estimated conditional mean. Under repeated sampling, 95% of intervals constructed in the same way would contain the true conditional population mean. The interval is usually narrowest near predictor values where the data provide the most information.
@@ -211,25 +234,55 @@ A confidence interval describes uncertainty in the estimated conditional mean. U
 A prediction interval describes uncertainty for a future individual observation. It includes both uncertainty in the estimated mean and the residual variation between observations. It is therefore wider than the corresponding confidence interval.
 
 ```{r}
-#| eval: false
+
 # Confidence interval for the conditional mean
-predict(model_fit, newdata = new_data,
+modelprediction_ci <- predict(model_fit, newdata = height_df,
         interval = "confidence", level = 0.95)
 
 # Prediction interval for a future observation
-predict(model_fit, newdata = new_data,
+modelprediction_pi <- predict(model_fit, newdata = height_df,
         interval = "prediction", level = 0.95)
+
+plot_dat <- data.frame(modelprediction_ci, modelprediction_pi, height_df)
+
+library(ggplot2)
+
+# plot confidence intervals
+ggplot(plot_dat, aes(x=parent_height, y=child_height)) + 
+    geom_point(colour = "blue") +
+  geom_line(aes(y = fit), linewidth = 0.5) +
+  geom_line(aes(y = lwr), linewidth = 0.5, linetype = 2) +
+  geom_line(aes(y = upr), linewidth = 0.5, linetype = 2) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr, fill = "red", color = NULL), alpha = 0.15) +
+  theme(legend.position = "none") +
+  ggtitle("95% Confidence Interval") +
+  xlab("Parent height [inches]") +
+  ylab("Child height [inches]")
+
+# plot prediction intervals
+ggplot(plot_dat, aes(x=parent_height, y=child_height)) + 
+    geom_point(colour = "blue") +
+  geom_line(aes(y = fit.1), linewidth = 0.5) +
+  geom_line(aes(y = lwr.1), linewidth = 0.5, linetype = 2) +
+  geom_line(aes(y = upr.1), linewidth = 0.5, linetype = 2) +
+  geom_ribbon(aes(ymin = lwr.1, ymax = upr.1, fill = "red", color = NULL), alpha = 0.15) +
+  theme(legend.position = "none") +
+  ggtitle("95% Prediction Interval") +
+  xlab("Parent height [inches]") +
+  ylab("Child height [inches]")
+
+
 ```
 
 ## Interpreting Coefficients and Validating Predictions
-A regression coefficient can be given a predictive interpretation: it describes the average difference in the outcome associated with a specified difference in the predictor, conditional on the other terms in the model. A causal or counterfactual interpretation is stronger. It describes the expected change in an outcome if the predictor were actively changed and requires additional assumptions about study design, confounding and the data-generating process. A large coefficient, or a small P-value, does not by itself establish causality.
+A regression coefficient can be given a predictive interpretation: it describes the average difference in the outcome associated with a specified difference in the predictor, conditional on the other terms in the model. A causal or counterfactual interpretation is based on more assumptions, therefore a stronger claim that require more evidence (study design, confounders, etc.). It describes the expected change in an outcome if the predictor were actively changed. A large coefficient, or a small *p*-value, does not by itself establish causality.
 
 Likewise, a linear coefficient describes only the relationship represented in the fitted model. It does not establish that the true relationship is linear, and it may conceal a curvilinear association. Always plot the data before estimating and interpreting the model.
 
 For prediction, model performance should be assessed using data that were not used to fit the model. We can withhold part of the original dataset for validation, although this reduces the data available for model development. A more rigorous test is external validation using a new dataset from the target population or setting.
 
-# L2-4 The Method of Least Squares
-The method of least squares is associated with the work of Adrien-Marie Legendre and Carl Friedrich Gauss. The underlying idea is straightforward: choose the model parameters that minimise the sum of the squared vertical distances between the observations and the fitted line.
+# L2-3 The Method of Least Squares
+The method of least squares leads to the selection of the model parameters that minimise the sum of the squared vertical distances between the observations and the fitted line.
 
 For a general function $p(x)$, the least-squares objective is:
 
@@ -257,7 +310,7 @@ $$
 \widehat{\beta}_0=\bar{y}-\widehat{\beta}_1\bar{x}.
 $$
 
-We can implement these calculations directly in *R*:
+We can implement these calculations directly in R:
 
 ```{r}
 lm_beta1 <- function(x, y) {
@@ -272,7 +325,7 @@ lm_beta0 <- function(x, y) {
 }
 ```
 
-Normally, of course, we would use the well-tested `lm()` function. Defining the calculation manually is useful for understanding what the software is estimating.
+Normally, of course, we would use the well-tested `lm()` function in R. Defining the calculation manually is useful for understanding what the software is estimating "underneath the hood".
 
 ## Residual Error and Goodness of Fit
 
@@ -288,7 +341,7 @@ $$
 s_e=\sqrt{\frac{\sum_{i=1}^{n}(y_i-\widehat{y}_i)^2}{df}},
 $$
 
-where the residual degrees of freedom equal the number of observations minus the number of independently estimated model parameters.
+Where the residual degrees of freedom equal the number of observations minus the number of independently estimated model parameters.
 
 The coefficient of determination can be written as:
 
@@ -297,7 +350,7 @@ R^2=1-\frac{\sum_{i=1}^{n}(y_i-\widehat{y}_i)^2}
 {\sum_{i=1}^{n}(y_i-\bar{y})^2}.
 $$
 
-Thus, $R^2$ compares the unexplained sum of squares from the fitted model with the total variation around the sample mean.
+Therefore, $R^2$ compares the unexplained sum of squares from the fitted model with the total variation around the sample mean.
 
 ## Standard Errors, *t*-Ratios and the Model *F*-Test
 
@@ -339,10 +392,9 @@ $$
 
 This matrix expression is the general version of the simple slope and intercept calculations above.
 
-# L2-5 Data Formatting
+# L2-4 Data Formatting
 Before fitting a statistical model, we need to organise the data in a form that the software and the analysis can use. Two common structures are wide and long data.
 
-## Wide and Long Data
 In a wide dataset, repeated measurements or categories are stored in separate columns. For example, body weight measured at baseline, one week, three weeks and six weeks might be stored as four columns for each participant.
 
 In a long dataset, each measurement occupies a separate row. One column identifies the participant, another identifies the measurement occasion or condition, and another contains the observed value. Long format is often convenient for plotting, grouped summaries, repeated-measures analyses and mixed-effects models.
@@ -376,12 +428,11 @@ wide_data <- long_data %>%
 
 When reshaping data, always check that the participant identifier and any grouping variables uniquely identify the intended observations. Unexpected duplicate combinations may produce list-columns or aggregated values.
 
-## Dummy Variables
 Regression models require categorical predictors to be represented numerically. This is commonly achieved using dummy or indicator variables. For a categorical variable with $K$ levels, we usually include $K-1$ dummy variables when the model also contains an intercept. The omitted level acts as the reference category.
 
 For a binary variable such as sex recorded as `female` and `male`, one indicator is sufficient. If `male` is the reference, a variable such as `Sex_female` takes the value zero for males and one for females. The associated coefficient then estimates the expected difference between females and males, conditional on the other terms in the model.
 
-In most *R* modelling functions, a variable stored as a factor is converted to dummy variables automatically:
+In most R modelling functions, a variable stored as a factor is converted to dummy variables automatically:
 
 ```{r}
 #| eval: false
@@ -398,12 +449,10 @@ The reference level can be set explicitly:
 data$Sex <- relevel(factor(data$Sex), ref = "male")
 ```
 
-Creating dummy variables manually is sometimes useful for inspecting or exporting a design matrix, but it is usually unnecessary for fitting a model in *R*.
 
 # L2-6 Linear Regression, the *t*-Test and ANOVA
 The *t*-test, ANOVA and linear regression are often taught as separate statistical methods. However, they are closely connected through the general linear-model framework. In simple cases, they test equivalent hypotheses and can produce equivalent results.
 
-## The Two-Sample *t*-Test as a Regression Model
 Suppose we compare low-density lipoprotein (LDL) levels between participants of normal weight and participants who are overweight. A two-sample *t*-test evaluates the difference between the two group means. The Welch *t*-statistic is:
 
 $$
@@ -440,7 +489,7 @@ summary(ldl_model)
 With equal-variance assumptions and equivalent coding, the conventional two-sample *t*-test and ordinary linear regression give the same test of the group difference. Welch's *t*-test allows the two groups to have unequal variances, so its standard error and degrees of freedom may differ from ordinary least squares.
 
 ## Generalised Least Squares for Unequal Variance
-Unequal residual variance, or heteroscedasticity, does not necessarily make the ordinary least-squares coefficient estimates biased. However, it can affect the model-based standard errors, confidence intervals and P-values.
+Unequal residual variance, or heteroscedasticity, does not necessarily make the ordinary least-squares coefficient estimates biased. However, it can affect the model-based standard errors, confidence intervals and *p*-values.
 
 One possible approach is generalised least squares (GLS), which allows the residual variance structure to be modelled. For example, we can allow the variance to differ between groups using `gls()` from the `nlme` package:
 
@@ -484,7 +533,7 @@ $$
 H_0:\beta_1=\beta_2=0.
 $$
 
-Thus, the overall ANOVA *F*-test asks whether the model containing the group indicators explains more variation than an intercept-only model.
+The overall ANOVA *F*-test asks whether the model containing the group indicators explains more variation than an intercept-only model.
 
 ```{r}
 #| eval: false
@@ -498,9 +547,9 @@ anova(ldl_lm)
 summary(ldl_lm)
 ```
 
-Regression is often the more flexible language because it naturally extends to continuous predictors, multiple categorical variables, interactions and adjustment variables. This does not make the classical tests obsolete. Instead, it shows that they can be understood as special cases of a broader modelling framework.
+Regression is often the more flexible approach because it naturally extends to continuous predictors, multiple categorical variables, interactions and adjustment variables. This does not make the classical tests obsolete. Instead, it shows that they can be understood as special cases of a broader modelling framework.
 
-Regression models can also shift the emphasis from a binary decision about statistical significance to estimates of effect size and uncertainty. Coefficients and confidence intervals often answer the scientific question more directly than a P-value alone.
+Regression models can also shift the emphasis from a binary decision about statistical significance to estimates of effect size and uncertainty. Coefficients and confidence intervals often answer the scientific question more directly than a *p*-value alone.
 
 # L2-7 Multiple Linear Regression
 Simple linear regression contains one predictor. Multiple linear regression extends the model to two or more predictors:
@@ -554,9 +603,9 @@ Missing-data mechanisms are commonly described as:
 - **Missing at random (MAR):** after conditioning on observed data, missingness does not depend on the missing value itself.
 - **Missing not at random (MNAR):** missingness continues to depend on unobserved values even after accounting for the observed data.
 
-Complete-case, or listwise, deletion retains only rows with complete data for all variables in the model. It may be reasonable when relatively little information is missing and the assumptions needed for the analysis are plausible. However, it can reduce precision and introduce bias when the retained observations differ systematically from those excluded.
+Complete-case, or listwise deletion, retains only rows with complete data for all variables in the model. It may be reasonable when relatively little information is missing and the assumptions needed for the analysis are plausible. However, it can reduce precision and introduce bias when the retained observations differ systematically from those excluded.
 
-Single imputation replaces each missing value once, for example with a mean or median. Although simple, it usually understates uncertainty and can distort relationships among variables. Multiple imputation is generally more principled under appropriate assumptions because it creates several completed datasets and incorporates uncertainty about the missing values. Detailed imputation strategies are beyond the scope of this section.
+Single imputation replaces each missing value once, for example with a mean or median. Although simple, it usually understates uncertainty and can distort relationships among variables. Multiple imputation is generally more rigorous under appropriate assumptions because it creates several completed datasets and incorporates uncertainty about the missing values. Detailed imputation strategies are beyond the scope of this section.
 
 ## Additivity and Linearity
 We can begin exploring additivity and linearity using pairwise plots of the numerical variables. These plots show the bivariate relationships, the univariate distributions and, depending on the function, the pairwise correlations.
@@ -611,8 +660,8 @@ summary(model_3)
 
 The `*` notation adds both main effects and their interaction. Two-way interactions can quickly produce many coefficients, so they should be guided by the scientific question rather than added indiscriminately. When an interaction is included, the main effects are conditional: for example, the coefficient for age represents the age association in the reference gender.
 
-## Centring and Standardising Predictors
-Centring subtracts a reference value, usually the sample mean, from a predictor:
+## Centering and Standardising Predictors
+Centering subtracts a reference value, usually the sample mean, from a predictor:
 
 $$
 X_{\text{centred}}=X-\bar{X}.
@@ -759,7 +808,7 @@ summary(potato_aov_interaction)
 The interaction asks whether differences among manure levels are consistent across varieties. As with multiple regression, the model structure should follow the experimental design and research question.
 
 ANOVA relies on the same broad assumptions as a linear regression with categorical predictors: validity, independent errors, an appropriate additive structure, approximately constant residual variance and approximately normal residual errors. The design of the experiment—particularly randomisation, replication and blocking—is fundamental to the validity of the analysis.
-
+∏
 ## Nonparametric Alternative: The Kruskal-Wallis Test
 The Kruskal-Wallis test is a rank-based extension of the Wilcoxon-Mann-Whitney test to three or more independent groups. It can be useful when an ANOVA model is not an adequate description of the data and a rank-based comparison is scientifically meaningful.
 

@@ -1,5 +1,8 @@
 
 ---
+title: "Part One"
+suppress-bibliography: true
+
 format: html
 webr:
   packages:
@@ -11,22 +14,18 @@ webr:
 ```{r}
 #| label: setup
 #| include: false
-
 install.packages(
   "NHANES",
   repos = "https://cloud.r-project.org"
 )
-
 install.packages(
   "MASS",
   repos = "https://cloud.r-project.org"
 )
-
 install.packages(
   "car",
   repos = "https://cloud.r-project.org"
 )
-
 install.packages(
   "pwr",
   repos = "https://cloud.r-project.org"
@@ -34,14 +33,8 @@ install.packages(
 
 cat("NHANES installed:", requireNamespace("NHANES", quietly = TRUE), "\n")
 cat("dplyr installed:", requireNamespace("dplyr", quietly = TRUE), "\n")
+
 ```
-
-# Part One
-
-<!--
-This is a book created from markdown and executable code.
-See @knuth84 for additional discussion of literate programming.
--->
 
 ::: {.callout-note appearance="simple" icon=false}
 
@@ -68,15 +61,15 @@ So, you're here to learn about statistics. Luckily statistics is all about learn
 
 *“All models are wrong, but some are useful.”* George Box
 
-Box was a chemist turned statistician, and relevant to this course, much of his work was concerned with how we can learn through experimentation, experimental study design and how statistical modelling can support experimental design and learning. 
+Box was a chemist turned statistician. Relevant to this course, much of his work was concerned with how we can learn through experimentation, experimental study design and how statistical modelling can support experimental design and learning. 
 
-In one of Box’s educational books on statistics, Statistics for Experimenters, he framed the use of statistics as a hypothetico-deductive learning process. Meaning that, through deduction we form theory - theory then informs predictions about reality – we then observe the phenomenon in the real world and collect new data – the data is used to update our theory and our hypotheses about how the world works. This description of learning can be applied to science as well as other everyday situations. 
+In one of Box’s educational books on statistics, Statistics for Experimenters @box2005, he framed the use of statistics as a hypothetico-deductive learning process. Meaning that, through deduction we form theory - theory then informs predictions about reality – we then observe the phenomenon in the real world and collect new data – the data is used to update our theory and our hypotheses about how the world works. This description of learning can be applied to science as well as other everyday situations. 
 
 We can frame the very same hypothetico-deductive learning process as a feedback system. We have devised a model which could be a theory or theoretical framework about how the world works - We make a prediction or deduction about the behaviour of a real-world system. Collected data about the system is a filter of sorts of what we observe in the real-world, it will be subject to some noise (variability and measurement error). That data will be used to update our prior model. We can then go on to make new predictions. The point being that, statistical models is a cornerstone in how we understand, predict, learn and refine our understanding of real-world and experimental systems (See **Figure 1.1**). 
 
 ![**Figure 1.1** hypothetico-deductive learning through statistical modelling (adapted from Box GEP *et al.* 2005).](L0101_Figure_01.png "Learning and statistical modelling.")
 
-Hiffenburgh, in the book Statistics in Medicine, brings up two areas of application where statistics is helpful:\
+Riffenburgh, in the book Statistics in Medicine @riffenburgh2012, brings up two areas of application where statistics is helpful:\
 
 1. When we do experiments, we're only observing a sample of the total underlying population. In order for our experiment to be useful we need to resolve the issue of how to make inferences about the overall population based on our smaller sample from the experiment.
 2. When we measure or collect data in an experiment (or study). This will be associated with variability and uncertainty. How do we account for this experimental uncertainty. Are there ways for us to control for that uncertainty.
@@ -87,38 +80,38 @@ Back to George Box and the framing of the experimental system. You'll be hearing
 
 Statistical modeling can help us resolve the above challenge. Here the models can be simple statistical regression models all the way to very complex structural equation models. Another important aspect of the experiment is the data and variables we choose to collect (or observe). In medicine (and most disciplines), these data is almost always and without exception associated with some noise from the inherent variability in the experiments (experimental errors) and biological variability. Statistics give us ways of describing and quantifying (explainable) variability and (unexplainable) error or noise. This then helps us to design new experiments. Finally, as experimenters, we want to understand causation (cause and effect), but often it's not quite clear what is caused by an effector and what is simply an association. Again, here, statistics give us models for how to better understand how experimental systems could be operating, and then go on to try to quantify these relationships between variables. For instance, we could have a system where we have an input *x* and an output *y*, but there's also an intermediate *W* that will affect the same response (See **Figure 1.2**).
 
-![**Figure 1.2** Statistical modelling can help us understand cause and effect and intermediaries (adapted from Box GEP *et al.* 2005).](L0101_Figure_02.png "Learning and statistical modelling.")
+![**Figure 1.2** Statistical modelling can help us understand cause and effect and intermediaries (adapted from @box2005).](L0101_Figure_02.png "Learning and statistical modelling.")
 
 By modelling that intermediate we should better be able to understand causation. Importantly, statistics helps us to describe and quantifying uncertainty and probabilities. For example, we have an experiment where we're rolling a set of two dice. What are the potential or possible outcomes of that experiment? What's the likelihood of a given set of outcomes or an event to be occurring? We'll talk more about this in the coming sections. 
 
-For other benefits of the statistical approach we can turn to the prominent, current statistician Andrew Gelman. In one of his blog posts, Gelman discusses how statistics can help us connect data to the underlying objects that we're trying to study in an experiment. More specifically, statistics can help us understand measurements and variables. For instance, the validity and reliability of measures and how these vary within subjects (so called intra-individual or inter-occasion variability) and between subjects (interindividual variability), and so on. 
+For other benefits of the statistical approach we can turn to the prominent, current statistician Andrew Gelman. In one of his blog posts @gelman2015, Gelman discusses how statistics can help us connect data to the underlying objects that we're trying to study in an experiment. More specifically, statistics can help us understand measurements and variables. For instance, the validity and reliability of measures and how these vary within subjects (so called intra-individual or inter-occasion variability) and between subjects (interindividual variability), and so on. 
 
 ## Ok, but how should I make use of statistics?
 That's a good question (I'm glad you - or really I - asked), though I'm afraid there is no One correct answer. It all depends what you are trying to achieve. George Box gives quite a useful, high-level overview of how we can make use of statistics (See **Figure 1.3**). We will elaborate more on this throughout the course.
 
-![**Figure 1.3** A broad overview of good practices in statistical analysis (adapted from Box GEP *et al.* 2005).](L0101_Figure_03.png "Practices in statistical analysis.")
+![**Figure 1.3** A broad overview of good practices in statistical analysis (adapted from @box2005.](L0101_Figure_03.png "Practices in statistical analysis.")
 
 * Before conducting an experiment (not only before analysis - it could already be too late by then!) we want to find out as much as we can about the problem. E.g., is there prior data from the same type of experiment that we can use for data modelling to better understand what we should measure, how often we should measure, and in how many samples or individuals. 
 * We shouldn't forget the domain specific knowledge that is key to understanding the problem e.g., the theory of the given discipline. A statistical modeling exercise is rarely about satisfying the curiousity of the statistician or data modeller. It is therefore super important to involve domain experts, e.g., the medical profession for medical problems, etc. We can use this prior knowledge to construct models (or hypotheses) that we then go on to test. 
 * We then want to define objectives. This is a group effort within a research or development team. Ideally, the team is interdisciplinary enough that you will not forget any important study design aspects. 
 * Finally, Box raises the need to learn from each other across disciplines, from experimenters, domain experts, users and patients, statisticians, to data modelers, and more.
 
-This all sounds well and nice, but why is it important? One of the research has faced during the last decade is the replication crisis. The issue was first raised in psychology but it turns out it was not limited to psychology alone, in following studies the issue of lack of replicability has been seen in biology, medicine, engineering, and more. Part of the issue is due to publication bias. But there's also an interesting angle here around the statistical approaches that we used and also how these were presented to have been used. We can view statistical methods as a spectrum of different ways of analysing and interpreting data. For example the more traditional approach, that most of you have experienced in conventional introductory statistics courses is referred to as confirmatory data analysis (CDA). This is when we aim to confirm or refute an a priori formulated hypothesis (or a set of hypotheses) using an a priori defined statistical analysis method.
+This all sounds well and nice, but why is it important? One of the research has faced during the last decade is the replication crisis (@baker2016, @forbes2023). The issue was first raised in psychology but it turns out it was not limited to psychology alone, in following studies the issue of lack of replicability has been seen in biology, medicine, engineering, and more. Part of the issue is due to publication bias. But there's also an interesting angle here around the statistical approaches that we used and also how these were presented to have been used. We can view statistical methods as a spectrum of different ways of analysing and interpreting data. For example the more traditional approach, that most of you have experienced in conventional introductory statistics courses is referred to as confirmatory data analysis (CDA). This is when we aim to confirm or refute an a priori formulated hypothesis (or a set of hypotheses) using an a priori defined statistical analysis method.
 
-This is predicated on a set of rules and assumptions that should be met before we do this type of analysis. For instance, given the model or analysis methods, the key assumptions of that method need to be met. In CDA, we should pre specify our intended study power and what the sample size of that experiment should be. We only test one hypothesis. If we test multiple, we make sure to account for multiple testing. This rigid, somewhat formulaic, approach aims to reduce the risk of bias in the conclusions that we can draw. Most often, we find ourselves doing something in between a CDA and a more exploratory data analysis (EDA). Perhaps, rather than confirm or refute a hypothesis, we want to evaluate experimental data. Rather than looking for statistical significance, we're looking to estimate effect size or a set of model parameters. We then might be asking - what's the uncertainty in our parameter/effect size estimates? EDA was very much pioneered by John Tukey. During EDA we're more interested in exploring patterns, perhaps in large datasets. We do not have an a priori hypothesis going into the analysis. You can see a summary of these approaches in **Figure 1.4**.
+This is predicated on a set of rules and assumptions that should be met before we do this type of analysis. For instance, given the model or analysis methods, the key assumptions of that method need to be met. In CDA, we should pre specify our intended study power and what the sample size of that experiment should be. We only test one hypothesis. If we test multiple, we make sure to account for multiple testing. This rigid, somewhat formulaic, approach aims to reduce the risk of bias in the conclusions that we can draw. Most often, we find ourselves doing something in between a CDA and a more exploratory data analysis (EDA). Perhaps, rather than confirm or refute a hypothesis, we want to evaluate experimental data. Rather than looking for statistical significance, we're looking to estimate effect size or a set of model parameters. We then might be asking - what's the uncertainty in our parameter/effect size estimates? EDA was very much pioneered by John Tukey. During EDA we're more interested in exploring patterns, perhaps in large datasets. We do not have an a priori hypothesis going into the analysis. You can see a summary of these approaches in **Figure 1.4** (@tukey1980, @fife&rodgers2021).
 
-![**Figure 1.4** An overview of confirmatory data analysis (CDA), rough CDA and exploratory data analysis (EDA). Adapted from Tukey 1980 and Fife and Rogers 2021.](L0101_Figure_04.png "CDA, rough CDA and EDA.")
+![**Figure 1.4** An overview of confirmatory data analysis (CDA), rough CDA and exploratory data analysis (EDA). Adapted from @tukey1980 and @fife&rodgers2021.](L0101_Figure_04.png "CDA, rough CDA and EDA.")
 
 This makes sense. Usually, we want to have some flexibility in the type of questions we ask given a dataset so we adapt the statistical approach to the data we are investigating so we can carry out the most suitable statistical analysis, right? No, stop, wait(!) - here is a potential big red flag. During EDA we're introducing potential risk of bias in the conclusions that we draw. We can't state with certainty that the conclusions that we draw during a rough CDA/EDA analysis will refute or confirm a hypothesis. These conclusions remain provisional pending further experiments and further statistical analysis. And, once we conduct EDA on a dataset, we cannot use the same datasets for a strict CDA approach. Because the choice of analysis would already be informed by the same dataset. In other words - a more exploratory approach will be excellent for finding potential avenues of further research, but we cannot draw any firm conclusions based on this analysis.
 
-Fife and Rogers (2021) explain the issue perfectly. Because of the limitations in the conclusions we can draw given EDA (or a rough CDA) it is super important that we are transparent in the way we present our statistical analysis to others (stakeholders, readers, etc.). By concealing our intentions and presenting an exploratory analysis as a strict CDA, we run the risk of performing p-hacking. That is when we find the optimal analytical methods to get the best possible p-value. 
+@fife&rodgers2021 explain the issue perfectly. Because of the limitations in the conclusions we can draw given EDA (or a rough CDA) it is super important that we are transparent in the way we present our statistical analysis to others (stakeholders, readers, etc.). By concealing our intentions and presenting an exploratory analysis as a strict CDA, we run the risk of performing p-hacking. That is when we find the optimal analytical methods to get the best possible p-value. 
 
 In other instances we might run the risk of fishing - when we conduct multiple statistical analyses across the dataset and present only those that are statistically significant, through multiple testing the likelihood of obtaining a statistically significant result increases. If we are dubious in our methods, we risk HARKing so hypothesising after the results are already known. 
 
 This all to say, there is merit to the classical strict CDA, EDA and everything in between. But we need to recognise the limitations of each approach and be transparent about our intentions in our analyses, experiments and how these are presented. 
 
 # L1-2 Probability
-In the previous section I briefly brought up the concepts probability and uncertainty and their role in statistics. Probability theory and sampling distributions is very much central to classical statistics and important for understanding the random experiment. I will briefly describe probability to then delve further into distributions. For more details, see the recommeded reading (Lavin 2013, Chapter 1). 
+In the previous section I briefly brought up the concepts probability and uncertainty and their role in statistics. Probability theory and sampling distributions is very much central to classical statistics and important for understanding the random experiment. I will briefly describe probability to then delve further into distributions. For more details, see the recommeded reading (Chapter 1 in @lavine2013). 
 
 ## What is statistics about?
 Probability, or uncertainty, is key part of what statistics is about. Probability can be described using four concepts: 
@@ -130,19 +123,19 @@ Probability, or uncertainty, is key part of what statistics is about. Probabilit
 
 Probabilities work different depending on if we are looking at discrete cases, such as counting the outcomes after rolling a die a number of times. Or, continuous measures (length, weight, volume, concentrations, amounts etc.) where we can use integrals to determine the probability of producing an outcome within a given range of values.
 
-As is done in Lavine 2013, let's start by looking at the discrete case. We call these counting outcomes. That means that we have a number of set discrete outcomes. For example, when rolling a single die we can produce outcomes between 1 and 6. If we are rolling two dice, we can produce 6 times 6, or 36 potential outcomes. This is the complete sample space of rolling two dice, (or *S*).
+As is done in @lavine2013, let's start by looking at the discrete case. We call these counting outcomes. That means that we have a number of set discrete outcomes. For example, when rolling a single die we can produce outcomes between 1 and 6. If we are rolling two dice, we can produce 6 times 6, or 36 potential outcomes. This is the complete sample space of rolling two dice, (or *S*).
 
 The probability of producing an outcome within the sample space *S* (the totality of outcomes) is one. While, the probability of producing the null set, a set containing none of the possible outcomes (also called an empty set or $\emptyset$), is zero. 
 
 In set theory we can have events that are made up of several sample outcomes (*s*). In Figure 1.5 I have marked two different events (sets of sample outcomes, *s*), event A in blue and event B in red. We can calculate the probability of these events given the set outcomes. For example, the probability of the unison ( $\cup$), meaning producing an outcome from A or B, is equal to the probability of A plus B if A and B do not intersect, (A $\cap$ B = $\emptyset$). In other words, the intersection between A and B is a null set that in effect is empty or impossible. To clarify, the intersect is empty because there is no overlap.
 
-![**Figure 1.5** The sample space (*S*) and events consisting of sample outcomes (*s*) marked by the blue and red box (adapted from Lavine 2013).](L0101_Figure_05.png "Set theory.")
+![**Figure 1.5** The sample space (*S*) and events consisting of sample outcomes (*s*) marked by the blue and red box (adapted from @lavine2013).](L0101_Figure_05.png "Set theory.")
 
-Most medical, biological data tend to be continuous. A short side note: In the video I bring up one of the groundbreaking works in the field of systems biology where Ludwig von Bertalanffy defined a model of the length of sea creatures over age. The work by von Bertalanffy (and others in the 1920's and 1930's) layed the foundations for mathematical systems modelling in biology and medicine. If you find this interesting, I talk about this in more detail in Simulation course (CM2014). 
+Most medical, biological data tend to be continuous. A short side note: In the video I bring up one of the groundbreaking works in the field of systems biology where Ludwig von Bertalanffy defined a model of the length of sea creatures over age. The work by von Bertalanffy (and others in the 1920's and 1930's) layed the foundations for mathematical systems modelling in biology and medicine. If you find this interesting, I talk about this in more detail on the Simulation Methods course (CM2014). 
 
 How do we treat probabilities for continuous data? here we can use the integrals of the probability density function (*pdf*) to determine the probability of ranges of values (outcomes). What is a *pdf* (other than a file format)? The pdf describes the likelihood of a continuous random variable falling within a particular range of values. For example, within the range of A to B (See Figure 1.6), what's the probability of producing a value within that range. The *pdf* which is the derivative of the cumulative ditribution function (*cdf*) which gives the probability that a random value is less than or equal to a given, defined value. So, the *cdf* is the accumulated area under the probability density curve up to the given, defined value. 
 
-![**Figure 1.6** Continuous probabilities and their properties (adapted from Lavine 2013).](L0101_Figure_06.png "Continuous probabilities.")
+![**Figure 1.6** Continuous probabilities and their properties (adapted from @lavine2013).](L0101_Figure_06.png "Continuous probabilities.")
 
 *Pdf* functions have a set of properties. One of these is that the probability of *y* is over or equal to zero for all *y*, because otherwise, the probability of a value between A and B could potentially be negative. The other property of the pdf is that the probability of *Y* being a set of -$\infty$ to $\infty$ is one. Integrating over that range gives a probability of one. Another interesting property of the *pdf* is then if we integrate over a singular value, which can be viewed as an infinitesimally small range between *A* and *A*, or *A* and *B* (where *A=B*), this will give a probability of zero because the integral is the area under the curve. In other words, for a vertical line on the distribution curve the area is zero. The probability of a continuous random variable is given by the area under the pdf. 
 
@@ -815,13 +808,15 @@ Later in the course, we will examine these issues in greater depth, including ho
 
 This concludes Part One of the course notes. I hope you have enjoyed it so far! Your feedback would be highly appreciated.
 
-# Recommended Reading and Key Literature
-::: {.callout-note appearance="simple" icon=false}
 
-## Recommended Reading
-- Lavine, M. (2013). Introduction to Statistical Thought. [Link text](https://www.example.com)
+::: {.callout-note appearance="simple" icon=false title=""}
 
-## Key Citations
+### Recommended Reading
+
+- Lavine, M. (2013). Introduction to Statistical Thought, Chapter 1. 
+
+### Key Citations
+
 - Box, G. E. P., Hunter, J. S., & Hunter, W. G. (2005). Statistics for Experimenters: Design, Innovation, and Discovery (2nd ed.). Wiley.
 - Riffenburgh, R. H., & Gillen, D. L. (2020). Statistics in Medicine (4th ed.). Academic Press.
 - Tukey, J. W. (1980). We need both exploratory and confirmatory. The American Statistician, 34, 23–25.

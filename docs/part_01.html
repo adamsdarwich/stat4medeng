@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Adam S. Darwich">
+<meta name="dcterms.date" content="2026-08-06">
 
-<title>part_01</title>
+<title>Part One – Statistics for Medical Engineers</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -62,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -137,26 +140,157 @@ window.Quarto = {
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_01.html">Part One</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for Medical Engineers</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Part One</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#l1-1-introduction" id="toc-l1-1-introduction" class="nav-link active" data-scroll-target="#l1-1-introduction">L1-1 Introduction</a>
+  <ul class="collapse">
+  <li><a href="#why-should-i-learn-about-statistics" id="toc-why-should-i-learn-about-statistics" class="nav-link" data-scroll-target="#why-should-i-learn-about-statistics">Why should I learn about statistics?</a></li>
+  <li><a href="#ok-but-how-should-i-make-use-of-statistics" id="toc-ok-but-how-should-i-make-use-of-statistics" class="nav-link" data-scroll-target="#ok-but-how-should-i-make-use-of-statistics">Ok, but how should I make use of statistics?</a></li>
+  </ul></li>
+  <li><a href="#l1-2-probability" id="toc-l1-2-probability" class="nav-link" data-scroll-target="#l1-2-probability">L1-2 Probability</a>
+  <ul class="collapse">
+  <li><a href="#what-is-statistics-about" id="toc-what-is-statistics-about" class="nav-link" data-scroll-target="#what-is-statistics-about">What is statistics about?</a></li>
+  </ul></li>
+  <li><a href="#l1-3-data-types-and-distributions" id="toc-l1-3-data-types-and-distributions" class="nav-link" data-scroll-target="#l1-3-data-types-and-distributions">L1-3 Data Types and Distributions</a>
+  <ul class="collapse">
+  <li><a href="#the-normal-or-gaussian-distribution" id="toc-the-normal-or-gaussian-distribution" class="nav-link" data-scroll-target="#the-normal-or-gaussian-distribution">The Normal or Gaussian Distribution</a></li>
+  <li><a href="#the-lognormal-distribution" id="toc-the-lognormal-distribution" class="nav-link" data-scroll-target="#the-lognormal-distribution">The Lognormal Distribution</a></li>
+  <li><a href="#the-exponential-distribution" id="toc-the-exponential-distribution" class="nav-link" data-scroll-target="#the-exponential-distribution">The Exponential Distribution</a></li>
+  <li><a href="#the-uniform-distribution" id="toc-the-uniform-distribution" class="nav-link" data-scroll-target="#the-uniform-distribution">The Uniform Distribution</a></li>
+  <li><a href="#the-binomial-distribution" id="toc-the-binomial-distribution" class="nav-link" data-scroll-target="#the-binomial-distribution">The Binomial Distribution</a></li>
+  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution">The Poisson Distribution</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
+  <li><a href="#l1-4-sampling-from-distributions" id="toc-l1-4-sampling-from-distributions" class="nav-link" data-scroll-target="#l1-4-sampling-from-distributions">L1-4 Sampling from Distributions</a></li>
+  <li><a href="#l1-5-hypothesis-testing" id="toc-l1-5-hypothesis-testing" class="nav-link" data-scroll-target="#l1-5-hypothesis-testing">L1-5 Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#parametric-t-tests" id="toc-parametric-t-tests" class="nav-link" data-scroll-target="#parametric-t-tests">Parametric t-tests</a>
+  <ul class="collapse">
+  <li><a href="#parametric-t-tests-the-normality-assumption" id="toc-parametric-t-tests-the-normality-assumption" class="nav-link" data-scroll-target="#parametric-t-tests-the-normality-assumption">Parametric t-tests: The Normality Assumption</a></li>
+  <li><a href="#parametric-t-tests-the-equal-variances-assumption" id="toc-parametric-t-tests-the-equal-variances-assumption" class="nav-link" data-scroll-target="#parametric-t-tests-the-equal-variances-assumption">Parametric t-tests: The Equal Variances Assumption</a></li>
+  <li><a href="#parametric-t-tests-paired-or-unpaired-tests" id="toc-parametric-t-tests-paired-or-unpaired-tests" class="nav-link" data-scroll-target="#parametric-t-tests-paired-or-unpaired-tests">Parametric t-tests: Paired or unpaired tests</a></li>
+  <li><a href="#what-is-the-meaning-of-the-p-value" id="toc-what-is-the-meaning-of-the-p-value" class="nav-link" data-scroll-target="#what-is-the-meaning-of-the-p-value">What is the Meaning of the p-value</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#l1-6-nonparametric-statistical-tests" id="toc-l1-6-nonparametric-statistical-tests" class="nav-link" data-scroll-target="#l1-6-nonparametric-statistical-tests">L1-6 Nonparametric Statistical Tests</a>
+  <ul class="collapse">
+  <li><a href="#the-sign-test" id="toc-the-sign-test" class="nav-link" data-scroll-target="#the-sign-test">The Sign Test</a></li>
+  <li><a href="#the-wilcowon-signed-rank-test" id="toc-the-wilcowon-signed-rank-test" class="nav-link" data-scroll-target="#the-wilcowon-signed-rank-test">The Wilcowon Signed Rank Test</a></li>
+  <li><a href="#side-note-back-to-arbuthnots-experiment" id="toc-side-note-back-to-arbuthnots-experiment" class="nav-link" data-scroll-target="#side-note-back-to-arbuthnots-experiment">Side Note: Back to Arbuthnot’s Experiment</a></li>
+  <li><a href="#the-permutation-test" id="toc-the-permutation-test" class="nav-link" data-scroll-target="#the-permutation-test">The Permutation Test</a></li>
+  <li><a href="#bootstrapping" id="toc-bootstrapping" class="nav-link" data-scroll-target="#bootstrapping">Bootstrapping</a></li>
+  <li><a href="#the-wilcoxon-rank-sum-test" id="toc-the-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#the-wilcoxon-rank-sum-test">The Wilcoxon Rank-Sum Test</a></li>
+  </ul></li>
+  <li><a href="#l1-7-selection-of-statistical-tests" id="toc-l1-7-selection-of-statistical-tests" class="nav-link" data-scroll-target="#l1-7-selection-of-statistical-tests">L1-7 Selection of Statistical Tests</a>
+  <ul class="collapse">
+  <li><a href="#simulating-the-relative-power-1---beta-of-two-statistical-tests" id="toc-simulating-the-relative-power-1---beta-of-two-statistical-tests" class="nav-link" data-scroll-target="#simulating-the-relative-power-1---beta-of-two-statistical-tests">Simulating the Relative Power (1 - Beta) of Two Statistical Tests</a></li>
+  <li><a href="#simulation-experiments-of-the-significance-level-alpha" id="toc-simulation-experiments-of-the-significance-level-alpha" class="nav-link" data-scroll-target="#simulation-experiments-of-the-significance-level-alpha">Simulation Experiments of the Significance Level (Alpha)</a></li>
+  <li><a href="#conclusions-1" id="toc-conclusions-1" class="nav-link" data-scroll-target="#conclusions-1">Conclusions</a></li>
+  </ul></li>
+  <li><a href="#l1-8-study-design-i" id="toc-l1-8-study-design-i" class="nav-link" data-scroll-target="#l1-8-study-design-i">L1-8 Study Design (I)</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Part One</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="part-one" class="level1">
-<h1>Part One</h1>
-<!--
-This is a book created from markdown and executable code.
-See @knuth84 for additional discussion of literate programming.
--->
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adam S. Darwich </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 6, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -177,15 +311,14 @@ See @knuth84 for additional discussion of literate programming.
 </ul>
 </div>
 </div>
-</section>
 <section id="l1-1-introduction" class="level1">
 <h1>L1-1 Introduction</h1>
 <section id="why-should-i-learn-about-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="why-should-i-learn-about-statistics">Why should I learn about statistics?</h2>
 <p>So, you’re here to learn about statistics. Luckily statistics is all about learning. You’re probably familiar with George Box, the scientist credited with the saying:</p>
 <p><em>“All models are wrong, but some are useful.”</em> George Box</p>
-<p>Box was a chemist turned statistician, and relevant to this course, much of his work was concerned with how we can learn through experimentation, experimental study design and how statistical modelling can support experimental design and learning.</p>
-<p>In one of Box’s educational books on statistics, Statistics for Experimenters, he framed the use of statistics as a hypothetico-deductive learning process. Meaning that, through deduction we form theory - theory then informs predictions about reality – we then observe the phenomenon in the real world and collect new data – the data is used to update our theory and our hypotheses about how the world works. This description of learning can be applied to science as well as other everyday situations.</p>
+<p>Box was a chemist turned statistician. Relevant to this course, much of his work was concerned with how we can learn through experimentation, experimental study design and how statistical modelling can support experimental design and learning.</p>
+<p>In one of Box’s educational books on statistics, Statistics for Experimenters <span class="citation" data-cites="box2005">Box et al. (2005)</span>, he framed the use of statistics as a hypothetico-deductive learning process. Meaning that, through deduction we form theory - theory then informs predictions about reality – we then observe the phenomenon in the real world and collect new data – the data is used to update our theory and our hypotheses about how the world works. This description of learning can be applied to science as well as other everyday situations.</p>
 <p>We can frame the very same hypothetico-deductive learning process as a feedback system. We have devised a model which could be a theory or theoretical framework about how the world works - We make a prediction or deduction about the behaviour of a real-world system. Collected data about the system is a filter of sorts of what we observe in the real-world, it will be subject to some noise (variability and measurement error). That data will be used to update our prior model. We can then go on to make new predictions. The point being that, statistical models is a cornerstone in how we understand, predict, learn and refine our understanding of real-world and experimental systems (See <strong>Figure 1.1</strong>).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -193,7 +326,7 @@ See @knuth84 for additional discussion of literate programming.
 <figcaption><strong>Figure 1.1</strong> hypothetico-deductive learning through statistical modelling (adapted from Box GEP <em>et al.</em> 2005).</figcaption>
 </figure>
 </div>
-<p>Hiffenburgh, in the book Statistics in Medicine, brings up two areas of application where statistics is helpful:<br>
+<p>Riffenburgh, in the book Statistics in Medicine <span class="citation" data-cites="riffenburgh2012">Riffenburgh (2012)</span>, brings up two areas of application where statistics is helpful:<br>
 </p>
 <ol type="1">
 <li>When we do experiments, we’re only observing a sample of the total underlying population. In order for our experiment to be useful we need to resolve the issue of how to make inferences about the overall population based on our smaller sample from the experiment.</li>
@@ -205,11 +338,11 @@ See @knuth84 for additional discussion of literate programming.
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="L0101_Figure_02.png" title="Learning and statistical modelling." class="img-fluid figure-img"></p>
-<figcaption><strong>Figure 1.2</strong> Statistical modelling can help us understand cause and effect and intermediaries (adapted from Box GEP <em>et al.</em> 2005).</figcaption>
+<figcaption><strong>Figure 1.2</strong> Statistical modelling can help us understand cause and effect and intermediaries (adapted from <span class="citation" data-cites="box2005">Box et al. (2005)</span>).</figcaption>
 </figure>
 </div>
 <p>By modelling that intermediate we should better be able to understand causation. Importantly, statistics helps us to describe and quantifying uncertainty and probabilities. For example, we have an experiment where we’re rolling a set of two dice. What are the potential or possible outcomes of that experiment? What’s the likelihood of a given set of outcomes or an event to be occurring? We’ll talk more about this in the coming sections.</p>
-<p>For other benefits of the statistical approach we can turn to the prominent, current statistician Andrew Gelman. In one of his blog posts, Gelman discusses how statistics can help us connect data to the underlying objects that we’re trying to study in an experiment. More specifically, statistics can help us understand measurements and variables. For instance, the validity and reliability of measures and how these vary within subjects (so called intra-individual or inter-occasion variability) and between subjects (interindividual variability), and so on.</p>
+<p>For other benefits of the statistical approach we can turn to the prominent, current statistician Andrew Gelman. In one of his blog posts <span class="citation" data-cites="gelman2015">Gelman, Andrew (2015)</span>, Gelman discusses how statistics can help us connect data to the underlying objects that we’re trying to study in an experiment. More specifically, statistics can help us understand measurements and variables. For instance, the validity and reliability of measures and how these vary within subjects (so called intra-individual or inter-occasion variability) and between subjects (interindividual variability), and so on.</p>
 </section>
 <section id="ok-but-how-should-i-make-use-of-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="ok-but-how-should-i-make-use-of-statistics">Ok, but how should I make use of statistics?</h2>
@@ -217,7 +350,7 @@ See @knuth84 for additional discussion of literate programming.
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="L0101_Figure_03.png" title="Practices in statistical analysis." class="img-fluid figure-img"></p>
-<figcaption><strong>Figure 1.3</strong> A broad overview of good practices in statistical analysis (adapted from Box GEP <em>et al.</em> 2005).</figcaption>
+<figcaption><strong>Figure 1.3</strong> A broad overview of good practices in statistical analysis (adapted from <span class="citation" data-cites="box2005">Box et al. (2005)</span>.</figcaption>
 </figure>
 </div>
 <ul>
@@ -226,23 +359,23 @@ See @knuth84 for additional discussion of literate programming.
 <li>We then want to define objectives. This is a group effort within a research or development team. Ideally, the team is interdisciplinary enough that you will not forget any important study design aspects.</li>
 <li>Finally, Box raises the need to learn from each other across disciplines, from experimenters, domain experts, users and patients, statisticians, to data modelers, and more.</li>
 </ul>
-<p>This all sounds well and nice, but why is it important? One of the research has faced during the last decade is the replication crisis. The issue was first raised in psychology but it turns out it was not limited to psychology alone, in following studies the issue of lack of replicability has been seen in biology, medicine, engineering, and more. Part of the issue is due to publication bias. But there’s also an interesting angle here around the statistical approaches that we used and also how these were presented to have been used. We can view statistical methods as a spectrum of different ways of analysing and interpreting data. For example the more traditional approach, that most of you have experienced in conventional introductory statistics courses is referred to as confirmatory data analysis (CDA). This is when we aim to confirm or refute an a priori formulated hypothesis (or a set of hypotheses) using an a priori defined statistical analysis method.</p>
-<p>This is predicated on a set of rules and assumptions that should be met before we do this type of analysis. For instance, given the model or analysis methods, the key assumptions of that method need to be met. In CDA, we should pre specify our intended study power and what the sample size of that experiment should be. We only test one hypothesis. If we test multiple, we make sure to account for multiple testing. This rigid, somewhat formulaic, approach aims to reduce the risk of bias in the conclusions that we can draw. Most often, we find ourselves doing something in between a CDA and a more exploratory data analysis (EDA). Perhaps, rather than confirm or refute a hypothesis, we want to evaluate experimental data. Rather than looking for statistical significance, we’re looking to estimate effect size or a set of model parameters. We then might be asking - what’s the uncertainty in our parameter/effect size estimates? EDA was very much pioneered by John Tukey. During EDA we’re more interested in exploring patterns, perhaps in large datasets. We do not have an a priori hypothesis going into the analysis. You can see a summary of these approaches in <strong>Figure 1.4</strong>.</p>
+<p>This all sounds well and nice, but why is it important? One of the research has faced during the last decade is the replication crisis (<span class="citation" data-cites="baker2016">Baker (2016)</span>, <span class="citation" data-cites="forbes2023">Forbes et al. (2023)</span>). The issue was first raised in psychology but it turns out it was not limited to psychology alone, in following studies the issue of lack of replicability has been seen in biology, medicine, engineering, and more. Part of the issue is due to publication bias. But there’s also an interesting angle here around the statistical approaches that we used and also how these were presented to have been used. We can view statistical methods as a spectrum of different ways of analysing and interpreting data. For example the more traditional approach, that most of you have experienced in conventional introductory statistics courses is referred to as confirmatory data analysis (CDA). This is when we aim to confirm or refute an a priori formulated hypothesis (or a set of hypotheses) using an a priori defined statistical analysis method.</p>
+<p>This is predicated on a set of rules and assumptions that should be met before we do this type of analysis. For instance, given the model or analysis methods, the key assumptions of that method need to be met. In CDA, we should pre specify our intended study power and what the sample size of that experiment should be. We only test one hypothesis. If we test multiple, we make sure to account for multiple testing. This rigid, somewhat formulaic, approach aims to reduce the risk of bias in the conclusions that we can draw. Most often, we find ourselves doing something in between a CDA and a more exploratory data analysis (EDA). Perhaps, rather than confirm or refute a hypothesis, we want to evaluate experimental data. Rather than looking for statistical significance, we’re looking to estimate effect size or a set of model parameters. We then might be asking - what’s the uncertainty in our parameter/effect size estimates? EDA was very much pioneered by John Tukey. During EDA we’re more interested in exploring patterns, perhaps in large datasets. We do not have an a priori hypothesis going into the analysis. You can see a summary of these approaches in <strong>Figure 1.4</strong> (<span class="citation" data-cites="tukey1980">Tukey (1980)</span>, <span class="citation" data-cites="fife&amp;rodgers2021">Fife and Rodgers (2021)</span>).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="L0101_Figure_04.png" title="CDA, rough CDA and EDA." class="img-fluid figure-img"></p>
-<figcaption><strong>Figure 1.4</strong> An overview of confirmatory data analysis (CDA), rough CDA and exploratory data analysis (EDA). Adapted from Tukey 1980 and Fife and Rogers 2021.</figcaption>
+<figcaption><strong>Figure 1.4</strong> An overview of confirmatory data analysis (CDA), rough CDA and exploratory data analysis (EDA). Adapted from <span class="citation" data-cites="tukey1980">Tukey (1980)</span> and <span class="citation" data-cites="fife&amp;rodgers2021">Fife and Rodgers (2021)</span>.</figcaption>
 </figure>
 </div>
 <p>This makes sense. Usually, we want to have some flexibility in the type of questions we ask given a dataset so we adapt the statistical approach to the data we are investigating so we can carry out the most suitable statistical analysis, right? No, stop, wait(!) - here is a potential big red flag. During EDA we’re introducing potential risk of bias in the conclusions that we draw. We can’t state with certainty that the conclusions that we draw during a rough CDA/EDA analysis will refute or confirm a hypothesis. These conclusions remain provisional pending further experiments and further statistical analysis. And, once we conduct EDA on a dataset, we cannot use the same datasets for a strict CDA approach. Because the choice of analysis would already be informed by the same dataset. In other words - a more exploratory approach will be excellent for finding potential avenues of further research, but we cannot draw any firm conclusions based on this analysis.</p>
-<p>Fife and Rogers (2021) explain the issue perfectly. Because of the limitations in the conclusions we can draw given EDA (or a rough CDA) it is super important that we are transparent in the way we present our statistical analysis to others (stakeholders, readers, etc.). By concealing our intentions and presenting an exploratory analysis as a strict CDA, we run the risk of performing p-hacking. That is when we find the optimal analytical methods to get the best possible p-value.</p>
+<p><span class="citation" data-cites="fife&amp;rodgers2021">Fife and Rodgers (2021)</span> explain the issue perfectly. Because of the limitations in the conclusions we can draw given EDA (or a rough CDA) it is super important that we are transparent in the way we present our statistical analysis to others (stakeholders, readers, etc.). By concealing our intentions and presenting an exploratory analysis as a strict CDA, we run the risk of performing p-hacking. That is when we find the optimal analytical methods to get the best possible p-value.</p>
 <p>In other instances we might run the risk of fishing - when we conduct multiple statistical analyses across the dataset and present only those that are statistically significant, through multiple testing the likelihood of obtaining a statistically significant result increases. If we are dubious in our methods, we risk HARKing so hypothesising after the results are already known.</p>
 <p>This all to say, there is merit to the classical strict CDA, EDA and everything in between. But we need to recognise the limitations of each approach and be transparent about our intentions in our analyses, experiments and how these are presented.</p>
 </section>
 </section>
 <section id="l1-2-probability" class="level1">
 <h1>L1-2 Probability</h1>
-<p>In the previous section I briefly brought up the concepts probability and uncertainty and their role in statistics. Probability theory and sampling distributions is very much central to classical statistics and important for understanding the random experiment. I will briefly describe probability to then delve further into distributions. For more details, see the recommeded reading (Lavin 2013, Chapter 1).</p>
+<p>In the previous section I briefly brought up the concepts probability and uncertainty and their role in statistics. Probability theory and sampling distributions is very much central to classical statistics and important for understanding the random experiment. I will briefly describe probability to then delve further into distributions. For more details, see the recommeded reading (Chapter 1 in <span class="citation" data-cites="lavine2013">Lavine (2013)</span>).</p>
 <section id="what-is-statistics-about" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-statistics-about">What is statistics about?</h2>
 <p>Probability, or uncertainty, is key part of what statistics is about. Probability can be described using four concepts:</p>
@@ -253,21 +386,21 @@ See @knuth84 for additional discussion of literate programming.
 <li><strong>Event</strong> A collection of sample outcomes. An event can occur if an experimental Outcome is a member of an event.</li>
 </ul>
 <p>Probabilities work different depending on if we are looking at discrete cases, such as counting the outcomes after rolling a die a number of times. Or, continuous measures (length, weight, volume, concentrations, amounts etc.) where we can use integrals to determine the probability of producing an outcome within a given range of values.</p>
-<p>As is done in Lavine 2013, let’s start by looking at the discrete case. We call these counting outcomes. That means that we have a number of set discrete outcomes. For example, when rolling a single die we can produce outcomes between 1 and 6. If we are rolling two dice, we can produce 6 times 6, or 36 potential outcomes. This is the complete sample space of rolling two dice, (or <em>S</em>).</p>
+<p>As is done in <span class="citation" data-cites="lavine2013">Lavine (2013)</span>, let’s start by looking at the discrete case. We call these counting outcomes. That means that we have a number of set discrete outcomes. For example, when rolling a single die we can produce outcomes between 1 and 6. If we are rolling two dice, we can produce 6 times 6, or 36 potential outcomes. This is the complete sample space of rolling two dice, (or <em>S</em>).</p>
 <p>The probability of producing an outcome within the sample space <em>S</em> (the totality of outcomes) is one. While, the probability of producing the null set, a set containing none of the possible outcomes (also called an empty set or <span class="math inline">\(\emptyset\)</span>), is zero.</p>
 <p>In set theory we can have events that are made up of several sample outcomes (<em>s</em>). In Figure 1.5 I have marked two different events (sets of sample outcomes, <em>s</em>), event A in blue and event B in red. We can calculate the probability of these events given the set outcomes. For example, the probability of the unison ( <span class="math inline">\(\cup\)</span>), meaning producing an outcome from A or B, is equal to the probability of A plus B if A and B do not intersect, (A <span class="math inline">\(\cap\)</span> B = <span class="math inline">\(\emptyset\)</span>). In other words, the intersection between A and B is a null set that in effect is empty or impossible. To clarify, the intersect is empty because there is no overlap.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="L0101_Figure_05.png" title="Set theory." class="img-fluid figure-img"></p>
-<figcaption><strong>Figure 1.5</strong> The sample space (<em>S</em>) and events consisting of sample outcomes (<em>s</em>) marked by the blue and red box (adapted from Lavine 2013).</figcaption>
+<figcaption><strong>Figure 1.5</strong> The sample space (<em>S</em>) and events consisting of sample outcomes (<em>s</em>) marked by the blue and red box (adapted from <span class="citation" data-cites="lavine2013">Lavine (2013)</span>).</figcaption>
 </figure>
 </div>
-<p>Most medical, biological data tend to be continuous. A short side note: In the video I bring up one of the groundbreaking works in the field of systems biology where Ludwig von Bertalanffy defined a model of the length of sea creatures over age. The work by von Bertalanffy (and others in the 1920’s and 1930’s) layed the foundations for mathematical systems modelling in biology and medicine. If you find this interesting, I talk about this in more detail in Simulation course (CM2014).</p>
+<p>Most medical, biological data tend to be continuous. A short side note: In the video I bring up one of the groundbreaking works in the field of systems biology where Ludwig von Bertalanffy defined a model of the length of sea creatures over age. The work by von Bertalanffy (and others in the 1920’s and 1930’s) layed the foundations for mathematical systems modelling in biology and medicine. If you find this interesting, I talk about this in more detail on the Simulation Methods course (CM2014).</p>
 <p>How do we treat probabilities for continuous data? here we can use the integrals of the probability density function (<em>pdf</em>) to determine the probability of ranges of values (outcomes). What is a <em>pdf</em> (other than a file format)? The pdf describes the likelihood of a continuous random variable falling within a particular range of values. For example, within the range of A to B (See Figure 1.6), what’s the probability of producing a value within that range. The <em>pdf</em> which is the derivative of the cumulative ditribution function (<em>cdf</em>) which gives the probability that a random value is less than or equal to a given, defined value. So, the <em>cdf</em> is the accumulated area under the probability density curve up to the given, defined value.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="L0101_Figure_06.png" title="Continuous probabilities." class="img-fluid figure-img"></p>
-<figcaption><strong>Figure 1.6</strong> Continuous probabilities and their properties (adapted from Lavine 2013).</figcaption>
+<figcaption><strong>Figure 1.6</strong> Continuous probabilities and their properties (adapted from <span class="citation" data-cites="lavine2013">Lavine (2013)</span>).</figcaption>
 </figure>
 </div>
 <p><em>Pdf</em> functions have a set of properties. One of these is that the probability of <em>y</em> is over or equal to zero for all <em>y</em>, because otherwise, the probability of a value between A and B could potentially be negative. The other property of the pdf is that the probability of <em>Y</em> being a set of -<span class="math inline">\(\infty\)</span> to <span class="math inline">\(\infty\)</span> is one. Integrating over that range gives a probability of one. Another interesting property of the <em>pdf</em> is then if we integrate over a singular value, which can be viewed as an infinitesimally small range between <em>A</em> and <em>A</em>, or <em>A</em> and <em>B</em> (where <em>A=B</em>), this will give a probability of zero because the integral is the area under the curve. In other words, for a vertical line on the distribution curve the area is zero. The probability of a continuous random variable is given by the area under the pdf.</p>
@@ -1049,10 +1182,7 @@ Attaching package: 'car'</code></pre>
 <p>This is a simple but widely used approach to estimating the sample size required for a clinical or experimental study. More advanced designs may account for repeated measurements, longitudinal outcomes, clustering, multiple endpoints and other complexities.</p>
 <p>Later in the course, we will examine these issues in greater depth, including how repeated measurements and longitudinal studies can strengthen our understanding of change over time. We will also return to causal reasoning and consider Bradford Hill’s viewpoints, which were developed in the context of evaluating evidence about associations such as that between smoking and lung cancer.</p>
 <p>This concludes Part One of the course notes. I hope you have enjoyed it so far! Your feedback would be highly appreciated.</p>
-</section>
-<section id="recommended-reading-and-key-literature" class="level1">
-<h1>Recommended Reading and Key Literature</h1>
-<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1063,10 +1193,10 @@ Attaching package: 'car'</code></pre>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Lavine, M. (2013). Introduction to Statistical Thought. <a href="https://www.example.com">Link text</a></li>
+<li>Lavine, M. (2013). Introduction to Statistical Thought, Chapter 1.</li>
 </ul>
-<section id="key-citations" class="level2">
-<h2 class="anchored" data-anchor-id="key-citations">Key Citations</h2>
+<section id="key-citations" class="level3">
+<h3 class="anchored" data-anchor-id="key-citations">Key Citations</h3>
 <ul>
 <li>Box, G. E. P., Hunter, J. S., &amp; Hunter, W. G. (2005). Statistics for Experimenters: Design, Innovation, and Discovery (2nd ed.). Wiley.</li>
 <li>Riffenburgh, R. H., &amp; Gillen, D. L. (2020). Statistics in Medicine (4th ed.). Academic Press.</li>

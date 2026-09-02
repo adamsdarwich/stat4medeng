@@ -33,7 +33,7 @@ webr:
 
 :::
 
-# L2-2 On the Relationships Between Variables
+# L2-1 On the Relationships Between Variables
 In this section, I will briefly introduce three ways of describing relationships between variables: covariance, correlation and regression. These concepts are related, but they are not interchangeable. Covariance and correlation describe how two variables vary together, whereas regression specifies an outcome variable and models how its expected value changes with one or more predictors.
 
 ## Covariance
@@ -116,7 +116,7 @@ The intercept $\beta_0$ describes the expected value of $Y$ when $X=0$. The slop
 
 We usually assign the dependent variable to the effect or outcome that we want to study. The independent variables are then the exposures, treatments, characteristics or predictors that may explain variation in that outcome. Regression can therefore be used to estimate relationships in a sample and, subject to the study design and assumptions, make inferences about a population.
 
-# L2-3 Linear Regression
+# L2-2 Linear Regression
 Regression has a long history. Francis Galton used the term when analysing the heights of parents and their adult children in the 1886 publication, Regression towards Mediocrity in Hereditary Stature. Galton observed that taller parents tended to have taller children, but that the children's heights also tended to be closer to the population mean. Galton called this *regression towards mediocrity*; today, we refer to this as regression towards the mean.
 
 Galton's research was also connected to the development of eugenics, an important and deeply problematic part of the early developments in statistics. His work influenced Karl Pearson and Ronald Fisher and contributed to what later became quantitative genetics. We can recognise the statistical importance of these methods while also acknowledging the context in which parts of this work were developed and applied.

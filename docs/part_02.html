@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -14,13 +14,10 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -79,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -112,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -217,13 +214,13 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#l2-2-on-the-relationships-between-variables" id="toc-l2-2-on-the-relationships-between-variables" class="nav-link active" data-scroll-target="#l2-2-on-the-relationships-between-variables">L2-2 On the Relationships Between Variables</a>
+  <li><a href="#l2-1-on-the-relationships-between-variables" id="toc-l2-1-on-the-relationships-between-variables" class="nav-link active" data-scroll-target="#l2-1-on-the-relationships-between-variables">L2-1 On the Relationships Between Variables</a>
   <ul class="collapse">
   <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance">Covariance</a></li>
   <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">Correlation</a></li>
   <li><a href="#from-association-to-regression" id="toc-from-association-to-regression" class="nav-link" data-scroll-target="#from-association-to-regression">From Association to Regression</a></li>
   </ul></li>
-  <li><a href="#l2-3-linear-regression" id="toc-l2-3-linear-regression" class="nav-link" data-scroll-target="#l2-3-linear-regression">L2-3 Linear Regression</a>
+  <li><a href="#l2-2-linear-regression" id="toc-l2-2-linear-regression" class="nav-link" data-scroll-target="#l2-2-linear-regression">L2-2 Linear Regression</a>
   <ul class="collapse">
   <li><a href="#a-simple-regression-model" id="toc-a-simple-regression-model" class="nav-link" data-scroll-target="#a-simple-regression-model">A Simple Regression Model</a></li>
   <li><a href="#assumptions-of-linear-regression" id="toc-assumptions-of-linear-regression" class="nav-link" data-scroll-target="#assumptions-of-linear-regression">Assumptions of Linear Regression</a></li>
@@ -322,8 +319,8 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-<section id="l2-2-on-the-relationships-between-variables" class="level1">
-<h1>L2-2 On the Relationships Between Variables</h1>
+<section id="l2-1-on-the-relationships-between-variables" class="level1">
+<h1>L2-1 On the Relationships Between Variables</h1>
 <p>In this section, I will briefly introduce three ways of describing relationships between variables: covariance, correlation and regression. These concepts are related, but they are not interchangeable. Covariance and correlation describe how two variables vary together, whereas regression specifies an outcome variable and models how its expected value changes with one or more predictors.</p>
 <section id="covariance" class="level2">
 <h2 class="anchored" data-anchor-id="covariance">Covariance</h2>
@@ -411,8 +408,8 @@ Y_i=\beta_0+\beta_1X_i+\varepsilon_i.
 <p>We usually assign the dependent variable to the effect or outcome that we want to study. The independent variables are then the exposures, treatments, characteristics or predictors that may explain variation in that outcome. Regression can therefore be used to estimate relationships in a sample and, subject to the study design and assumptions, make inferences about a population.</p>
 </section>
 </section>
-<section id="l2-3-linear-regression" class="level1">
-<h1>L2-3 Linear Regression</h1>
+<section id="l2-2-linear-regression" class="level1">
+<h1>L2-2 Linear Regression</h1>
 <p>Regression has a long history. Francis Galton used the term when analysing the heights of parents and their adult children in the 1886 publication, Regression towards Mediocrity in Hereditary Stature. Galton observed that taller parents tended to have taller children, but that the children’s heights also tended to be closer to the population mean. Galton called this <em>regression towards mediocrity</em>; today, we refer to this as regression towards the mean.</p>
 <p>Galton’s research was also connected to the development of eugenics, an important and deeply problematic part of the early developments in statistics. His work influenced Karl Pearson and Ronald Fisher and contributed to what later became quantitative genetics. We can recognise the statistical importance of these methods while also acknowledging the context in which parts of this work were developed and applied.</p>
 <section id="a-simple-regression-model" class="level2">

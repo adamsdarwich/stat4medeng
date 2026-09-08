@@ -14,6 +14,7 @@ website:
       - index.qmd
       - part_01.qmd
       - part_02.qmd
+      - part_03.qmd
       - summary.qmd
       - references.qmd
 

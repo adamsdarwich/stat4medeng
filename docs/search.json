@@ -254,7 +254,7 @@
     "href": "part_02.html#extending-the-model-to-more-than-one-factor",
     "title": "Part Two",
     "section": "Extending the Model to More Than One Factor",
-    "text": "Extending the Model to More Than One Factor\nThe historical potato experiments included several potato varieties as well as different manures. A more complete additive model therefore includes both factors:\n\npotato_aov_2 &lt;- aov(yield_lbs ~ manure + variety, data = potatoes)\nsummary(potato_aov_2)\n\nIf the effect of manure may differ by potato variety, we can add an interaction:\n\npotato_aov_interaction &lt;- aov(\n  yield_lbs ~ manure * variety,\n  data = potatoes\n)\n\nsummary(potato_aov_interaction)\n\nThe interaction asks whether differences among manure levels are consistent across varieties. As with multiple regression, the model structure should follow the experimental design and research question.\nANOVA relies on the same broad assumptions as a linear regression with categorical predictors: validity, independent errors, an appropriate additive structure, approximately constant residual variance and approximately normal residual errors. The design of the experiment—particularly randomisation, replication and blocking—is fundamental to the validity of the analysis. ∏ ## Nonparametric Alternative: The Kruskal-Wallis Test The Kruskal-Wallis test is a rank-based extension of the Wilcoxon-Mann-Whitney test to three or more independent groups. It can be useful when an ANOVA model is not an adequate description of the data and a rank-based comparison is scientifically meaningful.\n\nkruskal.test(yield_lbs ~ group, data = greatscott)\n\nThe Kruskal-Wallis test does not simply test equality of means. It evaluates whether the group distributions, represented through their ranks, differ. An interpretation as a test of location or medians requires additional assumptions about the shapes and spreads of the group distributions. If the overall test is statistically significant, adjusted post-hoc rank comparisons are needed to determine which groups differ.",
+    "text": "Extending the Model to More Than One Factor\nThe historical potato experiments included several potato varieties as well as different manures. A more complete additive model therefore includes both factors:\n\npotato_aov_2 &lt;- aov(yield_lbs ~ manure + variety, data = potatoes)\nsummary(potato_aov_2)\n\nIf the effect of manure may differ by potato variety, we can add an interaction:\n\npotato_aov_interaction &lt;- aov(\n  yield_lbs ~ manure * variety,\n  data = potatoes\n)\n\nsummary(potato_aov_interaction)\n\nThe interaction asks whether differences among manure levels are consistent across varieties. As with multiple regression, the model structure should follow the experimental design and research question.\nANOVA relies on the same broad assumptions as a linear regression with categorical predictors: validity, independent errors, an appropriate additive structure, approximately constant residual variance and approximately normal residual errors. The design of the experiment—particularly randomisation, replication and blocking—is fundamental to the validity of the analysis. ∏ ## Nonparametric Alternative: The Kruskal-Wallis Test The Kruskal-Wallis test is a rank-based extension of the Wilcoxon-Mann-Whitney test to three or more independent groups. It can be useful when an ANOVA model is not an adequate description of the data and a rank-based comparison is meaningful.\n\nkruskal.test(yield_lbs ~ group, data = greatscott)\n\nThe Kruskal-Wallis test does not simply test equality of means. It evaluates whether the group distributions, represented through their ranks, differ. An interpretation as a test of location or medians requires additional assumptions about the shapes and spreads of the group distributions. If the overall test is statistically significant, adjusted post-hoc rank comparisons are needed to determine which groups differ.",
     "crumbs": [
       "Part Two"
     ]
@@ -477,6 +477,206 @@
     "text": "Summary\nSummary.",
     "crumbs": [
       "Summary"
+    ]
+  },
+  {
+    "objectID": "part_03.html",
+    "href": "part_03.html",
+    "title": "Part Three",
+    "section": "",
+    "text": "NoteKey Takeaways\n\n\n\n\nHere I introduce generalised linear models (GLMs). GLMs extend linear regression to dependent variables of other types than continuous data.\nA GLM combines a random component, describing the distribution of the dependent variable; a systematic component, consisting of the linear predictor; and a link function connecting the expected response to the linear predictor.\nLogistic regression can be used to model binary outcomes, where the inverse-logit function transforms predictions to probabilities between zero and one. The model coefficients are expressed on the log-odds scale.\nPoisson regression is used to model count data. Important considerations include overdispersion and zero-inflation, which may require another model such as negative binomial or zero-inflated regression.\nOrdinal logistic regression can be used for ordered categorical outcomes. While, unordered categorical data can be modelled using binomial probit or multinomial probit regression.\nSurvival analysis concerns the time until an event, accounting for right censoring (survival beyond the study period). Kaplan-Meier curves describe survival over time, while Cox regression estimates associations between predictors and the hazard of an event.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#what-is-a-generalised-linear-model",
+    "href": "part_03.html#what-is-a-generalised-linear-model",
+    "title": "Part Three",
+    "section": "What is a Generalised Linear Model?",
+    "text": "What is a Generalised Linear Model?\nA generalised linear model has three main components:\n\nA Random component: the dependent variable \\(Y\\) follows a probability distribution from the exponential family, with a mean \\(\\mu\\).\nA Systematic component: a linear predictor combines the predictors and regression coefficients.\nA Link function: a mathematical function connects the expected value of the dependent variable to the linear predictor.\n\nThe linear predictor can be written as:\n\\[\n\\eta_i=\\beta_0+\\beta_1x_{i1}+\\beta_2x_{i2}+\\cdots+\\beta_kx_{ik}\n=\\mathbf{x}_i^T\\boldsymbol{\\beta}.\n\\]\nThe link function, \\(g(\\cdot)\\), connects the mean response \\(\\mu_i=E(Y_i)\\) to this linear predictor:\n\\[\ng(\\mu_i)=\\eta_i.\n\\]\nWe can then transform the prediction back to the original scale of the dependent variable using the inverse link function:\n\\[\n\\mu_i=g^{-1}(\\eta_i).\n\\]\nThe link function makes it possible to model a response that does not itself have a linear relationship with the predictors. For example, probabilities must remain between zero and one, while expected counts cannot be negative. An appropriate link function transforms these expected responses to a scale on which they can be modelled using a linear predictor.\nThe regression coefficients are usually estimated using maximum likelihood estimation. We therefore choose the coefficients that make the observed data most likely under the selected probability distribution and model.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#linear-regression-as-a-glm",
+    "href": "part_03.html#linear-regression-as-a-glm",
+    "title": "Part Three",
+    "section": "Linear Regression as a GLM",
+    "text": "Linear Regression as a GLM\nAn ordinary linear regression is a special case of the generalised linear model. We assume that the dependent variable is normally distributed around its expected value:\n\\[\nY_i\\sim N(\\mu_i,\\sigma^2).\n\\]\nThe identity link is used:\n\\[\ng(\\mu_i)=\\mu_i=\\eta_i.\n\\]\nBecause the link function does not transform the mean, the expected response is directly equal to the linear predictor:\n\\[\n\\mu_i=\\beta_0+\\beta_1x_{i1}+\\cdots+\\beta_kx_{ik}.\n\\]\nThe residual standard deviation, \\(\\sigma\\), is estimated from the data. As we saw in Part Two, an ordinary linear regression can be estimated by least squares. Under the assumption of normally distributed errors, this gives the same coefficient estimates as maximum likelihood estimation.\nOther combinations of distributions and link functions allow us to model different kinds of dependent variables. Common examples include:\n\nBinary outcomes: binomial distribution with a logit link.\nCount outcomes: Poisson distribution with a log link.\nPositive continuous outcomes: gamma distribution, commonly with a log or inverse link.\nOrdered categorical outcomes: an ordinal model, commonly using a logit link.\n\nThe general modelling procedure is therefore:\n\nSpecify the distribution of the dependent variable.\nSpecify a vector or matrix of predictors.\nUse a link function to connect the expected response to the linear predictor.\nEstimate the regression coefficients, usually using maximum likelihood estimation.\nUse the inverse link function to predict the dependent variable on its original scale.\nAssess the model fit and residual errors using diagnostics suited to the selected model.\n\nIn the following sections, we will look at logistic regression, Poisson regression and ordered categorical regression. We will also briefly consider how unordered categorical outcomes can be modelled.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#modelling-binary-outcomes",
+    "href": "part_03.html#modelling-binary-outcomes",
+    "title": "Part Three",
+    "section": "Modelling Binary Outcomes",
+    "text": "Modelling Binary Outcomes\nSuppose that disease status \\(Y_i\\) is coded as one when disease is present and zero when it is absent. We can describe the outcome using a Bernoulli distribution:\n\\[\nY_i\\sim\\operatorname{Bernoulli}(p_i),\n\\]\nwhere \\(p_i\\) is the probability that disease is present for observation \\(i\\).\nIf we fitted a conventional linear regression directly to the binary response, its predictions would not necessarily remain between zero and one. Logistic regression resolves this by using the logit link:\n\\[\n\\operatorname{logit}(p_i)\n=\\log\\left(\\frac{p_i}{1-p_i}\\right)\n=\\beta_0+\\beta_1x_{i1}+\\cdots+\\beta_kx_{ik}.\n\\]\nThe inverse-logit function transforms the linear predictor back into a probability:\n\\[\np_i=\\frac{\\exp(\\eta_i)}{1+\\exp(\\eta_i)}\n=\\frac{1}{1+\\exp(-\\eta_i)}.\n\\]\nThis nonlinear transformation bounds the model predictions between zero and one. The fitted probabilities can then be mapped to the observed binary outcomes.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#an-example-of-logistic-regression-in-r",
+    "href": "part_03.html#an-example-of-logistic-regression-in-r",
+    "title": "Part Three",
+    "section": "An Example of Logistic Regression in R",
+    "text": "An Example of Logistic Regression in R\nIn the example presented in the slides, disease status is modelled as a function of a continuous biomarker, x1:\n\nm1_binom &lt;- glm(\n  y ~ x1,\n  family = \"binomial\",\n  data = binom_dat\n)\n\nsummary(m1_binom)\n\nThe model can be written as:\n\\[\n\\operatorname{logit}(p_i)=\\beta_0+\\beta_1x_{i1}.\n\\]\nThe output is similar to the output from an ordinary linear regression. It includes the coefficient estimates, standard errors, test statistics and P-values. The standard errors indicate the uncertainty in our estimates of the model coefficients.\nBecause the outcome is discrete, it does not make sense to summarise model fit using the residual standard deviation in the same way as for ordinary linear regression. The output instead includes the null deviance and residual deviance.\nThe null deviance describes the error from a model containing only an intercept. The residual deviance describes the error remaining after the predictor or predictors have been included. A lower deviance indicates better fit to the observed data. In the example, the null deviance is approximately 130.7 and the residual deviance is approximately 92.0, representing a substantial decrease after including the biomarker.\nFor nested models, the difference in deviance can be assessed using a likelihood-ratio test. Under the null hypothesis, the decrease in deviance is approximately chi-squared distributed, with degrees of freedom equal to the difference in the number of estimated parameters. Adding one uninformative parameter would, on average, reduce the deviance by approximately one. A substantially larger decrease indicates that the added parameter may improve the model beyond what would be expected by chance.\nThe output also includes the Akaike information criterion (AIC). AIC is mainly useful when comparing candidate models fitted to the same outcome data. Lower values indicate a better trade-off between model fit and complexity; the value is not particularly meaningful on its own.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#interpreting-logistic-regression-coefficients",
+    "href": "part_03.html#interpreting-logistic-regression-coefficients",
+    "title": "Part Three",
+    "section": "Interpreting Logistic Regression Coefficients",
+    "text": "Interpreting Logistic Regression Coefficients\nLogistic regression coefficients can be difficult to interpret directly because they describe changes in the log odds rather than constant changes in probability. The relationship between the linear predictor and the probability is nonlinear. A given change in the linear predictor has its largest effect on probability near \\(p=0.5\\) and a smaller effect near zero or one.\nOne straightforward approach is to calculate predicted probabilities at meaningful predictor values. For example, we can calculate the probability at the mean biomarker value and then calculate how this probability changes when the biomarker increases by one unit:\n\nlibrary(arm)\n\np_mean &lt;- invlogit(\n  coef(m1_binom)[1] +\n    coef(m1_binom)[2] * mean(binom_dat$x1)\n)\n\np_x1 &lt;- invlogit(coef(m1_binom)[1] + coef(m1_binom)[2] * 1)\np_x2 &lt;- invlogit(coef(m1_binom)[1] + coef(m1_binom)[2] * 2)\n\np_difference &lt;- p_x2 - p_x1\n\nThe resulting probability difference depends on where we are on the logistic curve. We should therefore calculate effects over values of the predictors that are relevant to the research question.\n\nThe Divide-by-Four Rule\nThe logistic curve is steepest at its centre, where \\(p=0.5\\). At this point, the slope of the inverse-logit curve with respect to a continuous predictor is:\n\\[\n\\frac{\\beta_j}{4}.\n\\]\nConsequently, \\(\\beta_j/4\\) gives an approximate upper bound for the change in probability associated with a one-unit increase in \\(x_j\\), holding the other predictors constant (Gelman and Hill (2007)). In the slide example, a coefficient of approximately 1.8 gives a maximum probability difference of approximately 0.45.\nThis is a useful approximation, but it is not the probability change at every predictor value. Calculating predicted probabilities is generally clearer.\n\n\nOdds Ratios\nIf an outcome has probability \\(p\\), its odds are:\n\\[\n\\operatorname{odds}=\\frac{p}{1-p}.\n\\]\nAn odds of one corresponds to a probability of 0.5. Exponentiating a logistic regression coefficient gives an odds ratio:\n\\[\nOR_j=\\exp(\\beta_j).\n\\]\nFor a continuous predictor, this is the multiplicative change in the odds associated with a one-unit increase in that predictor, holding the other predictors constant. Odds ratios should not be interpreted as risk ratios, particularly when the outcome is common.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#prediction",
+    "href": "part_03.html#prediction",
+    "title": "Part Three",
+    "section": "Prediction",
+    "text": "Prediction\nWe can use predict() to calculate fitted probabilities over a sequence of biomarker values:\n\ndat_new &lt;- data.frame(\n  x1 = seq(\n    from = min(binom_dat$x1),\n    to = max(binom_dat$x1),\n    length.out = 100\n  )\n)\n\ndat_new$Predicted &lt;- predict(\n  m1_binom,\n  type = \"response\",\n  newdata = dat_new\n)\n\nSpecifying type = \"response\" returns predictions as probabilities on the original response scale rather than as log odds.\nWith two biomarkers, the model becomes:\n\\[\n\\operatorname{logit}(p_i)\n=\\beta_0+\\beta_1x_{i1}+\\beta_2x_{i2}.\n\\]\n\nm2_binom &lt;- glm(\n  y ~ x1 + x2,\n  family = \"binomial\",\n  data = binom_dat\n)\n\nWe can then vary one biomarker while fixing the other at its minimum, mean or maximum value. Plotting these probability curves helps us understand the relative effects of the two biomarkers on the model predictions.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#residual-diagnostics",
+    "href": "part_03.html#residual-diagnostics",
+    "title": "Part Three",
+    "section": "Residual Diagnostics",
+    "text": "Residual Diagnostics\nThe observed residuals from a binary model are also discrete, so they do not behave like the continuous residuals from an ordinary linear regression. One option is to use binned residual plots, in which residuals are grouped across ranges of the fitted values. We look for systematic patterns and for bins that fall outside their expected error bounds.\n\nlibrary(performance)\nlibrary(see)\n\nm2_binned_residuals &lt;- binned_residuals(\n  m2_binom,\n  n_bins = 5,\n  ci = 0.95,\n  residuals = \"deviance\"\n)\n\nplot(m2_binned_residuals, show_dots = TRUE)\n\nSimulation-based residual diagnostics, for example those available through DHARMa, provide another general approach for GLMs. A systematic rise and fall in the residuals may indicate an inadequately represented nonlinear relationship, although the appropriate response is not automatically to log-transform a predictor. We should consider whether a transformation, polynomial term, spline or interaction is supported by the scientific relationship.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#modelling-count-data",
+    "href": "part_03.html#modelling-count-data",
+    "title": "Part Three",
+    "section": "Modelling Count Data",
+    "text": "Modelling Count Data\nFor a Poisson regression, the outcome is assumed to follow a Poisson distribution:\n\\[\nY_i\\sim\\operatorname{Poisson}(\\lambda_i),\n\\]\nwhere \\(\\lambda_i\\) is both the expected count and, under the Poisson assumption, the variance:\n\\[\nE(Y_i)=\\operatorname{Var}(Y_i)=\\lambda_i.\n\\]\nThe canonical link function is the natural logarithm:\n\\[\n\\log(\\lambda_i)\n=\\beta_0+\\beta_1x_{i1}+\\cdots+\\beta_kx_{ik}.\n\\]\nUsing the inverse link gives:\n\\[\n\\lambda_i=\\exp(\\beta_0+\\beta_1x_{i1}+\\cdots+\\beta_kx_{ik}),\n\\]\nwhich ensures that the predicted mean count cannot be negative.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#an-example-of-poisson-regression-in-r",
+    "href": "part_03.html#an-example-of-poisson-regression-in-r",
+    "title": "Part Three",
+    "section": "An Example of Poisson Regression in R",
+    "text": "An Example of Poisson Regression in R\nIn the example presented in the slides, the observed count is modelled as a function of treatment and a continuous biomarker:\n\nm1_pois &lt;- glm(\n  y ~ x1 + x2,\n  family = \"poisson\",\n  data = pois_dat\n)\n\nsummary(m1_pois)\n\nThe output again contains the coefficient estimates, standard errors, z-statistics, P-values, null deviance and residual deviance. Because the model uses a log link, exponentiating a coefficient gives a rate ratio or count ratio:\n\\[\n\\exp(\\beta_j).\n\\]\nFor a continuous predictor, this is the multiplicative change in the expected count associated with a one-unit increase in the predictor, holding the other variables constant. For a categorical predictor, it compares the expected count with that of the reference category.\nAs with logistic regression, the difference between the null and residual deviances indicates how much the predictors improve fit relative to an intercept-only model. We should also examine residual diagnostics:\n\nlibrary(DHARMa)\n\nsim_res &lt;- simulateResiduals(m1_pois)\nplot(sim_res)\n\nDHARMa uses simulation to produce scaled residuals that can be assessed using familiar diagnostic plots and formal tests.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#overdispersion",
+    "href": "part_03.html#overdispersion",
+    "title": "Part Three",
+    "section": "Overdispersion",
+    "text": "Overdispersion\nThe Poisson distribution is described using one parameter, \\(\\lambda\\), which determines both its mean and variance. Real count data often have more variability than allowed by this assumption. This is called overdispersion.\nIf overdispersion is ignored, the model may underestimate the standard errors. Confidence intervals may then be too narrow and P-values too small. We can test dispersion using, for example, the testDispersion() function in DHARMa:\n\ntestDispersion(m1_pois)\n\nA dispersion ratio greater than one indicates that the observed variability exceeds the variability expected under the fitted Poisson model. The magnitude, uncertainty and residual plots should be considered together rather than treating one as a universal pass-or-fail cut-off.\nIf the data are overdispersed, one alternative is negative binomial regression. The negative binomial model includes an additional parameter that allows the variance to exceed the mean:\n\nlibrary(MASS)\n\nm2_pois &lt;- glm.nb(\n  y ~ x1 + x2,\n  data = pois_dat\n)\n\nsummary(m2_pois)",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#zero-inflation",
+    "href": "part_03.html#zero-inflation",
+    "title": "Part Three",
+    "section": "Zero Inflation",
+    "text": "Zero Inflation\nAnother feature of count data is an unexpectedly large number of zero-valued observations. For example, one patient group may have no detected metastases, while the positive counts in another group resemble a Poisson or negative binomial distribution.\nPoisson and negative binomial models naturally allow zero counts and can accommodate some datasets containing many zeros. Switching to a negative binomial model may sometimes be sufficient when the apparent zero excess is associated with broader overdispersion.\nWhen the data-generating process contains a separate source of structural zeros, we can consider a mixture model. A zero-inflated Poisson model combines a process that always produces a zero with a Poisson count process:\n\nlibrary(pscl)\n\nm3_pois &lt;- zeroinfl(\n  y ~ x1 + x2,\n  data = pois_dat\n)\n\nsummary(m3_pois)\n\nThe choice between Poisson, negative binomial, hurdle and zero-inflated models should be based on the assumed data-generating process as well as model diagnostics. A large number of observed zeros alone does not prove that a zero-inflated model is required.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#ordinal-logistic-regression",
+    "href": "part_03.html#ordinal-logistic-regression",
+    "title": "Part Three",
+    "section": "Ordinal Logistic Regression",
+    "text": "Ordinal Logistic Regression\nFor an ordered outcome with \\(K\\) categories, an ordinal logistic regression models \\(K-1\\) cumulative log odds. The common proportional-odds formulation can be written as:\n\\[\n\\log\\left[\\frac{P(Y_i\\leq j)}{P(Y_i&gt;j)}\\right]\n=c_j-\\mathbf{x}_i^T\\boldsymbol{\\beta},\n\\qquad j=1,\\ldots,K-1.\n\\]\nThe cut-points \\(c_j\\), sometimes shown as intercepts or thresholds, divide an underlying continuous tendency into the observed response categories. The linear predictor \\(\\mathbf{x}_i^T\\boldsymbol{\\beta}\\) shifts an observation along this underlying scale.\nWe fit one cumulative logistic comparison for each boundary between categories: category 1 versus categories above 1, categories 1-2 versus categories above 2, and so on. The cut-points differ between these comparisons, but the regression coefficients are assumed to remain the same. This is the proportional-odds assumption, also called the parallel-regression assumption.\nThe cut-points and regression coefficients are estimated simultaneously using maximum likelihood estimation. The residual variability relates partly to the fuzziness with which the underlying scale is separated into the observed response categories.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#an-example-in-r",
+    "href": "part_03.html#an-example-in-r",
+    "title": "Part Three",
+    "section": "An Example in R",
+    "text": "An Example in R\nAn ordinal logistic model can be fitted using polr() from the MASS package:\n\nlibrary(MASS)\n\nordinal_model &lt;- polr(\n  response ~ biomarker,\n  data = ordinal_dat,\n  Hess = TRUE\n)\n\nsummary(ordinal_model)\n\nIn the slide example, the estimated biomarker coefficient is 1.185. With the sign convention used by polr(), a higher biomarker value is associated with greater odds of being in a higher response category. Exponentiating the coefficient gives the proportional odds ratio:\n\\[\n\\exp(1.185)\\approx3.27.\n\\]\nThus, a one-unit increase in the biomarker multiplies the odds of being above rather than at or below any given category boundary by approximately 3.27, assuming proportional odds.\nThe intercepts labelled 1|2 and 2|3 are the estimated thresholds separating response category 1 from categories 2-3, and categories 1-2 from category 3. They locate the boundaries on the underlying logistic scale when the biomarker equals zero. They are not ordinary group means and are usually less scientifically interesting than the predictor coefficients.\nThe residual deviance measures model lack of fit and is mainly interpreted through comparison with a nested model. AIC can be compared across candidate models fitted to the same outcome data, including non-nested models, with lower values indicating a better trade-off between fit and complexity.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#model-diagnostics",
+    "href": "part_03.html#model-diagnostics",
+    "title": "Part Three",
+    "section": "Model Diagnostics",
+    "text": "Model Diagnostics\nThe proportional-odds assumption can be assessed using, for example, Brant’s test:\n\nlibrary(brant)\n\nbrant(ordinal_model)\n\nThis examines whether the predictor coefficients can reasonably be treated as equal across the cumulative logits. As always, the test should be considered alongside graphical diagnostics, sample size and the practical magnitude of any departure.\nWe can also compare the predicted categories with the observed categories using a contingency table. Ideally, most observations fall along its diagonal:\n\npredicted_category &lt;- predict(ordinal_model, type = \"class\")\ntable(Actual = ordinal_dat$response, Predicted = predicted_category)\n\nThe example in the slides predicts categories one and three more successfully than the middle category. This may indicate that the middle category is difficult to separate using the available biomarker.\nSurrogate residuals provide another way to examine ordinal regression models. The sure package can be used to generate residuals on a continuous scale:\n\nlibrary(sure)\n\nordinal_residuals &lt;- resids(ordinal_model)\nhist(ordinal_residuals)\nqqnorm(ordinal_residuals)\nqqline(ordinal_residuals)\n\nWe generally look for residuals centred around zero, with no systematic relationship with fitted values or predictors and no major departure from their expected distribution.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#modelling-unordered-categorical-data",
+    "href": "part_03.html#modelling-unordered-categorical-data",
+    "title": "Part Three",
+    "section": "Modelling Unordered Categorical Data",
+    "text": "Modelling Unordered Categorical Data\nUnordered categorical outcomes contain several categories without an inherent ranking. Examples could include alternative diagnoses or mutually exclusive choices.\nWith two outcome categories, a binomial probit model can be fitted in glm() using a probit link:\n\nprobit_model &lt;- glm(\n  outcome ~ x1 + x2,\n  family = binomial(link = \"probit\"),\n  data = choice_dat\n)\n\nFor more than two unordered choices, a multinomial model is required. A multinomial probit model can, for example, be fitted using the MNP package:\n\nlibrary(MNP)\nexample(mnp)",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#time-to-event-data-and-right-censoring",
+    "href": "part_03.html#time-to-event-data-and-right-censoring",
+    "title": "Part Three",
+    "section": "Time-to-Event Data and Right Censoring",
+    "text": "Time-to-Event Data and Right Censoring\nParticipants or objects are followed until the event occurs or until the observation period ends. If the event has not occurred by the end of observation, the participant’s event time is right-censored. We know that the true event time is later than the observed follow-up time, but we do not know its exact value.\nRight censoring may occur because:\n\na participant remains event-free at the end of the study;\na participant is lost to follow-up; or\na participant withdraws before experiencing the event.\n\nSurvival methods use the information available up to the censoring time rather than treating the censored participant as if the event occurred or discarding the participant completely. Standard methods usually assume that censoring is non-informative conditional on the variables in the model: participants censored at a given time should have a similar subsequent prognosis to comparable participants who remain under observation.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#kaplan-meier-survival-curves",
+    "href": "part_03.html#kaplan-meier-survival-curves",
+    "title": "Part Three",
+    "section": "Kaplan-Meier Survival Curves",
+    "text": "Kaplan-Meier Survival Curves\nThe Kaplan-Meier estimator provides a nonparametric estimate of the survival function:\n\\[\nS(t)=P(T&gt;t),\n\\]\nthe probability of remaining event-free beyond time \\(t\\). The estimate changes at observed event times and accounts for the number of participants still at risk.\nWe can create a survival object and fit a Kaplan-Meier curve using the survival package:\n\nlibrary(survival)\n\nsurv_object &lt;- Surv(\n  time = data$time,\n  event = data$event\n)\n\nsurv_km &lt;- survfit(surv_object ~ 1)\nplot(surv_km)\n\nHere, event is normally coded as one when the event occurred and zero when the observation was censored. The Kaplan-Meier curve moves downwards as events occur. A cumulative event or mortality curve, \\(1-S(t)\\), moves upwards towards one.\nKaplan-Meier curves can be used to compare groups visually. The log-rank test provides an overall comparison of the survival curves:\n\nsurvdiff(\n  Surv(time, event) ~ treatment,\n  data = data\n)\n\nThe null hypothesis is that the groups have the same survival experience over time. The log-rank test gives a test statistic and P-value, but it does not directly provide an effect estimate. An unadjusted Kaplan-Meier comparison also does not account for other predictors or potential confounders.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#cox-proportional-hazards-regression",
+    "href": "part_03.html#cox-proportional-hazards-regression",
+    "title": "Part Three",
+    "section": "Cox Proportional-Hazards Regression",
+    "text": "Cox Proportional-Hazards Regression\nCox regression models the relationship between a time-to-event outcome and one or more predictors. The hazard is the instantaneous event rate among individuals who have remained event-free up to time \\(t\\).\nThe Cox proportional-hazards model is:\n\\[\nh(t\\mid\\mathbf{x})\n=h_0(t)\\exp(\\beta_1x_1+\\cdots+\\beta_kx_k),\n\\]\nwhere \\(h_0(t)\\) is the baseline hazard at time \\(t\\). The method is semiparametric because the baseline hazard is left unspecified, while the predictor effects are described parametrically through the regression coefficients.\nExponentiating a coefficient gives a hazard ratio:\n\\[\nHR_j=\\exp(\\beta_j).\n\\]\nA hazard ratio above one indicates a higher instantaneous event rate, and a hazard ratio below one indicates a lower event rate, holding the other predictors constant. A hazard ratio is not a ratio of survival probabilities or a direct statement about the difference in median survival time.\nWe can fit a Cox model using coxph():\n\nlibrary(survival)\nlibrary(survminer)\n\nm1_cox &lt;- coxph(\n  Surv(time, event) ~ treatment + age,\n  data = data\n)\n\nsummary(m1_cox)\nggforest(m1_cox, data = data)\n\nThe forest plot displays the estimated hazard ratios and their confidence intervals. This provides an effect estimate for treatment while adjusting for age.",
+    "crumbs": [
+      "Part Three"
+    ]
+  },
+  {
+    "objectID": "part_03.html#the-proportional-hazards-assumption",
+    "href": "part_03.html#the-proportional-hazards-assumption",
+    "title": "Part Three",
+    "section": "The Proportional-Hazards Assumption",
+    "text": "The Proportional-Hazards Assumption\nThe Cox model assumes that the hazard ratio associated with a predictor remains constant over time. This is the proportional-hazards assumption. For example, if a treatment has a hazard ratio of 0.7, the model assumes that this relative effect is the same throughout follow-up, even though the baseline hazard itself may change.\nWe can assess this assumption using scaled Schoenfeld residuals and cox.zph():\n\nproportionality_test &lt;- cox.zph(m1_cox)\nproportionality_test\nplot(proportionality_test)\n\nA systematic trend in the residual plot, or evidence from the test, may suggest that a predictor’s effect changes over time. Possible approaches include modelling an interaction with time, stratification or dividing the follow-up period into scientifically meaningful intervals.\nAs with the other models in this course, diagnostics and assumptions must be considered in relation to the study design and research question. Survival estimates depend on clearly defined time origins and events, adequate follow-up, appropriate handling of censoring and thoughtful selection of predictors.",
+    "crumbs": [
+      "Part Three"
     ]
   }
 ]

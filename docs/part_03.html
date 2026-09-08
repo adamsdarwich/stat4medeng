@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adam S. Darwich">
+<meta name="dcterms.date" content="2026-08-06">
+
+<title>Part Three – Statistics for Medical Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_03.html">Part Three</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for Medical Engineers</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part One</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Two</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_03.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Part Three</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#l3-1-generalised-linear-models" id="toc-l3-1-generalised-linear-models" class="nav-link active" data-scroll-target="#l3-1-generalised-linear-models">L3-1 Generalised Linear Models</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-generalised-linear-model" id="toc-what-is-a-generalised-linear-model" class="nav-link" data-scroll-target="#what-is-a-generalised-linear-model">What is a Generalised Linear Model?</a></li>
+  <li><a href="#linear-regression-as-a-glm" id="toc-linear-regression-as-a-glm" class="nav-link" data-scroll-target="#linear-regression-as-a-glm">Linear Regression as a GLM</a></li>
+  </ul></li>
+  <li><a href="#l3-2-logistic-regression" id="toc-l3-2-logistic-regression" class="nav-link" data-scroll-target="#l3-2-logistic-regression">L3-2 Logistic Regression</a>
+  <ul class="collapse">
+  <li><a href="#modelling-binary-outcomes" id="toc-modelling-binary-outcomes" class="nav-link" data-scroll-target="#modelling-binary-outcomes">Modelling Binary Outcomes</a></li>
+  <li><a href="#an-example-of-logistic-regression-in-r" id="toc-an-example-of-logistic-regression-in-r" class="nav-link" data-scroll-target="#an-example-of-logistic-regression-in-r">An Example of Logistic Regression in R</a></li>
+  <li><a href="#interpreting-logistic-regression-coefficients" id="toc-interpreting-logistic-regression-coefficients" class="nav-link" data-scroll-target="#interpreting-logistic-regression-coefficients">Interpreting Logistic Regression Coefficients</a>
+  <ul class="collapse">
+  <li><a href="#the-divide-by-four-rule" id="toc-the-divide-by-four-rule" class="nav-link" data-scroll-target="#the-divide-by-four-rule">The Divide-by-Four Rule</a></li>
+  <li><a href="#odds-ratios" id="toc-odds-ratios" class="nav-link" data-scroll-target="#odds-ratios">Odds Ratios</a></li>
+  </ul></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction">Prediction</a></li>
+  <li><a href="#residual-diagnostics" id="toc-residual-diagnostics" class="nav-link" data-scroll-target="#residual-diagnostics">Residual Diagnostics</a></li>
+  </ul></li>
+  <li><a href="#l3-3-poisson-regression" id="toc-l3-3-poisson-regression" class="nav-link" data-scroll-target="#l3-3-poisson-regression">L3-3 Poisson Regression</a>
+  <ul class="collapse">
+  <li><a href="#modelling-count-data" id="toc-modelling-count-data" class="nav-link" data-scroll-target="#modelling-count-data">Modelling Count Data</a></li>
+  <li><a href="#an-example-of-poisson-regression-in-r" id="toc-an-example-of-poisson-regression-in-r" class="nav-link" data-scroll-target="#an-example-of-poisson-regression-in-r">An Example of Poisson Regression in R</a></li>
+  <li><a href="#overdispersion" id="toc-overdispersion" class="nav-link" data-scroll-target="#overdispersion">Overdispersion</a></li>
+  <li><a href="#zero-inflation" id="toc-zero-inflation" class="nav-link" data-scroll-target="#zero-inflation">Zero Inflation</a></li>
+  </ul></li>
+  <li><a href="#l3-4-ordered-categorical-regression" id="toc-l3-4-ordered-categorical-regression" class="nav-link" data-scroll-target="#l3-4-ordered-categorical-regression">L3-4 Ordered Categorical Regression</a>
+  <ul class="collapse">
+  <li><a href="#ordinal-logistic-regression" id="toc-ordinal-logistic-regression" class="nav-link" data-scroll-target="#ordinal-logistic-regression">Ordinal Logistic Regression</a></li>
+  <li><a href="#an-example-in-r" id="toc-an-example-in-r" class="nav-link" data-scroll-target="#an-example-in-r">An Example in R</a></li>
+  <li><a href="#model-diagnostics" id="toc-model-diagnostics" class="nav-link" data-scroll-target="#model-diagnostics">Model Diagnostics</a></li>
+  <li><a href="#modelling-unordered-categorical-data" id="toc-modelling-unordered-categorical-data" class="nav-link" data-scroll-target="#modelling-unordered-categorical-data">Modelling Unordered Categorical Data</a></li>
+  </ul></li>
+  <li><a href="#l3-5-survival-analysis" id="toc-l3-5-survival-analysis" class="nav-link" data-scroll-target="#l3-5-survival-analysis">L3-5 Survival Analysis</a>
+  <ul class="collapse">
+  <li><a href="#time-to-event-data-and-right-censoring" id="toc-time-to-event-data-and-right-censoring" class="nav-link" data-scroll-target="#time-to-event-data-and-right-censoring">Time-to-Event Data and Right Censoring</a></li>
+  <li><a href="#kaplan-meier-survival-curves" id="toc-kaplan-meier-survival-curves" class="nav-link" data-scroll-target="#kaplan-meier-survival-curves">Kaplan-Meier Survival Curves</a></li>
+  <li><a href="#cox-proportional-hazards-regression" id="toc-cox-proportional-hazards-regression" class="nav-link" data-scroll-target="#cox-proportional-hazards-regression">Cox Proportional-Hazards Regression</a></li>
+  <li><a href="#the-proportional-hazards-assumption" id="toc-the-proportional-hazards-assumption" class="nav-link" data-scroll-target="#the-proportional-hazards-assumption">The Proportional-Hazards Assumption</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Part Three</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adam S. Darwich </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 6, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Here I introduce generalised linear models (GLMs). GLMs extend linear regression to dependent variables of other types than continuous data.</p></li>
+<li><p>A GLM combines a random component, describing the distribution of the dependent variable; a systematic component, consisting of the linear predictor; and a link function connecting the expected response to the linear predictor.</p></li>
+<li><p>Logistic regression can be used to model binary outcomes, where the inverse-logit function transforms predictions to probabilities between zero and one. The model coefficients are expressed on the log-odds scale.</p></li>
+<li><p>Poisson regression is used to model count data. Important considerations include overdispersion and zero-inflation, which may require another model such as negative binomial or zero-inflated regression.</p></li>
+<li><p>Ordinal logistic regression can be used for ordered categorical outcomes. While, unordered categorical data can be modelled using binomial probit or multinomial probit regression.</p></li>
+<li><p>Survival analysis concerns the time until an event, accounting for right censoring (survival beyond the study period). Kaplan-Meier curves describe survival over time, while Cox regression estimates associations between predictors and the hazard of an event.</p></li>
+</ul>
+</div>
+</div>
+<section id="l3-1-generalised-linear-models" class="level1">
+<h1>L3-1 Generalised Linear Models</h1>
+<p>Here, we will look at generalised linear models. This brings us back to Rothamsted Experimental Station in Harpenden (the location of the potato studies and ANOVA development) and the work of John Nelder and Robert Wedderburn during the 1970s. They developed generalised linear modelling as a general approach to regression for dependent variables that can be described using distributions from the exponential family (<span class="citation" data-cites="nelder&amp;wedderburn1972">Nelder and Wedderburn (1972)</span>).</p>
+<p>The exponential family includes many commonly used discrete and continuous probability distributions, such as the normal, binomial, Poisson, gamma and exponential distributions. These distributions have useful mathematical properties (<em>i.e.</em>, a known relationship between the mean and the variance, and straightforward calculations of the log-likelihood derivative) and can be handled within a common modelling framework.</p>
+<section id="what-is-a-generalised-linear-model" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-generalised-linear-model">What is a Generalised Linear Model?</h2>
+<p>A generalised linear model has three main components:</p>
+<ol type="1">
+<li>A <strong>Random component</strong>: the dependent variable <span class="math inline">\(Y\)</span> follows a probability distribution from the exponential family, with a mean <span class="math inline">\(\mu\)</span>.</li>
+<li>A <strong>Systematic component</strong>: a linear predictor combines the predictors and regression coefficients.</li>
+<li>A <strong>Link function</strong>: a mathematical function connects the expected value of the dependent variable to the linear predictor.</li>
+</ol>
+<p>The linear predictor can be written as:</p>
+<p><span class="math display">\[
+\eta_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots+\beta_kx_{ik}
+=\mathbf{x}_i^T\boldsymbol{\beta}.
+\]</span></p>
+<p>The link function, <span class="math inline">\(g(\cdot)\)</span>, connects the mean response <span class="math inline">\(\mu_i=E(Y_i)\)</span> to this linear predictor:</p>
+<p><span class="math display">\[
+g(\mu_i)=\eta_i.
+\]</span></p>
+<p>We can then transform the prediction back to the original scale of the dependent variable using the inverse link function:</p>
+<p><span class="math display">\[
+\mu_i=g^{-1}(\eta_i).
+\]</span></p>
+<p>The link function makes it possible to model a response that does not itself have a linear relationship with the predictors. For example, probabilities must remain between zero and one, while expected counts cannot be negative. An appropriate link function transforms these expected responses to a scale on which they can be modelled using a linear predictor.</p>
+<p>The regression coefficients are usually estimated using maximum likelihood estimation. We therefore choose the coefficients that make the observed data most likely under the selected probability distribution and model.</p>
+</section>
+<section id="linear-regression-as-a-glm" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression-as-a-glm">Linear Regression as a GLM</h2>
+<p>An ordinary linear regression is a special case of the generalised linear model. We assume that the dependent variable is normally distributed around its expected value:</p>
+<p><span class="math display">\[
+Y_i\sim N(\mu_i,\sigma^2).
+\]</span></p>
+<p>The identity link is used:</p>
+<p><span class="math display">\[
+g(\mu_i)=\mu_i=\eta_i.
+\]</span></p>
+<p>Because the link function does not transform the mean, the expected response is directly equal to the linear predictor:</p>
+<p><span class="math display">\[
+\mu_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_kx_{ik}.
+\]</span></p>
+<p>The residual standard deviation, <span class="math inline">\(\sigma\)</span>, is estimated from the data. As we saw in Part Two, an ordinary linear regression can be estimated by least squares. Under the assumption of normally distributed errors, this gives the same coefficient estimates as maximum likelihood estimation.</p>
+<p>Other combinations of distributions and link functions allow us to model different kinds of dependent variables. Common examples include:</p>
+<ul>
+<li><strong>Binary outcomes:</strong> binomial distribution with a logit link.</li>
+<li><strong>Count outcomes:</strong> Poisson distribution with a log link.</li>
+<li><strong>Positive continuous outcomes:</strong> gamma distribution, commonly with a log or inverse link.</li>
+<li><strong>Ordered categorical outcomes:</strong> an ordinal model, commonly using a logit link.</li>
+</ul>
+<p>The general modelling procedure is therefore:</p>
+<ol type="1">
+<li>Specify the distribution of the dependent variable.</li>
+<li>Specify a vector or matrix of predictors.</li>
+<li>Use a link function to connect the expected response to the linear predictor.</li>
+<li>Estimate the regression coefficients, usually using maximum likelihood estimation.</li>
+<li>Use the inverse link function to predict the dependent variable on its original scale.</li>
+<li>Assess the model fit and residual errors using diagnostics suited to the selected model.</li>
+</ol>
+<p>In the following sections, we will look at logistic regression, Poisson regression and ordered categorical regression. We will also briefly consider how unordered categorical outcomes can be modelled.</p>
+</section>
+</section>
+<section id="l3-2-logistic-regression" class="level1">
+<h1>L3-2 Logistic Regression</h1>
+<p>Binary outcomes are frequently encountered in medicine. These are outcomes with two possible values, usually represented by zero and one. Examples include:</p>
+<ul>
+<li>the presence or absence of a disease given a set of biomarkers;</li>
+<li>success or failure of a response to treatment; and</li>
+<li>the occurrence or non-occurrence of a clinical outcome.</li>
+</ul>
+<p>Logistic regression is used when we want to model the probability of one of these outcomes as a function of one or more predictors.</p>
+<section id="modelling-binary-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="modelling-binary-outcomes">Modelling Binary Outcomes</h2>
+<p>Suppose that disease status <span class="math inline">\(Y_i\)</span> is coded as one when disease is present and zero when it is absent. We can describe the outcome using a Bernoulli distribution:</p>
+<p><span class="math display">\[
+Y_i\sim\operatorname{Bernoulli}(p_i),
+\]</span></p>
+<p>where <span class="math inline">\(p_i\)</span> is the probability that disease is present for observation <span class="math inline">\(i\)</span>.</p>
+<p>If we fitted a conventional linear regression directly to the binary response, its predictions would not necessarily remain between zero and one. Logistic regression resolves this by using the logit link:</p>
+<p><span class="math display">\[
+\operatorname{logit}(p_i)
+=\log\left(\frac{p_i}{1-p_i}\right)
+=\beta_0+\beta_1x_{i1}+\cdots+\beta_kx_{ik}.
+\]</span></p>
+<p>The inverse-logit function transforms the linear predictor back into a probability:</p>
+<p><span class="math display">\[
+p_i=\frac{\exp(\eta_i)}{1+\exp(\eta_i)}
+=\frac{1}{1+\exp(-\eta_i)}.
+\]</span></p>
+<p>This nonlinear transformation bounds the model predictions between zero and one. The fitted probabilities can then be mapped to the observed binary outcomes.</p>
+</section>
+<section id="an-example-of-logistic-regression-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="an-example-of-logistic-regression-in-r">An Example of Logistic Regression in R</h2>
+<p>In the example presented in the slides, disease status is modelled as a function of a continuous biomarker, <code>x1</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>m1_binom <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> binom_dat</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_binom)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The model can be written as:</p>
+<p><span class="math display">\[
+\operatorname{logit}(p_i)=\beta_0+\beta_1x_{i1}.
+\]</span></p>
+<p>The output is similar to the output from an ordinary linear regression. It includes the coefficient estimates, standard errors, test statistics and P-values. The standard errors indicate the uncertainty in our estimates of the model coefficients.</p>
+<p>Because the outcome is discrete, it does not make sense to summarise model fit using the residual standard deviation in the same way as for ordinary linear regression. The output instead includes the null deviance and residual deviance.</p>
+<p>The <strong>null deviance</strong> describes the error from a model containing only an intercept. The <strong>residual deviance</strong> describes the error remaining after the predictor or predictors have been included. A lower deviance indicates better fit to the observed data. In the example, the null deviance is approximately 130.7 and the residual deviance is approximately 92.0, representing a substantial decrease after including the biomarker.</p>
+<p>For nested models, the difference in deviance can be assessed using a likelihood-ratio test. Under the null hypothesis, the decrease in deviance is approximately chi-squared distributed, with degrees of freedom equal to the difference in the number of estimated parameters. Adding one uninformative parameter would, on average, reduce the deviance by approximately one. A substantially larger decrease indicates that the added parameter may improve the model beyond what would be expected by chance.</p>
+<p>The output also includes the Akaike information criterion (AIC). AIC is mainly useful when comparing candidate models fitted to the same outcome data. Lower values indicate a better trade-off between model fit and complexity; the value is not particularly meaningful on its own.</p>
+</section>
+<section id="interpreting-logistic-regression-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-logistic-regression-coefficients">Interpreting Logistic Regression Coefficients</h2>
+<p>Logistic regression coefficients can be difficult to interpret directly because they describe changes in the log odds rather than constant changes in probability. The relationship between the linear predictor and the probability is nonlinear. A given change in the linear predictor has its largest effect on probability near <span class="math inline">\(p=0.5\)</span> and a smaller effect near zero or one.</p>
+<p>One straightforward approach is to calculate predicted probabilities at meaningful predictor values. For example, we can calculate the probability at the mean biomarker value and then calculate how this probability changes when the biomarker increases by one unit:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arm)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>p_mean <span class="ot">&lt;-</span> <span class="fu">invlogit</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(m1_binom)[<span class="dv">1</span>] <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>(m1_binom)[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">mean</span>(binom_dat<span class="sc">$</span>x1)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>p_x1 <span class="ot">&lt;-</span> <span class="fu">invlogit</span>(<span class="fu">coef</span>(m1_binom)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(m1_binom)[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">1</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>p_x2 <span class="ot">&lt;-</span> <span class="fu">invlogit</span>(<span class="fu">coef</span>(m1_binom)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(m1_binom)[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>p_difference <span class="ot">&lt;-</span> p_x2 <span class="sc">-</span> p_x1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The resulting probability difference depends on where we are on the logistic curve. We should therefore calculate effects over values of the predictors that are relevant to the research question.</p>
+<section id="the-divide-by-four-rule" class="level3">
+<h3 class="anchored" data-anchor-id="the-divide-by-four-rule">The Divide-by-Four Rule</h3>
+<p>The logistic curve is steepest at its centre, where <span class="math inline">\(p=0.5\)</span>. At this point, the slope of the inverse-logit curve with respect to a continuous predictor is:</p>
+<p><span class="math display">\[
+\frac{\beta_j}{4}.
+\]</span></p>
+<p>Consequently, <span class="math inline">\(\beta_j/4\)</span> gives an approximate upper bound for the change in probability associated with a one-unit increase in <span class="math inline">\(x_j\)</span>, holding the other predictors constant (<span class="citation" data-cites="gelman&amp;hill2007">Gelman and Hill (2007)</span>). In the slide example, a coefficient of approximately 1.8 gives a maximum probability difference of approximately 0.45.</p>
+<p>This is a useful approximation, but it is not the probability change at every predictor value. Calculating predicted probabilities is generally clearer.</p>
+</section>
+<section id="odds-ratios" class="level3">
+<h3 class="anchored" data-anchor-id="odds-ratios">Odds Ratios</h3>
+<p>If an outcome has probability <span class="math inline">\(p\)</span>, its odds are:</p>
+<p><span class="math display">\[
+\operatorname{odds}=\frac{p}{1-p}.
+\]</span></p>
+<p>An odds of one corresponds to a probability of 0.5. Exponentiating a logistic regression coefficient gives an odds ratio:</p>
+<p><span class="math display">\[
+OR_j=\exp(\beta_j).
+\]</span></p>
+<p>For a continuous predictor, this is the multiplicative change in the odds associated with a one-unit increase in that predictor, holding the other predictors constant. Odds ratios should not be interpreted as risk ratios, particularly when the outcome is common.</p>
+</section>
+</section>
+<section id="prediction" class="level2">
+<h2 class="anchored" data-anchor-id="prediction">Prediction</h2>
+<p>We can use <code>predict()</code> to calculate fitted probabilities over a sequence of biomarker values:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat_new <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">seq</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">from =</span> <span class="fu">min</span>(binom_dat<span class="sc">$</span>x1),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">to =</span> <span class="fu">max</span>(binom_dat<span class="sc">$</span>x1),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">length.out =</span> <span class="dv">100</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>dat_new<span class="sc">$</span>Predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  m1_binom,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"response"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> dat_new</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Specifying <code>type = "response"</code> returns predictions as probabilities on the original response scale rather than as log odds.</p>
+<p>With two biomarkers, the model becomes:</p>
+<p><span class="math display">\[
+\operatorname{logit}(p_i)
+=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}.
+\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m2_binom <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> binom_dat</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can then vary one biomarker while fixing the other at its minimum, mean or maximum value. Plotting these probability curves helps us understand the relative effects of the two biomarkers on the model predictions.</p>
+</section>
+<section id="residual-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="residual-diagnostics">Residual Diagnostics</h2>
+<p>The observed residuals from a binary model are also discrete, so they do not behave like the continuous residuals from an ordinary linear regression. One option is to use binned residual plots, in which residuals are grouped across ranges of the fitted values. We look for systematic patterns and for bins that fall outside their expected error bounds.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(see)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>m2_binned_residuals <span class="ot">&lt;-</span> <span class="fu">binned_residuals</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  m2_binom,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_bins =</span> <span class="dv">5</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ci =</span> <span class="fl">0.95</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuals =</span> <span class="st">"deviance"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m2_binned_residuals, <span class="at">show_dots =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Simulation-based residual diagnostics, for example those available through <code>DHARMa</code>, provide another general approach for GLMs. A systematic rise and fall in the residuals may indicate an inadequately represented nonlinear relationship, although the appropriate response is not automatically to log-transform a predictor. We should consider whether a transformation, polynomial term, spline or interaction is supported by the scientific relationship.</p>
+</section>
+</section>
+<section id="l3-3-poisson-regression" class="level1">
+<h1>L3-3 Poisson Regression</h1>
+<p>Count data are also frequently encountered in medical research. Examples include:</p>
+<ul>
+<li>counts of tumour metastases, inflamed joints or lung nodules;</li>
+<li>cell counts or radioactive particles detected during a fixed time;</li>
+<li>length of hospital stay measured in days; and</li>
+<li>the number of patients or procedures observed over a specified period.</li>
+</ul>
+<p>Counts are non-negative integers and are often right-skewed. The Poisson distribution provides a common starting point for modelling these data.</p>
+<section id="modelling-count-data" class="level2">
+<h2 class="anchored" data-anchor-id="modelling-count-data">Modelling Count Data</h2>
+<p>For a Poisson regression, the outcome is assumed to follow a Poisson distribution:</p>
+<p><span class="math display">\[
+Y_i\sim\operatorname{Poisson}(\lambda_i),
+\]</span></p>
+<p>where <span class="math inline">\(\lambda_i\)</span> is both the expected count and, under the Poisson assumption, the variance:</p>
+<p><span class="math display">\[
+E(Y_i)=\operatorname{Var}(Y_i)=\lambda_i.
+\]</span></p>
+<p>The canonical link function is the natural logarithm:</p>
+<p><span class="math display">\[
+\log(\lambda_i)
+=\beta_0+\beta_1x_{i1}+\cdots+\beta_kx_{ik}.
+\]</span></p>
+<p>Using the inverse link gives:</p>
+<p><span class="math display">\[
+\lambda_i=\exp(\beta_0+\beta_1x_{i1}+\cdots+\beta_kx_{ik}),
+\]</span></p>
+<p>which ensures that the predicted mean count cannot be negative.</p>
+</section>
+<section id="an-example-of-poisson-regression-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="an-example-of-poisson-regression-in-r">An Example of Poisson Regression in R</h2>
+<p>In the example presented in the slides, the observed count is modelled as a function of treatment and a continuous biomarker:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m1_pois <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"poisson"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pois_dat</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_pois)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The output again contains the coefficient estimates, standard errors, <em>z</em>-statistics, P-values, null deviance and residual deviance. Because the model uses a log link, exponentiating a coefficient gives a rate ratio or count ratio:</p>
+<p><span class="math display">\[
+\exp(\beta_j).
+\]</span></p>
+<p>For a continuous predictor, this is the multiplicative change in the expected count associated with a one-unit increase in the predictor, holding the other variables constant. For a categorical predictor, it compares the expected count with that of the reference category.</p>
+<p>As with logistic regression, the difference between the null and residual deviances indicates how much the predictors improve fit relative to an intercept-only model. We should also examine residual diagnostics:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DHARMa)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sim_res <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(m1_pois)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sim_res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>DHARMa</code> uses simulation to produce scaled residuals that can be assessed using familiar diagnostic plots and formal tests.</p>
+</section>
+<section id="overdispersion" class="level2">
+<h2 class="anchored" data-anchor-id="overdispersion">Overdispersion</h2>
+<p>The Poisson distribution is described using one parameter, <span class="math inline">\(\lambda\)</span>, which determines both its mean and variance. Real count data often have more variability than allowed by this assumption. This is called <strong>overdispersion</strong>.</p>
+<p>If overdispersion is ignored, the model may underestimate the standard errors. Confidence intervals may then be too narrow and P-values too small. We can test dispersion using, for example, the <code>testDispersion()</code> function in <code>DHARMa</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">testDispersion</span>(m1_pois)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A dispersion ratio greater than one indicates that the observed variability exceeds the variability expected under the fitted Poisson model. The magnitude, uncertainty and residual plots should be considered together rather than treating one as a universal pass-or-fail cut-off.</p>
+<p>If the data are overdispersed, one alternative is negative binomial regression. The negative binomial model includes an additional parameter that allows the variance to exceed the mean:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>m2_pois <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pois_dat</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2_pois)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="zero-inflation" class="level2">
+<h2 class="anchored" data-anchor-id="zero-inflation">Zero Inflation</h2>
+<p>Another feature of count data is an unexpectedly large number of zero-valued observations. For example, one patient group may have no detected metastases, while the positive counts in another group resemble a Poisson or negative binomial distribution.</p>
+<p>Poisson and negative binomial models naturally allow zero counts and can accommodate some datasets containing many zeros. Switching to a negative binomial model may sometimes be sufficient when the apparent zero excess is associated with broader overdispersion.</p>
+<p>When the data-generating process contains a separate source of structural zeros, we can consider a mixture model. A zero-inflated Poisson model combines a process that always produces a zero with a Poisson count process:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pscl)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>m3_pois <span class="ot">&lt;-</span> <span class="fu">zeroinfl</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pois_dat</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3_pois)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The choice between Poisson, negative binomial, hurdle and zero-inflated models should be based on the assumed data-generating process as well as model diagnostics. A large number of observed zeros alone does not prove that a zero-inflated model is required.</p>
+</section>
+</section>
+<section id="l3-4-ordered-categorical-regression" class="level1">
+<h1>L3-4 Ordered Categorical Regression</h1>
+<p>We will conclude our examples of generalised linear models by looking at ordered categorical data. These are outcomes with more than two categories that have an inherent order.</p>
+<p>Examples include:</p>
+<ul>
+<li>disease severity, risk or cancer stage;</li>
+<li>general health or performance status;</li>
+<li>frequency categories used in psychiatric instruments; and</li>
+<li>levels of agreement on a Likert scale.</li>
+</ul>
+<p>Converting a continuous measure into categories generally results in a loss of information and statistical power. For example, BMI contains more information as a continuous measure than when divided into underweight, normal weight, overweight, obese and morbidly obese categories. Sometimes, however, ordered categories cannot be avoided because they form part of a validated clinical instrument or directly represent the outcome of interest.</p>
+<p>Likert scales are sometimes analysed as continuous interval data and sometimes as ordered categorical data. Opinions differ regarding when a continuous approximation is sufficiently accurate. The decision should consider the number of categories, the distribution of responses, the instrument and the intended interpretation.</p>
+<section id="ordinal-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="ordinal-logistic-regression">Ordinal Logistic Regression</h2>
+<p>For an ordered outcome with <span class="math inline">\(K\)</span> categories, an ordinal logistic regression models <span class="math inline">\(K-1\)</span> cumulative log odds. The common proportional-odds formulation can be written as:</p>
+<p><span class="math display">\[
+\log\left[\frac{P(Y_i\leq j)}{P(Y_i&gt;j)}\right]
+=c_j-\mathbf{x}_i^T\boldsymbol{\beta},
+\qquad j=1,\ldots,K-1.
+\]</span></p>
+<p>The cut-points <span class="math inline">\(c_j\)</span>, sometimes shown as intercepts or thresholds, divide an underlying continuous tendency into the observed response categories. The linear predictor <span class="math inline">\(\mathbf{x}_i^T\boldsymbol{\beta}\)</span> shifts an observation along this underlying scale.</p>
+<p>We fit one cumulative logistic comparison for each boundary between categories: category 1 versus categories above 1, categories 1-2 versus categories above 2, and so on. The cut-points differ between these comparisons, but the regression coefficients are assumed to remain the same. This is the <strong>proportional-odds assumption</strong>, also called the parallel-regression assumption.</p>
+<p>The cut-points and regression coefficients are estimated simultaneously using maximum likelihood estimation. The residual variability relates partly to the fuzziness with which the underlying scale is separated into the observed response categories.</p>
+</section>
+<section id="an-example-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="an-example-in-r">An Example in R</h2>
+<p>An ordinal logistic model can be fitted using <code>polr()</code> from the <code>MASS</code> package:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ordinal_model <span class="ot">&lt;-</span> <span class="fu">polr</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  response <span class="sc">~</span> biomarker,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ordinal_dat,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Hess =</span> <span class="cn">TRUE</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ordinal_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In the slide example, the estimated biomarker coefficient is 1.185. With the sign convention used by <code>polr()</code>, a higher biomarker value is associated with greater odds of being in a higher response category. Exponentiating the coefficient gives the proportional odds ratio:</p>
+<p><span class="math display">\[
+\exp(1.185)\approx3.27.
+\]</span></p>
+<p>Thus, a one-unit increase in the biomarker multiplies the odds of being above rather than at or below any given category boundary by approximately 3.27, assuming proportional odds.</p>
+<p>The intercepts labelled <code>1|2</code> and <code>2|3</code> are the estimated thresholds separating response category 1 from categories 2-3, and categories 1-2 from category 3. They locate the boundaries on the underlying logistic scale when the biomarker equals zero. They are not ordinary group means and are usually less scientifically interesting than the predictor coefficients.</p>
+<p>The residual deviance measures model lack of fit and is mainly interpreted through comparison with a nested model. AIC can be compared across candidate models fitted to the same outcome data, including non-nested models, with lower values indicating a better trade-off between fit and complexity.</p>
+</section>
+<section id="model-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="model-diagnostics">Model Diagnostics</h2>
+<p>The proportional-odds assumption can be assessed using, for example, Brant’s test:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brant)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">brant</span>(ordinal_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This examines whether the predictor coefficients can reasonably be treated as equal across the cumulative logits. As always, the test should be considered alongside graphical diagnostics, sample size and the practical magnitude of any departure.</p>
+<p>We can also compare the predicted categories with the observed categories using a contingency table. Ideally, most observations fall along its diagonal:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>predicted_category <span class="ot">&lt;-</span> <span class="fu">predict</span>(ordinal_model, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">Actual =</span> ordinal_dat<span class="sc">$</span>response, <span class="at">Predicted =</span> predicted_category)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The example in the slides predicts categories one and three more successfully than the middle category. This may indicate that the middle category is difficult to separate using the available biomarker.</p>
+<p>Surrogate residuals provide another way to examine ordinal regression models. The <code>sure</code> package can be used to generate residuals on a continuous scale:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sure)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ordinal_residuals <span class="ot">&lt;-</span> <span class="fu">resids</span>(ordinal_model)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ordinal_residuals)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(ordinal_residuals)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(ordinal_residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We generally look for residuals centred around zero, with no systematic relationship with fitted values or predictors and no major departure from their expected distribution.</p>
+</section>
+<section id="modelling-unordered-categorical-data" class="level2">
+<h2 class="anchored" data-anchor-id="modelling-unordered-categorical-data">Modelling Unordered Categorical Data</h2>
+<p>Unordered categorical outcomes contain several categories without an inherent ranking. Examples could include alternative diagnoses or mutually exclusive choices.</p>
+<p>With two outcome categories, a binomial probit model can be fitted in <code>glm()</code> using a probit link:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>probit_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  outcome <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> choice_dat</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For more than two unordered choices, a multinomial model is required. A multinomial probit model can, for example, be fitted using the <code>MNP</code> package:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MNP)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(mnp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="l3-5-survival-analysis" class="level1">
+<h1>L3-5 Survival Analysis</h1>
+<p>In this final section, I will briefly introduce survival analysis. Early survival statistics were developed by the seventeenth-century London merchant John Graunt, who analysed records of births and deaths in the City of London. His <em>Natural and Political Observations…Made upon the Bills of Mortality</em> was first published in 1662.</p>
+<p>Survival analysis is concerned with the time until an event occurs. Although the name comes from the analysis of death, the event can be any clearly defined outcome, such as disease recurrence, hospital discharge, device failure or recovery.</p>
+<section id="time-to-event-data-and-right-censoring" class="level2">
+<h2 class="anchored" data-anchor-id="time-to-event-data-and-right-censoring">Time-to-Event Data and Right Censoring</h2>
+<p>Participants or objects are followed until the event occurs or until the observation period ends. If the event has not occurred by the end of observation, the participant’s event time is <strong>right-censored</strong>. We know that the true event time is later than the observed follow-up time, but we do not know its exact value.</p>
+<p>Right censoring may occur because:</p>
+<ul>
+<li>a participant remains event-free at the end of the study;</li>
+<li>a participant is lost to follow-up; or</li>
+<li>a participant withdraws before experiencing the event.</li>
+</ul>
+<p>Survival methods use the information available up to the censoring time rather than treating the censored participant as if the event occurred or discarding the participant completely. Standard methods usually assume that censoring is non-informative conditional on the variables in the model: participants censored at a given time should have a similar subsequent prognosis to comparable participants who remain under observation.</p>
+</section>
+<section id="kaplan-meier-survival-curves" class="level2">
+<h2 class="anchored" data-anchor-id="kaplan-meier-survival-curves">Kaplan-Meier Survival Curves</h2>
+<p>The Kaplan-Meier estimator provides a nonparametric estimate of the survival function:</p>
+<p><span class="math display">\[
+S(t)=P(T&gt;t),
+\]</span></p>
+<p>the probability of remaining event-free beyond time <span class="math inline">\(t\)</span>. The estimate changes at observed event times and accounts for the number of participants still at risk.</p>
+<p>We can create a survival object and fit a Kaplan-Meier curve using the <code>survival</code> package:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>surv_object <span class="ot">&lt;-</span> <span class="fu">Surv</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> data<span class="sc">$</span>time,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> data<span class="sc">$</span>event</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>surv_km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(surv_object <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(surv_km)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Here, <code>event</code> is normally coded as one when the event occurred and zero when the observation was censored. The Kaplan-Meier curve moves downwards as events occur. A cumulative event or mortality curve, <span class="math inline">\(1-S(t)\)</span>, moves upwards towards one.</p>
+<p>Kaplan-Meier curves can be used to compare groups visually. The log-rank test provides an overall comparison of the survival curves:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(time, event) <span class="sc">~</span> treatment,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The null hypothesis is that the groups have the same survival experience over time. The log-rank test gives a test statistic and P-value, but it does not directly provide an effect estimate. An unadjusted Kaplan-Meier comparison also does not account for other predictors or potential confounders.</p>
+</section>
+<section id="cox-proportional-hazards-regression" class="level2">
+<h2 class="anchored" data-anchor-id="cox-proportional-hazards-regression">Cox Proportional-Hazards Regression</h2>
+<p>Cox regression models the relationship between a time-to-event outcome and one or more predictors. The hazard is the instantaneous event rate among individuals who have remained event-free up to time <span class="math inline">\(t\)</span>.</p>
+<p>The Cox proportional-hazards model is:</p>
+<p><span class="math display">\[
+h(t\mid\mathbf{x})
+=h_0(t)\exp(\beta_1x_1+\cdots+\beta_kx_k),
+\]</span></p>
+<p>where <span class="math inline">\(h_0(t)\)</span> is the baseline hazard at time <span class="math inline">\(t\)</span>. The method is semiparametric because the baseline hazard is left unspecified, while the predictor effects are described parametrically through the regression coefficients.</p>
+<p>Exponentiating a coefficient gives a hazard ratio:</p>
+<p><span class="math display">\[
+HR_j=\exp(\beta_j).
+\]</span></p>
+<p>A hazard ratio above one indicates a higher instantaneous event rate, and a hazard ratio below one indicates a lower event rate, holding the other predictors constant. A hazard ratio is not a ratio of survival probabilities or a direct statement about the difference in median survival time.</p>
+<p>We can fit a Cox model using <code>coxph()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>m1_cox <span class="ot">&lt;-</span> <span class="fu">coxph</span>(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(time, event) <span class="sc">~</span> treatment <span class="sc">+</span> age,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_cox)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggforest</span>(m1_cox, <span class="at">data =</span> data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The forest plot displays the estimated hazard ratios and their confidence intervals. This provides an effect estimate for treatment while adjusting for age.</p>
+</section>
+<section id="the-proportional-hazards-assumption" class="level2">
+<h2 class="anchored" data-anchor-id="the-proportional-hazards-assumption">The Proportional-Hazards Assumption</h2>
+<p>The Cox model assumes that the hazard ratio associated with a predictor remains constant over time. This is the proportional-hazards assumption. For example, if a treatment has a hazard ratio of 0.7, the model assumes that this relative effect is the same throughout follow-up, even though the baseline hazard itself may change.</p>
+<p>We can assess this assumption using scaled Schoenfeld residuals and <code>cox.zph()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>proportionality_test <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(m1_cox)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>proportionality_test</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(proportionality_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A systematic trend in the residual plot, or evidence from the test, may suggest that a predictor’s effect changes over time. Possible approaches include modelling an interaction with time, stratification or dividing the follow-up period into scientifically meaningful intervals.</p>
+<p>As with the other models in this course, diagnostics and assumptions must be considered in relation to the study design and research question. Survival estimates depend on clearly defined time origins and events, adequate follow-up, appropriate handling of censoring and thoughtful selection of predictors.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-empty-content">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

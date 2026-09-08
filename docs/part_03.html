@@ -739,7 +739,7 @@ S(t)=P(T&gt;t),
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>surv_km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(surv_object <span class="sc">~</span> <span class="dv">1</span>)</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(surv_km)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Here, <code>event</code> is normally coded as one when the event occurred and zero when the observation was censored. The Kaplan-Meier curve moves downwards as events occur. A cumulative event or mortality curve, <span class="math inline">\(1-S(t)\)</span>, moves upwards towards one.</p>
+<p>Here, <code>event</code> is normally coded as one when the event occurred and zero when the observation ∏was censored. The Kaplan-Meier curve moves downwards as events occur. A cumulative event or mortality curve, <span class="math inline">\(1-S(t)\)</span>, moves upwards towards one.</p>
 <p>Kaplan-Meier curves can be used to compare groups visually. The log-rank test provides an overall comparison of the survival curves:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(</span>

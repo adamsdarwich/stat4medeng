@@ -557,7 +557,7 @@ surv_km <- survfit(surv_object ~ 1)
 plot(surv_km)
 ```
 
-Here, `event` is normally coded as one when the event occurred and zero when the observation was censored. The Kaplan-Meier curve moves downwards as events occur. A cumulative event or mortality curve, $1-S(t)$, moves upwards towards one.
+Here, `event` is normally coded as one when the event occurred and zero when the observation ∏was censored. The Kaplan-Meier curve moves downwards as events occur. A cumulative event or mortality curve, $1-S(t)$, moves upwards towards one.
 
 Kaplan-Meier curves can be used to compare groups visually. The log-rank test provides an overall comparison of the survival curves:
 

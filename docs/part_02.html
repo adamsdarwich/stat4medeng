@@ -261,6 +261,7 @@ window.Quarto = {
   <li><a href="#one-way-anova-in-r" id="toc-one-way-anova-in-r" class="nav-link" data-scroll-target="#one-way-anova-in-r">One-Way ANOVA in R</a></li>
   <li><a href="#post-hoc-comparisons" id="toc-post-hoc-comparisons" class="nav-link" data-scroll-target="#post-hoc-comparisons">Post-Hoc Comparisons</a></li>
   <li><a href="#extending-the-model-to-more-than-one-factor" id="toc-extending-the-model-to-more-than-one-factor" class="nav-link" data-scroll-target="#extending-the-model-to-more-than-one-factor">Extending the Model to More Than One Factor</a></li>
+  <li><a href="#nonparametric-alternative-the-kruskal-wallis-test" id="toc-nonparametric-alternative-the-kruskal-wallis-test" class="nav-link" data-scroll-target="#nonparametric-alternative-the-kruskal-wallis-test">Nonparametric Alternative: The Kruskal-Wallis Test</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1092,7 +1093,11 @@ F=\frac{MS_{\text{Treatment}}}{MS_{\text{Error}}}.
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(potato_aov_interaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The interaction asks whether differences among manure levels are consistent across varieties. As with multiple regression, the model structure should follow the experimental design and research question.</p>
-<p>ANOVA relies on the same broad assumptions as a linear regression with categorical predictors: validity, independent errors, an appropriate additive structure, approximately constant residual variance and approximately normal residual errors. The design of the experiment—particularly randomisation, replication and blocking—is fundamental to the validity of the analysis. ∏ ## Nonparametric Alternative: The Kruskal-Wallis Test The Kruskal-Wallis test is a rank-based extension of the Wilcoxon-Mann-Whitney test to three or more independent groups. It can be useful when an ANOVA model is not an adequate description of the data and a rank-based comparison is meaningful.</p>
+<p>ANOVA relies on the same broad assumptions as a linear regression with categorical predictors: validity, independent errors, an appropriate additive structure, approximately constant residual variance and approximately normal residual errors. The design of the experiment—particularly randomisation, replication and blocking—is fundamental to the validity of the analysis.</p>
+</section>
+<section id="nonparametric-alternative-the-kruskal-wallis-test" class="level2">
+<h2 class="anchored" data-anchor-id="nonparametric-alternative-the-kruskal-wallis-test">Nonparametric Alternative: The Kruskal-Wallis Test</h2>
+<p>The Kruskal-Wallis test is a rank-based extension of the Wilcoxon-Mann-Whitney test to three or more independent groups. It can be useful when an ANOVA model is not an adequate description of the data and a rank-based comparison is meaningful.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(yield_lbs <span class="sc">~</span> group, <span class="at">data =</span> greatscott)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>

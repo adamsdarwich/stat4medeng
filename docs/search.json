@@ -688,5 +688,353 @@
     "crumbs": [
       "Summary"
     ]
+  },
+  {
+    "objectID": "part_04.html",
+    "href": "part_04.html",
+    "title": "Part Four",
+    "section": "",
+    "text": "NoteKey Takeaways\n\n\n\n\nMixed-effects models combine fixed effects, describing average relationships, with random effects, describing variation between groups. The approach is useful when observations are grouped, including repeated measurements for the same participants over time. As such, a group can be a set of observations belonging to one individual, these data are grouped.\nRepeated observations help distinguish variability between participants from variability within participants. The estimation of these are possible using mixed-effects modelling.\nThe conditional growth model is a backbone of much of research in medicine and biology. The model incorporates an interaction between time and the intervention to describe how the intervention effect changes over time.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#a-longitudinal-herd-example",
+    "href": "part_04.html#a-longitudinal-herd-example",
+    "title": "Part Four",
+    "section": "A Longitudinal Herd Example",
+    "text": "A Longitudinal Herd Example\nConsider measurements of milk fat content from several herds over time. We can store the data in long format, with one row per observation:\n\n\n\nID\nTIME\nDV\n\n\n\n\n1\n1\n2.1\n\n\n1\n2\n2.4\n\n\n1\n3\n2.7\n\n\n1\n4\n3.2\n\n\n2\n1\n2.4\n\n\n\nID identifies the herd, TIME records the measurement time in months, and DV is the dependent variable (milk fat content).\nWe might expect milk fat content to increase over time while differing between herds at the same time point. The question is how to represent those differences in a model.\n\n\n\nFigure 4.1 Longitudinal milk fat data in five herds.\n\n\nThe above plot contains one trajectory per herd. Variation in the starting values represents between-herd differences in intercepts, while variation in the rate of change represents between-herd differences in slopes.\nWe have a few potential approaches for modelling these data. I will go through these belows along with their positives and negatives.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#naïve-pooling",
+    "href": "part_04.html#naïve-pooling",
+    "title": "Part Four",
+    "section": "Naïve Pooling",
+    "text": "Naïve Pooling\nOne approach is to fit a single regression line through all observations:\n\\[\nY_{ij}=\\beta_0+\\beta_1t_{ij}+\\varepsilon_{ij},\n\\]\nwhere \\(i\\) identifies a herd and \\(j\\) identifies an observation within that herd.\nThis model ignores herd groups. All differences between observations and the common regression line are assigned to the residual error term of the model, including persistent differences between herds.\nNaïve pooling treats the observations as independent even when the study design gives reasons to expect dependence. Ignoring grouping does not always change the estimated average slope substantially. However, it can affect its standard error, confidence interval and p-value. More importantly, the naïve pool approach leaves the between-herd variation as undescribed residual noise while the data violates the assumption on independence of errors.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#aggregating-observations",
+    "href": "part_04.html#aggregating-observations",
+    "title": "Part Four",
+    "section": "Aggregating Observations",
+    "text": "Aggregating Observations\nAnother approach is to average the observations at each time point and fit a regression to those averages:\n\nherd_means &lt;- aggregate(DV ~ TIME, data = herd_dat, FUN = mean)\nm_herd_means &lt;- lm(DV ~ TIME, data = herd_means)\nsummary(m_herd_means)\n\nThe lecture calls this complete pooling. In wider multilevel terminology, complete pooling often refers to fitting common coefficients to all individual observations without group-specific effects. To distinguish the two operations here, we refer to this particular approach as aggregation.\nAggregation can be useful when the mean trajectory is the object of interest. However, it discards information about variation between herds and within herds. Time-point averages calculated from the same herds can also remain correlated. Averaging does not automatically make them independent.\nAn especially smooth mean trajectory can produce a very small regression residual standard deviation. That value describes deviations of the averages from the fitted line. It should not be interpreted as the variation among individual observations or as a complete description of uncertainty in the original data.\nAggregation also changes the level of the analysis. Associations between group averages need not equal associations between individuals. Inferring an individual relationship from an aggregate relationship is known as the ecological fallacy."
+  },
+  {
+    "objectID": "part_04.html#group-specific-fixed-effects",
+    "href": "part_04.html#group-specific-fixed-effects",
+    "title": "Part Four",
+    "section": "Group-Specific Fixed Effects",
+    "text": "Group-Specific Fixed Effects\nWe can instead estimate a separate intercept for each herd:\n\\[\nY_{ij}=\\alpha_i+\\beta_1t_{ij}+\\varepsilon_{ij}.\n\\]\n\nm_herd_id &lt;- lm(DV ~ TIME + ID - 1, data = herd_dat)\nsummary(m_herd_id)\n\nThe - 1 removes the overall intercept. R then estimates a coefficient for each herd intercept, rather than an intercept for a reference herd and differences from that reference.\nThe lecture presents this as no pooling. More precisely, the intercepts are estimated separately, while the time slope remains common to all herds. To allow both intercepts and slopes to vary separately, we could use:\n\nm_herd_separate &lt;- lm(DV ~ 0 + ID + ID:TIME, data = herd_dat)\n\nThese models can describe the observed herds well. However, they do not specify a population distribution for the herd coefficients. A coefficient for a new herd is therefore not directly available from this parameterisation. Estimating many separate coefficients can also become difficult when some groups have few observations."
+  },
+  {
+    "objectID": "part_04.html#partial-pooling",
+    "href": "part_04.html#partial-pooling",
+    "title": "Part Four",
+    "section": "Partial Pooling",
+    "text": "Partial Pooling\nA mixed-effects model represents the herd coefficients as deviations from population coefficients:\n\\[\nY_{ij}=(\\beta_0+b_{0i})+(\\beta_1+b_{1i})t_{ij}+\\varepsilon_{ij}.\n\\]\nHere, \\(\\beta_0\\) and \\(\\beta_1\\) are the fixed effects. They describe the population intercept and slope. The random effects, \\(b_{0i}\\) and \\(b_{1i}\\), describe the deviations for herd \\(i\\).\nFor a conventional linear mixed-effects model, we assume:\n\\[\n\\begin{pmatrix}b_{0i}\\\\b_{1i}\\end{pmatrix}\n\\sim N\\left(\n\\begin{pmatrix}0\\\\0\\end{pmatrix},\n\\begin{pmatrix}\n\\tau_0^2 & \\tau_{01}\\\\\n\\tau_{01} & \\tau_1^2\n\\end{pmatrix}\n\\right),\n\\qquad\n\\varepsilon_{ij}\\sim N(0,\\sigma^2).\n\\]\nThe variance \\(\\tau_0^2\\) describes variation in intercepts between herds, \\(\\tau_1^2\\) describes variation in slopes, and \\(\\tau_{01}\\) describes their covariance. The residual variance \\(\\sigma^2\\) describes variation remaining around each herd’s trajectory. We assume that different herds are independent and that the residuals are independent conditional on the model’s random effects.\nThe model estimates the fixed effects and variance components. It also predicts each herd’s random effects using both its observations and the population distribution. This “partial pooling” allows groups to share information.\nFor a simple random-intercept model with a known common mean, equal residual variance, and \\(n_i\\) observations in group \\(i\\), the idea can be illustrated by:\n\\[\n\\widehat{\\alpha}_i\\approx\nw_i\\bar y_i+(1-w_i)\\widehat\\beta_0,\n\\qquad\nw_i=\\frac{\\tau_0^2}{\\tau_0^2+\\sigma^2/n_i}.\n\\]\nThe group estimate lies between its observed mean and the estimated population mean. A group with many precise observations receives a larger weight on its own data. Greater residual noise or fewer observations leads to stronger shrinkage towards the population mean. The weights are more complicated for models with predictors and random slopes, but the principle is the same.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#fitting-a-mixed-effects-model-in-r",
+    "href": "part_04.html#fitting-a-mixed-effects-model-in-r",
+    "title": "Part Four",
+    "section": "Fitting a Mixed-Effects Model in R",
+    "text": "Fitting a Mixed-Effects Model in R\nThe lmer() function in R fits linear mixed-effects models. The term before the vertical bar specifies the random coefficients, and the term after it specifies the grouping variable.\n\nlibrary(lme4)\nlibrary(lmerTest)\n\nm_herd_mixed &lt;- lmerTest::lmer(\n  DV ~ TIME + (1 + TIME | ID),\n  data = herd_dat,\n  REML = TRUE\n)\n\nsummary(m_herd_mixed)\nfixef(m_herd_mixed)\nVarCorr(m_herd_mixed)\nranef(m_herd_mixed)\ncoef(m_herd_mixed)\nisSingular(m_herd_mixed)\n\nTIME gives the fixed time slope. (1 + TIME | ID) allows the intercept and time slope to vary between herds and estimates their correlation. The overall intercept is included by default. lmerTest supplies approximate fixed-effect tests, using Satterthwaite degrees of freedom by default.\nThe output distinguishes several quantities:\n\n\n\n\n\n\n\nOutput\nInterpretation\n\n\n\n\nFixed-effect estimate\nEstimated population coefficient\n\n\nFixed-effect standard error\nUncertainty in that estimated coefficient\n\n\nRandom-effect standard deviation\nEstimated variation in the coefficient between groups\n\n\nRandom-effect correlation\nAssociation between the groups’ intercept and slope deviations\n\n\nResidual standard deviation\nRemaining variation around the conditional fitted values\n\n\nCorrelation of fixed effects\nCorrelation between coefficient estimators, rather than between individual random effects\n\n\n\nA random-effect standard deviation is not the standard error of the fixed effect. We can estimate the population mean precisely while individuals still vary substantially around it.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#repeated-measures-anova",
+    "href": "part_04.html#repeated-measures-anova",
+    "title": "Part Four",
+    "section": "Repeated-Measures ANOVA",
+    "text": "Repeated-Measures ANOVA\nRepeated-measures ANOVA also accounts for repeated observations. It usually treats measurement occasions as categories and requires complete records.\nMixed-effects models provide more flexibility for unequal observation schedules, continuous time, and differing numbers of measurements per participant. They can also use available outcome observations under appropriate assumptions about missingness. However, we still need a suitable mean model and covariance structure. Choosing a mixed-effects model does not remove those requirements.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#fixed-effects-and-random-effects",
+    "href": "part_04.html#fixed-effects-and-random-effects",
+    "title": "Part Four",
+    "section": "Fixed Effects and Random Effects",
+    "text": "Fixed Effects and Random Effects\nThe terminology can be confusing. In this chapter, a fixed effect is a coefficient shared across the population, while a random effect is a group-specific deviation modelled as a draw from a distribution.\nIn the lecture slides, we take. a look at an association between smoking and an inflammation biomarker. For independent observations, we could write:\n\\[\nY_i=\\beta_0+\\beta_1\\operatorname{Smoking}_i+\\varepsilon_i,\n\\]\nwhere smoking is coded zero or one. The coefficient \\(\\beta_1\\) is the difference in expected inflammation between smokers and nonsmokers.\nNow consider an observational follow-up in which we measure the same people before and after they begin smoking. Their measurements are paired. A random intercept can represent persistent differences in baseline inflammation:\n\\[\nY_{ij}=\\beta_0+\\beta_1\\operatorname{Smoking}_{ij}+b_{0i}+\\varepsilon_{ij}.\n\\]\nWe can now distinguish variation between participants from variation around each participant’s predicted response. The model recognises that observations from one person share the same \\(b_{0i}\\).",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#smoking-and-inflammation",
+    "href": "part_04.html#smoking-and-inflammation",
+    "title": "Part Four",
+    "section": "Smoking and Inflammation",
+    "text": "Smoking and Inflammation\nThe lecture considers an association between smoking and an inflammation biomarker. For independent observations, we could write:\n\\[\nY_i=\\beta_0+\\beta_1\\operatorname{Smoking}_i+\\varepsilon_i,\n\\]\nwhere smoking is coded zero or one. The coefficient \\(\\beta_1\\) is the difference in expected inflammation between smokers and nonsmokers.\nNow consider an observational follow-up in which we measure the same people before and after they begin smoking. Their measurements are paired. A random intercept can represent persistent differences in baseline inflammation:\n\\[\nY_{ij}=\\beta_0+\\beta_1\\operatorname{Smoking}_{ij}+b_{0i}+\\varepsilon_{ij}.\n\\]\nWe can now distinguish variation between participants from variation around each participant’s predicted response. The model recognises that observations from one person share the same \\(b_{0i}\\).\nHowever, if every participant is a nonsmoker at baseline and a smoker at follow-up, smoking status is also an indicator of measurement occasion. We cannot separate a smoking effect from other changes over time using those measurements alone. A suitable comparison group and additional design information would strengthen the analysis."
+  },
+  {
+    "objectID": "part_04.html#association-and-causality",
+    "href": "part_04.html#association-and-causality",
+    "title": "Part Four",
+    "section": "Association and Causality",
+    "text": "Association and Causality\nA statistically significant coefficient does not establish that changing the predictor would cause the estimated change in the outcome (counterfactual interpretation). Confounding, selection and the timing of observations matter.\nThe Bradford Hill considerations discussed in the lecture include strength and consistency of association, specificity, temporality, a biological gradient, plausibility, coherence, experimental evidence and analogy. They help organise reasoning about evidence. They are not a checklist that mechanically proves causality. In particular, a cause must precede its effect.\nRandomisation provides a different form of evidence by making treatment assignment independent of participant characteristics in expectation. It does not guarantee exact balance in a realised sample. Fisher’s lady-tasting-tea example illustrates how a randomised experiment can compare an observed result with what chance alone would produce.\nFor health data, we should distinguish the statistical model from the causal argument. A random intercept accounts for a pattern of dependence. It does not automatically adjust for every cause of differences between participants or hospitals.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#cross-sectional-and-real-world-data",
+    "href": "part_04.html#cross-sectional-and-real-world-data",
+    "title": "Part Four",
+    "section": "Cross-Sectional and Real-World Data",
+    "text": "Cross-Sectional and Real-World Data\nA cross-sectional study observes a population at one time or over a short interval. It can describe prevalence and associations, but often provides limited information about the sequence of events.\nEven without repeated observations of each person, patients may be grouped by hospital. A model such as:\n\nhospital_model &lt;- lmerTest::lmer(\n  inflammation ~ treatment + age + (1 | Hospital),\n  data = hospital_data\n)\n\nallows hospital baselines to vary. This is a formula template requiring a dataset named hospital_data, rather than part of the simulated examples.\nWith repeated measurements of patients within hospitals, a nested structure could be written as (1 | Hospital/ID). This expands into a hospital intercept and an intercept for each hospital–patient combination. The grouping structure should reflect how the observations were collected.\nRetrospective healthcare data may contain irregular measurement times and unequal numbers of observations. Mixed-effects models can represent that structure, but treatment allocation and measurement frequency may themselves relate to health status. Those features need consideration when interpreting the fitted associations.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#preparing-the-predictors",
+    "href": "part_04.html#preparing-the-predictors",
+    "title": "Part Four",
+    "section": "Preparing the Predictors",
+    "text": "Preparing the Predictors\nAs in Part Two, examine variable definitions, units, distributions and missingness before fitting a model. Consider whether time zero is meaningful and whether a linear time effect is plausible over the observed period.\nHighly correlated predictors can make individual coefficients difficult to estimate. Regression does not require predictors to be mutually independent. The problem is that closely related predictors supply little independent information about their separate coefficients.\nCentring a predictor changes the interpretation of the intercept:\n\\[\nx_{ij}^{c}=x_{ij}-c.\n\\]\nIf \\(c\\) is baseline time, the intercept refers to baseline. If \\(c\\) is the mean, it refers to the mean predictor value, conditional on the other predictors. Standardising additionally divides by a standard deviation. The corresponding coefficient then describes a one-standard-deviation change.\nFor longitudinal predictors, distinguish changes within a person from differences between people. An individual’s mean predictor value and their deviation from that mean can have different associations with the outcome. A random intercept alone does not guarantee that one common slope isolates a within-person effect.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#choosing-model-terms",
+    "href": "part_04.html#choosing-model-terms",
+    "title": "Part Four",
+    "section": "Choosing Model Terms",
+    "text": "Choosing Model Terms\nInclude predictors because they help answer the research question or describe the process generating the data. Important adjustment variables may remain relevant even when their individual P-values are large. Interactions should have a scientific or design-based rationale.\nAn unexpected coefficient sign is a reason to investigate coding, confounding, collinearity and model form. Removing a variable simply because its sign conflicts with an expectation can hide an important feature of the data. Retaining unnecessary predictors can also reduce precision, particularly in small datasets.\nChoose the random-effects structure alongside the fixed effects. For repeated observations over time, a random slope may be appropriate if individuals plausibly change at different rates and the observation schedule supplies enough information to estimate that variation.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#a-hormone-level-example",
+    "href": "part_04.html#a-hormone-level-example",
+    "title": "Part Four",
+    "section": "A Hormone-Level Example",
+    "text": "A Hormone-Level Example\nThe lecture uses a simulated treatment example with substantial differences in baseline hormone levels between participants. We will use an illustrative dataset in which each of 50 participants contributes five observations under each of two conditions. This makes the treatment indicator vary within participants and permits comparison with a model containing separate participant intercepts.\nThe design is an educational illustration. It does not establish that treatment and control periods would be exchangeable in a clinical study. A real before-and-after or crossover analysis would also consider period effects and, where relevant, carryover.\n\nset.seed(403)\n\nn_patients &lt;- 50\nexdata &lt;- expand.grid(\n  OBS = 1:5,\n  IV = 0:1,\n  ID = seq_len(n_patients)\n)\n\npatient_baseline &lt;- rnorm(n_patients, mean = 36, sd = 11)\nexdata$DV &lt;- patient_baseline[exdata$ID] +\n  10 * exdata$IV +\n  rnorm(nrow(exdata), mean = 0, sd = 3.2)\nexdata$ID &lt;- factor(exdata$ID)\n\n# Randomly remove 18% of outcome values, leaving identifiers intact.\nmissing_rows &lt;- sample(\n  seq_len(nrow(exdata)),\n  size = round(0.18 * nrow(exdata))\n)\nexdata$DV[missing_rows] &lt;- NA_real_\n\nmean(is.na(exdata$DV))\nlibrary(naniar)\nvis_miss(exdata)\n\nboxplot(DV ~ ID, data = exdata,\n        xlab = \"Participant\", ylab = \"Hormone level (illustrative units)\")\nboxplot(DV ~ IV, data = exdata,\n        xlab = \"Condition: 0 = control, 1 = treatment\", ylab = \"Hormone level\")\nboxplot(DV ~ OBS + IV, data = exdata,\n        xlab = \"Observation and condition\", ylab = \"Hormone level\")\n\nThe simulated effect is constant over the measurement occasions. Differences between participant baselines are much larger than the residual noise.\nMissingness should be described in relation to the relevant variable. With four columns and missing values confined to DV, 18% missing outcome values correspond to 4.5% missing cells in the full table. That distinction explains the two percentages discussed in the lecture.\nA mixed-effects model can retain a participant’s observed outcomes even when some others are missing. It does not impute the missing values. Likelihood-based inference typically relies on missing at random, conditional on the observed information used in the analysis, together with a correctly specified model. Missing outcomes depending on unobserved health changes may require sensitivity analysis.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#comparing-pooling-approaches",
+    "href": "part_04.html#comparing-pooling-approaches",
+    "title": "Part Four",
+    "section": "Comparing Pooling Approaches",
+    "text": "Comparing Pooling Approaches\nWe first restrict all models to the same complete rows:\n\nanalysis_dat &lt;- exdata[complete.cases(exdata[c(\"DV\", \"IV\", \"ID\")]), ]\n\nm_pool &lt;- lm(DV ~ IV, data = analysis_dat)\nm_id &lt;- lm(DV ~ IV + ID - 1, data = analysis_dat)\n\nm_null &lt;- lmerTest::lmer(\n  DV ~ 1 + (1 | ID), data = analysis_dat, REML = TRUE\n)\nm_treat &lt;- lmerTest::lmer(\n  DV ~ IV + (1 | ID), data = analysis_dat, REML = TRUE\n)\n\nsummary(m_pool)\nsummary(m_id)\nsummary(m_null)\nsummary(m_treat)\n\nThe pooled model places baseline differences between patients into its residual error. The model with fixed participant intercepts estimates each baseline separately. The mixed-effects model estimates a population baseline and a distribution of deviations around it.\nHere, treatment varies within each participant. If treatment were constant within each participant in a parallel-arm study, its coefficient would be collinear with a full set of fixed participant indicators in m_id. That model could not estimate the treatment effect separately. A random-intercept model makes a different assumption and can estimate a between-participant treatment association, subject to the study design and its assumptions.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#interpreting-the-lecture-output",
+    "href": "part_04.html#interpreting-the-lecture-output",
+    "title": "Part Four",
+    "section": "Interpreting the Lecture Output",
+    "text": "Interpreting the Lecture Output\nThe slide output for the treatment mixed-effects model reports approximately:\n\n\n\nQuantity\nSlide estimate\n\n\n\n\nFixed intercept\n36.45\n\n\nFixed treatment coefficient\n10.04\n\n\nBetween-participant intercept standard deviation\n11.06\n\n\nResidual standard deviation\n3.19\n\n\n\nThese values come from the lecture dataset, not the new simulation. The intercept represents the expected outcome under control. Treatment is associated with an increase of about 10 units. Participants vary around the population intercept, with a standard deviation of about 11 units. Their individual observations vary around the conditional model predictions, with a residual standard deviation of about 3.2 units.\njtools::summ() provides an alternative summary:\n\njtools::summ(m_treat)\n\nThe marginal \\(R^2\\) summarises variation accounted for by the fixed effects, while the conditional \\(R^2\\) includes the random effects. A much higher conditional \\(R^2\\) indicates that the grouping structure accounts for considerable variation. A high conditional \\(R^2\\) does not by itself demonstrate accurate predictions for new participants whose random effects are unknown.\nFor a random-intercept model, the intraclass correlation coefficient is:\n\\[\n\\operatorname{ICC}=\\frac{\\tau_0^2}{\\tau_0^2+\\sigma^2}.\n\\]\nUsing the slide variances gives \\(122.4/(122.4+10.2)\\approx0.92\\). Conditional on the fixed predictors, this is the correlation implied for two observations from the same participant. It describes the proportion of remaining variance associated with differences between participants. With random slopes, the implied correlations also depend on predictor values.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#population-and-individual-predictions",
+    "href": "part_04.html#population-and-individual-predictions",
+    "title": "Part Four",
+    "section": "Population and Individual Predictions",
+    "text": "Population and Individual Predictions\nA population prediction uses only the fixed effects. A conditional prediction also uses the estimated random effect for an observed participant:\n\nanalysis_dat$population_pred &lt;- predict(m_treat, re.form = NA)\nanalysis_dat$individual_pred &lt;- predict(m_treat, re.form = NULL)\n\npar(mfrow = c(1, 2))\nplot(analysis_dat$population_pred, analysis_dat$DV,\n     xlab = \"Population prediction\", ylab = \"Observed outcome\")\nabline(0, 1, col = \"red\")\nplot(analysis_dat$individual_pred, analysis_dat$DV,\n     xlab = \"Individual prediction\", ylab = \"Observed outcome\")\nabline(0, 1, col = \"red\")\npar(mfrow = c(1, 1))\n\nIndividual predictions usually fit the existing observations more closely because they use information about each participant. That is a different prediction task from predicting a new participant.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#residual-diagnostics-and-model-stability",
+    "href": "part_04.html#residual-diagnostics-and-model-stability",
+    "title": "Part Four",
+    "section": "Residual Diagnostics and Model Stability",
+    "text": "Residual Diagnostics and Model Stability\nExamine residuals against fitted values, time, treatment and other important predictors. Look for systematic trends and changes in spread. A QQ plot helps assess whether the conditional residual distribution is reasonably compatible with a normal distribution.\n\npar(mfrow = c(2, 2))\nplot(fitted(m_treat), resid(m_treat),\n     xlab = \"Conditional fitted value\", ylab = \"Residual\")\nabline(h = 0, lty = 2)\nqqnorm(resid(m_treat))\nqqline(resid(m_treat))\nboxplot(resid(m_treat) ~ analysis_dat$IV,\n        xlab = \"Condition\", ylab = \"Residual\")\nplot(analysis_dat$OBS, resid(m_treat),\n     xlab = \"Observation occasion\", ylab = \"Residual\")\nabline(h = 0, lty = 2)\npar(mfrow = c(1, 1))\n\nisSingular(m_treat)\nVarCorr(m_treat)\n\nRandom effects also have distributional assumptions, although their predicted values are shrunken and should not be treated as independent raw observations for a normality test. Serial patterns remaining within participants can indicate residual autocorrelation that the random intercept does not capture.\nA singular fit means that an estimated random-effects covariance matrix has reduced rank. A variance near zero or an intercept–slope correlation near \\(-1\\) or \\(1\\) can indicate this. Consider whether the design supports the proposed random-effects structure before changing optimiser settings or removing terms.\nValidation should reflect the intended prediction task. To assess predictions for new patients, hold out entire patients. Randomly splitting rows can place observations from the same patient in both the training and test sets and give an optimistic assessment.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#likelihood-ratio-tests-and-information-criteria",
+    "href": "part_04.html#likelihood-ratio-tests-and-information-criteria",
+    "title": "Part Four",
+    "section": "Likelihood-Ratio Tests and Information Criteria",
+    "text": "Likelihood-Ratio Tests and Information Criteria\nFor nested models fitted by ML to the same observations, the likelihood-ratio statistic is:\n\\[\nD=2\\left[\\ell(\\widehat\\theta_{\\text{full}})\n-\\ell(\\widehat\\theta_{\\text{reduced}})\\right].\n\\]\nUnder suitable conditions, this is approximately chi-squared distributed with degrees of freedom equal to the number of additional parameters. We can test the addition of treatment while retaining the random-intercept structure:\n\nm_null_ml &lt;- update(m_null, REML = FALSE)\nm_treat_ml &lt;- update(m_treat, REML = FALSE)\nanova(m_null_ml, m_treat_ml)\n\nAIC(m_null_ml, m_treat_ml)\nBIC(m_null_ml, m_treat_ml)\n\nA small P-value indicates evidence against the reduced model under the test assumptions. It does not quantify clinical importance. Tests that add or remove variance components require extra care because a variance of zero is on the boundary of its allowed values, and the usual chi-squared reference distribution may not apply.\nThe general information-criterion formulas are:\n\\[\n\\operatorname{AIC}=-2\\ell(\\widehat\\theta)+2k,\n\\qquad\n\\operatorname{BIC}=-2\\ell(\\widehat\\theta)+k\\log(n),\n\\]\nwhere \\(k\\) counts the estimated model parameters, including relevant variance and covariance parameters. Lower values indicate a better balance between fit and the corresponding complexity penalty among the models compared. The usual BIC penalty exceeds the AIC penalty when \\(n&gt;e^2\\). These criteria are relative measures, and comparisons require compatible likelihoods and the same response observations.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#displaying-effects-and-confidence-intervals",
+    "href": "part_04.html#displaying-effects-and-confidence-intervals",
+    "title": "Part Four",
+    "section": "Displaying Effects and Confidence Intervals",
+    "text": "Displaying Effects and Confidence Intervals\nPredicted means and their uncertainty often communicate an effect more clearly than a coefficient table:\n\nlibrary(effects)\nplot(allEffects(m_treat))\n\nWe can use a parametric bootstrap to calculate confidence intervals for the fixed effects:\n\nset.seed(404)\nconfint(\n  m_treat,\n  parm = \"beta_\",\n  method = \"boot\",\n  nsim = 1000,\n  boot.type = \"perc\"\n)\n\nThis simulates datasets from the fitted mixed-effects model and refits it, rather than resampling individual rows as if they were independent. Inspect warnings and failed fits. For a nonparametric bootstrap of grouped data, the resampling scheme must also preserve the relevant dependence, for example by resampling participants as whole groups.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#the-likelihood-function",
+    "href": "part_04.html#the-likelihood-function",
+    "title": "Part Four",
+    "section": "The Likelihood Function",
+    "text": "The Likelihood Function\nFor independent observations with density or probability mass function \\(f(y_i\\mid\\theta)\\), the likelihood is:\n\\[\nL(\\theta\\mid\\mathbf y)=\\prod_{i=1}^{n}f(y_i\\mid\\theta).\n\\]\nThe observed data are held fixed while we vary the candidate parameter values. For continuous data, the factors are probability densities, rather than probabilities of observing an exact value. The likelihood is not a probability distribution for the parameters.\nWe commonly maximise the log likelihood:\n\\[\n\\ell(\\theta)=\\log L(\\theta\\mid\\mathbf y)\n=\\sum_{i=1}^{n}\\log f(y_i\\mid\\theta).\n\\]\nEquivalently, an optimiser may minimise the negative log likelihood. In a mixed-effects model, the marginal likelihood accounts for the random-effects distribution. Observations from one participant are not treated as marginally independent.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#estimating-a-normal-mean-and-variance",
+    "href": "part_04.html#estimating-a-normal-mean-and-variance",
+    "title": "Part Four",
+    "section": "Estimating a Normal Mean and Variance",
+    "text": "Estimating a Normal Mean and Variance\nFor independent observations from \\(N(\\mu,\\sigma^2)\\), the log likelihood is:\n\\[\n\\ell(\\mu,\\sigma^2)\n=-\\frac n2\\log(2\\pi)-\\frac n2\\log(\\sigma^2)\n-\\frac{1}{2\\sigma^2}\\sum_{i=1}^{n}(y_i-\\mu)^2.\n\\]\nThe ML estimates are:\n\\[\n\\widehat\\mu=\\bar y,\n\\qquad\n\\widehat\\sigma^2_{\\mathrm{ML}}\n=\\frac1n\\sum_{i=1}^{n}(y_i-\\bar y)^2.\n\\]\nWe use the data to estimate the mean and then measure deviations from that estimated mean. The variance estimate therefore tends to be too small:\n\\[\nE\\left(\\widehat\\sigma^2_{\\mathrm{ML}}\\right)\n=\\frac{n-1}{n}\\sigma^2.\n\\]\nThe familiar sample variance uses \\(n-1\\) in the denominator to correct this bias. This is a useful starting point for understanding REML.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#restricted-or-residual-maximum-likelihood",
+    "href": "part_04.html#restricted-or-residual-maximum-likelihood",
+    "title": "Part Four",
+    "section": "Restricted or Residual Maximum Likelihood",
+    "text": "Restricted or Residual Maximum Likelihood\nREML estimates variance components while accounting for estimation of the fixed effects. In an ordinary normal linear model with \\(p\\) fixed-effect coefficients, including the intercept, the analogous variance estimates are:\n\\[\n\\widehat\\sigma^2_{\\mathrm{ML}}=\\frac{\\mathrm{SSE}}{n},\n\\qquad\n\\widehat\\sigma^2_{\\mathrm{REML}}=\\frac{\\mathrm{SSE}}{n-p}.\n\\]\nMixed-effects models have a more complex covariance structure, so REML is not generally implemented by replacing one denominator. The underlying motivation remains to reduce bias in variance-component estimation arising from estimation of the mean structure.\nThe ordinary normal-model example shows downward ML variance bias. Small datasets can produce unstable estimates in either direction in an individual fit, but that is different from the systematic bias illustrated above. REML does not guarantee precise or unbiased estimates of every variance component in every mixed-effects model.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#when-to-use-ml-and-reml",
+    "href": "part_04.html#when-to-use-ml-and-reml",
+    "title": "Part Four",
+    "section": "When to Use ML and REML",
+    "text": "When to Use ML and REML\nFor lmer(), REML is the default. Set the argument explicitly when comparing models:\n\n# ML for comparing models with different fixed effects.\nm_comparison &lt;- lmerTest::lmer(\n  DV ~ IV + (1 | ID), data = analysis_dat, REML = FALSE\n)\n\n# REML for estimating the selected model.\nm_final &lt;- update(m_comparison, REML = TRUE)\nsummary(m_final)\n\nREML likelihoods based on different fixed-effect structures are not directly comparable. Use ML when comparing models that add or remove fixed effects, including AIC comparisons. After selecting a model, a common approach is to refit it using REML.\nModels with the same fixed-effect structure can sometimes be compared using REML to investigate different covariance structures. That requires a suitable comparison method and attention to boundary issues. The restriction is therefore more specific than saying that REML can never be used for model comparison.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#a-paediatric-diet-example",
+    "href": "part_04.html#a-paediatric-diet-example",
+    "title": "Part Four",
+    "section": "A Paediatric Diet Example",
+    "text": "A Paediatric Diet Example\nSuppose we follow children receiving a control diet or an intervention diet. Each child belongs to one group and has repeated measurements of body weight. Children may differ in baseline weight and growth rate.\nA spaghetti plot, with one line per child, shows individual trajectories. If the group trajectories increasingly separate, a time-by-diet interaction may describe that pattern.\nThe lecture discusses follow-up over two years. For the illustrative code below, we use 100 children measured at four occasions, producing 400 observations, matching the number of observations in the slide model output. The chosen schedule is illustrative.\n\nset.seed(405)\n\nn_children &lt;- 100\ndietdata &lt;- expand.grid(\n  Months = c(0, 6, 12, 24),\n  ID = seq_len(n_children)\n)\ndiet_assignment &lt;- sample(rep(0:1, each = n_children / 2))\ndietdata$Diet &lt;- diet_assignment[dietdata$ID]\n\nchild_intercepts &lt;- rnorm(n_children, mean = 0, sd = 0.94)\nchild_slopes &lt;- rnorm(n_children, mean = 0, sd = 0.075)\n\ndietdata$BW &lt;- 24.8 + child_intercepts[dietdata$ID] +\n  0.14 * dietdata$Diet +\n  (0.25 + child_slopes[dietdata$ID]) * dietdata$Months +\n  0.25 * dietdata$Diet * dietdata$Months +\n  rnorm(nrow(dietdata), mean = 0, sd = 0.44)\ndietdata$ID &lt;- factor(dietdata$ID)\n\nplot(BW ~ Months, data = dietdata, type = \"n\",\n     xlab = \"Months\", ylab = \"Body weight (kg)\")\nfor (id in levels(dietdata$ID)) {\n  one_child &lt;- dietdata[dietdata$ID == id, ]\n  one_child &lt;- one_child[order(one_child$Months), ]\n  lines(one_child$Months, one_child$BW,\n        col = if (one_child$Diet[1] == 0) \"orange\" else \"steelblue\")\n}\nlegend(\"topleft\", legend = c(\"Control\", \"Intervention\"),\n       col = c(\"orange\", \"steelblue\"), lty = 1, bty = \"n\")\n\nThe coefficients specify an illustrative growth pattern and should not be interpreted as evidence about a particular dietary intervention.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#a-conditional-growth-model",
+    "href": "part_04.html#a-conditional-growth-model",
+    "title": "Part Four",
+    "section": "A Conditional Growth Model",
+    "text": "A Conditional Growth Model\nWe can write:\n\\[\nY_{ij}=\\beta_0+b_{0i}\n+\\beta_1t_{ij}+b_{1i}t_{ij}\n+\\beta_2\\operatorname{Diet}_i\n+\\beta_3t_{ij}\\operatorname{Diet}_i\n+\\varepsilon_{ij}.\n\\]\nThe fixed effects describe average growth and the difference between diets. The random intercept and slope describe variation between children within those average patterns.\n\nm_growth &lt;- lmerTest::lmer(\n  BW ~ Months * Diet + (1 + Months | ID),\n  data = dietdata,\n  REML = TRUE\n)\nsummary(m_growth)\nVarCorr(m_growth)\nisSingular(m_growth)\n\nIn an R formula, Months * Diet expands to Months + Diet + Months:Diet. The random-effect term estimates intercept variation, time-slope variation and their covariance. (Months | ID) also includes a random intercept by default, so it is equivalent to (1 + Months | ID).\nDiet is constant within each child. A random time slope is identifiable from repeated time observations, whereas a random diet slope within child would not have the same interpretation or information available in this design.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#interpreting-the-interaction",
+    "href": "part_04.html#interpreting-the-interaction",
+    "title": "Part Four",
+    "section": "Interpreting the Interaction",
+    "text": "Interpreting the Interaction\nWith control coded zero and intervention coded one, the fixed-effect trajectories are:\n\\[\nE(Y\\mid t,\\operatorname{Diet}=0)=\\beta_0+\\beta_1t,\n\\]\n\\[\nE(Y\\mid t,\\operatorname{Diet}=1)\n=(\\beta_0+\\beta_2)+(\\beta_1+\\beta_3)t.\n\\]\nThe intervention-minus-control difference at time \\(t\\) is:\n\\[\n\\Delta(t)=\\beta_2+\\beta_3t.\n\\]\nThe slide model reports approximately \\(\\beta_0=24.80\\), \\(\\beta_1=0.247\\), \\(\\beta_2=0.144\\) and \\(\\beta_3=0.254\\). The interpretation is:\n\n\n\n\n\n\n\nCoefficient\nMeaning\n\n\n\n\nIntercept\nExpected baseline weight in the control group, about 24.80 kg\n\n\nMonths\nAverage control-group growth, about 0.247 kg per month\n\n\nDiet\nIntervention-minus-control baseline difference, about 0.144 kg\n\n\nMonths: Diet\nDifference in growth rates, about 0.254 kg per month\n\n\n\nThe intervention-group growth rate is approximately \\(0.247+0.254=0.501\\) kg per month. At 12 months, the modelled difference is approximately \\(0.144+12(0.254)=3.19\\) kg.\nA nonsignificant diet main effect refers to the difference at time zero. It does not imply that the diet groups follow the same trajectory. The interaction addresses a different hypothesis: whether their average growth rates differ.\nIf we centre time at 12 months, the diet main effect becomes the difference at 12 months. The fitted trajectories remain the same. Interpret main effects at the reference value of the interacting predictor.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#testing-and-displaying-different-growth-rates",
+    "href": "part_04.html#testing-and-displaying-different-growth-rates",
+    "title": "Part Four",
+    "section": "Testing and Displaying Different Growth Rates",
+    "text": "Testing and Displaying Different Growth Rates\nTo test the interaction, compare models with the same random-effects structure and use ML:\n\nm_growth_additive &lt;- lmerTest::lmer(\n  BW ~ Months + Diet + (1 + Months | ID),\n  data = dietdata, REML = FALSE\n)\nm_growth_interaction &lt;- update(\n  m_growth_additive, . ~ . + Months:Diet\n)\nanova(m_growth_additive, m_growth_interaction)\n\nplot(effects::allEffects(m_growth))\nplot(m_growth)\nqqnorm(resid(m_growth))\nqqline(resid(m_growth))\n\nThe uncertainty in the estimated difference at a selected time depends on both coefficient variances and their covariance:\n\\[\n\\operatorname{Var}\\{\\widehat\\Delta(t)\\}\n=\\operatorname{Var}(\\widehat\\beta_2)\n+t^2\\operatorname{Var}(\\widehat\\beta_3)\n+2t\\operatorname{Cov}(\\widehat\\beta_2,\\widehat\\beta_3).\n\\]\nAdding the two standard errors would not give the correct standard error of the time-specific difference.\nCheck whether linear growth adequately describes the observed interval. A random slope accommodates variation in linear growth rates, but does not itself describe curvature. We may need a nonlinear time term or another mean function if the trajectories change shape.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#nonlinear-mixed-effects-models",
+    "href": "part_04.html#nonlinear-mixed-effects-models",
+    "title": "Part Four",
+    "section": "Nonlinear Mixed-Effects Models",
+    "text": "Nonlinear Mixed-Effects Models\nA nonlinear mixed-effects model replaces the linear mean function with a nonlinear function:\n\\[\nY_{ij}=f(t_{ij},\\boldsymbol\\phi_i,\\mathbf x_i)+\\varepsilon_{ij}.\n\\]\nThe individual parameters \\(\\boldsymbol\\phi_i\\) vary around population parameters. For a positive parameter such as clearance, one common formulation is:\n\\[\n\\operatorname{CL}_i=\\operatorname{CL}_{\\mathrm{pop}}\n\\exp(\\eta_{\\mathrm{CL},i}),\n\\qquad\n\\eta_{\\mathrm{CL},i}\\sim N(0,\\omega_{\\mathrm{CL}}^2).\n\\]\nThis keeps individual clearances positive. Here, \\(\\operatorname{CL}_{\\mathrm{pop}}\\) is the median, or typical value, of the lognormal clearance distribution. Its arithmetic mean is \\(\\operatorname{CL}_{\\mathrm{pop}}\\exp(\\omega_{\\mathrm{CL}}^2/2)\\).\nThe symbol \\(\\eta\\) here is a random deviation, not a standard deviation. Its variability is described by \\(\\omega\\). In Part Three, we used \\(\\eta\\) for a linear predictor, illustrating why the meaning of a symbol must be defined within each model.\nThe function \\(f\\) can be an explicit equation or the solution of differential equations. Fixed effects, between-individual variation and residual error remain distinct components."
+  },
+  {
+    "objectID": "part_04.html#a-paediatric-pharmacokinetic-case-study",
+    "href": "part_04.html#a-paediatric-pharmacokinetic-case-study",
+    "title": "Part Four",
+    "section": "A Paediatric Pharmacokinetic Case Study",
+    "text": "A Paediatric Pharmacokinetic Case Study\nThe final lecture describes modelling of levobupivacaine exposure in infants undergoing surgery. The questions concern the concentration–time profile, plasma protein binding, and the consequences of alternative infusion durations.\nLevobupivacaine binds to \\(\\alpha_1\\)-acid glycoprotein. The study distinguishes total concentration from unbound concentration, which is particularly relevant when considering toxicity. The published study reports using pharmacokinetic modelling to optimise sampling and explore the effect of protein binding on exposure (Vashisht et al., 2019).\nThe lecture describes combining existing information from adults, in vitro experiments and available paediatric observations to make prospective predictions. After collecting the study data, the investigators assessed those predictions and developed a population model of the observed profiles.\nThis gives a sequence of distinct uses for modelling:\n\nUse existing information to predict plausible profiles in the target population.\nChoose a feasible study and sampling schedule.\nCollect observations and compare them with the prospective predictions.\nEstimate population parameters and between-individual variation from the study data.\nSimulate alternative schedules and evaluate their implications within the model’s supported range.\n\nA model fitted to the observations and a prospective prediction made before seeing them provide different forms of evidence. Both are useful, but they answer different questions.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#mechanistic-models-and-sampling-information",
+    "href": "part_04.html#mechanistic-models-and-sampling-information",
+    "title": "Part Four",
+    "section": "Mechanistic Models and Sampling Information",
+    "text": "Mechanistic Models and Sampling Information\nA simplified absorption-and-elimination model illustrates why sampling times matter:\n\\[\n\\frac{dA_{\\mathrm{depot}}}{dt}=-k_aA_{\\mathrm{depot}},\n\\qquad\n\\frac{dA_{\\mathrm{central}}}{dt}\n=k_aA_{\\mathrm{depot}}-\\frac{\\operatorname{CL}}{V}A_{\\mathrm{central}},\n\\qquad\nC=\\frac{A_{\\mathrm{central}}}{V}.\n\\]\nHere, \\(k_a\\) is an absorption rate constant, \\(\\operatorname{CL}\\) is clearance, and \\(V\\) is the apparent distribution volume. These equations illustrate a basic model rather than reproduce the full binding-and-infusion model in the case study.\nEarly samples may contain information about absorption. Later samples may contain more information about elimination. Several samples at times where concentrations change similarly with two parameters may provide little information for distinguishing those parameters.\nFor unbound drug, the relation between concentration, binding and clearance must also be represented consistently. More measurements of total concentration alone may not identify every component of a binding model.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#d-optimal-study-design",
+    "href": "part_04.html#d-optimal-study-design",
+    "title": "Part Four",
+    "section": "D-Optimal Study Design",
+    "text": "D-Optimal Study Design\nD-optimal design chooses a design that maximises the determinant of an expected information matrix:\n\\[\n\\operatorname{Design}^{*}\n=\\arg\\max_{\\operatorname{Design}}\n\\det\\{\\mathcal I(\\boldsymbol\\theta;\\operatorname{Design})\\}.\n\\]\nThe information matrix describes how informative the planned observations are about the parameters under the assumed model. Its inverse approximates the covariance of the parameter estimates under suitable conditions. Maximising its determinant aims to reduce the joint uncertainty in those estimates.\nThe design depends on assumed parameter values, variability and residual error. A design that performs well for one assumed model may be less informative if those assumptions are wrong. It is therefore useful to examine plausible alternative parameter values and to simulate the performance of candidate designs.\nIn paediatric studies, practical constraints include the number and volume of blood samples, feasible sampling windows and the clinical workflow. Optimisation operates within those constraints. It does not replace clinical judgement or guarantee that the selected model is correct.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#prediction-uncertainty-and-study-design",
+    "href": "part_04.html#prediction-uncertainty-and-study-design",
+    "title": "Part Four",
+    "section": "Prediction, Uncertainty and Study Design",
+    "text": "Prediction, Uncertainty and Study Design\nAfter estimation, we can simulate profiles for a population and study how exposure varies between individuals. Distinguish uncertainty in the estimated population parameters from actual variation between individuals and from residual measurement error.\nA simulated concentration below a toxicity reference is evidence about exposure under the model’s assumptions. It does not by itself establish clinical safety for every patient or for an unstudied dosing schedule. The usefulness of an extrapolation depends on the relevance of the mechanism, data and target population.\nThe broader lesson is that study design and modelling inform one another. A model helps identify which observations are needed, while the collected observations show which features of the model can actually be estimated.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#complete-pooling",
+    "href": "part_04.html#complete-pooling",
+    "title": "Part Four",
+    "section": "Complete Pooling",
+    "text": "Complete Pooling\nAnother approach is to average the observations at each time point and fit a regression to those averages:\n\nherd_means &lt;- aggregate(DV ~ TIME, data = herd_dat, FUN = mean)\nm_herd_means &lt;- lm(DV ~ TIME, data = herd_means)\nsummary(m_herd_means)\n\nAggregation can be useful when the mean trajectory is the object of interest. However, we are discarding information on variability. Time-point averages calculated from the same herds can also remain correlated. Averaging does not automatically make them independent.\nAn especially smooth mean trajectory can produce a very small regression residual standard deviation. That value describes deviations of the averages from the fitted line. It should not be interpreted as the variation among individual observations or as a complete description of uncertainty in the original data.\nAggregation also changes the level of the analysis. Associations between group averages need not equal associations between individuals. Inferring an individual relationship from an aggregate relationship is known as the ecological fallacy.",
+    "crumbs": [
+      "Part Four"
+    ]
+  },
+  {
+    "objectID": "part_04.html#no-pooling",
+    "href": "part_04.html#no-pooling",
+    "title": "Part Four",
+    "section": "No Pooling",
+    "text": "No Pooling\nWe can instead estimate a separate intercept for each herd:\n\\[\nY_{ij}=\\alpha_i+\\beta_1t_{ij}+\\varepsilon_{ij}.\n\\]\n\nm_herd_id &lt;- lm(DV ~ TIME + ID - 1, data = herd_dat)\nsummary(m_herd_id)\n\nThe - 1 removes the overall intercept. R then estimates a coefficient for each herd intercept, rather than an intercept for a reference herd and differences from that reference.\nThese models can describe the observed herds well. However, they do not specify a population distribution for the herd coefficients. A coefficient for a new herd is therefore not inferred from this parameterisation. Estimating many separate coefficients can also become difficult if some groups have few observations.",
+    "crumbs": [
+      "Part Four"
+    ]
   }
 ]

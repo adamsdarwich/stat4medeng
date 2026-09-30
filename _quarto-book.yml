@@ -11,6 +11,7 @@ book:
     - part_01.qmd
     - part_02.qmd
     - part_03.qmd
+    - part_04.qmd
     - summary.qmd
     - references.qmd
 

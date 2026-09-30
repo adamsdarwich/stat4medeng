@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adam S. Darwich">
+<meta name="dcterms.date" content="2026-08-06">
+
+<title>Part Four – Statistics for Medical Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_04.html">Part Four</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for Medical Engineers</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part One</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Two</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Three</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_04.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Part Four</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#l4-1-mixed-effects-modelling" id="toc-l4-1-mixed-effects-modelling" class="nav-link active" data-scroll-target="#l4-1-mixed-effects-modelling">L4-1 Mixed-Effects Modelling</a>
+  <ul class="collapse">
+  <li><a href="#a-longitudinal-herd-example" id="toc-a-longitudinal-herd-example" class="nav-link" data-scroll-target="#a-longitudinal-herd-example">A Longitudinal Herd Example</a></li>
+  <li><a href="#naïve-pooling" id="toc-naïve-pooling" class="nav-link" data-scroll-target="#naïve-pooling">Naïve Pooling</a></li>
+  <li><a href="#complete-pooling" id="toc-complete-pooling" class="nav-link" data-scroll-target="#complete-pooling">Complete Pooling</a></li>
+  <li><a href="#no-pooling" id="toc-no-pooling" class="nav-link" data-scroll-target="#no-pooling">No Pooling</a></li>
+  <li><a href="#partial-pooling" id="toc-partial-pooling" class="nav-link" data-scroll-target="#partial-pooling">Partial Pooling</a></li>
+  <li><a href="#fitting-a-mixed-effects-model-in-r" id="toc-fitting-a-mixed-effects-model-in-r" class="nav-link" data-scroll-target="#fitting-a-mixed-effects-model-in-r">Fitting a Mixed-Effects Model in R</a></li>
+  <li><a href="#repeated-measures-anova" id="toc-repeated-measures-anova" class="nav-link" data-scroll-target="#repeated-measures-anova">Repeated-Measures ANOVA</a></li>
+  </ul></li>
+  <li><a href="#l4-2-mixed-effects-modelling-and-study-design" id="toc-l4-2-mixed-effects-modelling-and-study-design" class="nav-link" data-scroll-target="#l4-2-mixed-effects-modelling-and-study-design">L4-2 Mixed-Effects Modelling and Study Design</a>
+  <ul class="collapse">
+  <li><a href="#fixed-effects-and-random-effects" id="toc-fixed-effects-and-random-effects" class="nav-link" data-scroll-target="#fixed-effects-and-random-effects">Fixed Effects and Random Effects</a></li>
+  <li><a href="#association-and-causality" id="toc-association-and-causality" class="nav-link" data-scroll-target="#association-and-causality">Association and Causality</a></li>
+  <li><a href="#cross-sectional-and-real-world-data" id="toc-cross-sectional-and-real-world-data" class="nav-link" data-scroll-target="#cross-sectional-and-real-world-data">Cross-Sectional and Real-World Data</a></li>
+  </ul></li>
+  <li><a href="#l4-3-developing-mixed-effects-models" id="toc-l4-3-developing-mixed-effects-models" class="nav-link" data-scroll-target="#l4-3-developing-mixed-effects-models">L4-3 Developing Mixed-Effects Models</a>
+  <ul class="collapse">
+  <li><a href="#preparing-the-predictors" id="toc-preparing-the-predictors" class="nav-link" data-scroll-target="#preparing-the-predictors">Preparing the Predictors</a></li>
+  <li><a href="#choosing-model-terms" id="toc-choosing-model-terms" class="nav-link" data-scroll-target="#choosing-model-terms">Choosing Model Terms</a></li>
+  <li><a href="#a-hormone-level-example" id="toc-a-hormone-level-example" class="nav-link" data-scroll-target="#a-hormone-level-example">A Hormone-Level Example</a></li>
+  <li><a href="#comparing-pooling-approaches" id="toc-comparing-pooling-approaches" class="nav-link" data-scroll-target="#comparing-pooling-approaches">Comparing Pooling Approaches</a></li>
+  <li><a href="#interpreting-the-lecture-output" id="toc-interpreting-the-lecture-output" class="nav-link" data-scroll-target="#interpreting-the-lecture-output">Interpreting the Lecture Output</a></li>
+  <li><a href="#population-and-individual-predictions" id="toc-population-and-individual-predictions" class="nav-link" data-scroll-target="#population-and-individual-predictions">Population and Individual Predictions</a></li>
+  <li><a href="#residual-diagnostics-and-model-stability" id="toc-residual-diagnostics-and-model-stability" class="nav-link" data-scroll-target="#residual-diagnostics-and-model-stability">Residual Diagnostics and Model Stability</a></li>
+  <li><a href="#likelihood-ratio-tests-and-information-criteria" id="toc-likelihood-ratio-tests-and-information-criteria" class="nav-link" data-scroll-target="#likelihood-ratio-tests-and-information-criteria">Likelihood-Ratio Tests and Information Criteria</a></li>
+  <li><a href="#displaying-effects-and-confidence-intervals" id="toc-displaying-effects-and-confidence-intervals" class="nav-link" data-scroll-target="#displaying-effects-and-confidence-intervals">Displaying Effects and Confidence Intervals</a></li>
+  </ul></li>
+  <li><a href="#l4-4-maximum-likelihood-and-reml" id="toc-l4-4-maximum-likelihood-and-reml" class="nav-link" data-scroll-target="#l4-4-maximum-likelihood-and-reml">L4-4 Maximum Likelihood and REML</a>
+  <ul class="collapse">
+  <li><a href="#the-likelihood-function" id="toc-the-likelihood-function" class="nav-link" data-scroll-target="#the-likelihood-function">The Likelihood Function</a></li>
+  <li><a href="#estimating-a-normal-mean-and-variance" id="toc-estimating-a-normal-mean-and-variance" class="nav-link" data-scroll-target="#estimating-a-normal-mean-and-variance">Estimating a Normal Mean and Variance</a></li>
+  <li><a href="#restricted-or-residual-maximum-likelihood" id="toc-restricted-or-residual-maximum-likelihood" class="nav-link" data-scroll-target="#restricted-or-residual-maximum-likelihood">Restricted or Residual Maximum Likelihood</a></li>
+  <li><a href="#when-to-use-ml-and-reml" id="toc-when-to-use-ml-and-reml" class="nav-link" data-scroll-target="#when-to-use-ml-and-reml">When to Use ML and REML</a></li>
+  </ul></li>
+  <li><a href="#l4-5-developing-linear-mixed-effects-growth-models" id="toc-l4-5-developing-linear-mixed-effects-growth-models" class="nav-link" data-scroll-target="#l4-5-developing-linear-mixed-effects-growth-models">L4-5 Developing Linear Mixed-Effects Growth Models</a>
+  <ul class="collapse">
+  <li><a href="#a-paediatric-diet-example" id="toc-a-paediatric-diet-example" class="nav-link" data-scroll-target="#a-paediatric-diet-example">A Paediatric Diet Example</a></li>
+  <li><a href="#a-conditional-growth-model" id="toc-a-conditional-growth-model" class="nav-link" data-scroll-target="#a-conditional-growth-model">A Conditional Growth Model</a></li>
+  <li><a href="#interpreting-the-interaction" id="toc-interpreting-the-interaction" class="nav-link" data-scroll-target="#interpreting-the-interaction">Interpreting the Interaction</a></li>
+  <li><a href="#testing-and-displaying-different-growth-rates" id="toc-testing-and-displaying-different-growth-rates" class="nav-link" data-scroll-target="#testing-and-displaying-different-growth-rates">Testing and Displaying Different Growth Rates</a></li>
+  </ul></li>
+  <li><a href="#optional-l4-6-mixed-effects-modelling-and-study-design-ii" id="toc-optional-l4-6-mixed-effects-modelling-and-study-design-ii" class="nav-link" data-scroll-target="#optional-l4-6-mixed-effects-modelling-and-study-design-ii">Optional: L4-6 Mixed-Effects Modelling and Study Design II</a>
+  <ul class="collapse">
+  <li><a href="#a-paediatric-pharmacokinetic-case-study" id="toc-a-paediatric-pharmacokinetic-case-study" class="nav-link" data-scroll-target="#a-paediatric-pharmacokinetic-case-study">A Paediatric Pharmacokinetic Case Study</a></li>
+  <li><a href="#mechanistic-models-and-sampling-information" id="toc-mechanistic-models-and-sampling-information" class="nav-link" data-scroll-target="#mechanistic-models-and-sampling-information">Mechanistic Models and Sampling Information</a></li>
+  <li><a href="#d-optimal-study-design" id="toc-d-optimal-study-design" class="nav-link" data-scroll-target="#d-optimal-study-design">D-Optimal Study Design</a></li>
+  <li><a href="#prediction-uncertainty-and-study-design" id="toc-prediction-uncertainty-and-study-design" class="nav-link" data-scroll-target="#prediction-uncertainty-and-study-design">Prediction, Uncertainty and Study Design</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Part Four</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adam S. Darwich </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 6, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Mixed-effects models combine fixed effects, describing average relationships, with random effects, describing variation between groups. The approach is useful when observations are grouped, including repeated measurements for the same participants over time. As such, a group can be a set of observations belonging to one individual, these data are grouped.</p></li>
+<li><p>Repeated observations help distinguish variability between participants from variability within participants. The estimation of these are possible using mixed-effects modelling.</p></li>
+<li><p>The conditional growth model is a backbone of much of research in medicine and biology. The model incorporates an interaction between time and the intervention to describe how the intervention effect changes over time.</p></li>
+</ul>
+</div>
+</div>
+<section id="l4-1-mixed-effects-modelling" class="level1">
+<h1>L4-1 Mixed-Effects Modelling</h1>
+<p>Earlier, we used regression to describe relationships between variables. In Part Three, we extended regression to different types of outcomes. Here, we consider another important feature of the data: observations may belong to groups and may therefore be related to one another.</p>
+<p>The perhaps most notable example of grouped data is longitudinal, repeated measurements in the same set of study participants. Treating every measurement as independent can give an incomplete description of the variation and inappropriate standard errors.</p>
+<p>Charles R. Henderson made important contributions to mixed-effects methods through his work on animal breeding. His work illustrates a problem that also occurs in health research: we want to estimate average relationships while accounting for differences between the groups that generated the observations.</p>
+<section id="a-longitudinal-herd-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-longitudinal-herd-example">A Longitudinal Herd Example</h2>
+<p>Consider measurements of milk fat content from several herds over time. We can store the data in long format, with one row per observation:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">ID</th>
+<th style="text-align: right;">TIME</th>
+<th style="text-align: right;">DV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.4</td>
+</tr>
+</tbody>
+</table>
+<p><code>ID</code> identifies the herd, <code>TIME</code> records the measurement time in months, and <code>DV</code> is the dependent variable (milk fat content).</p>
+<p>We might expect milk fat content to increase over time while differing between herds at the same time point. The question is how to represent those differences in a model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="L03_Figure_01.png" title="Milk fat data." class="img-fluid figure-img"></p>
+<figcaption><strong>Figure 4.1</strong> Longitudinal milk fat data in five herds.</figcaption>
+</figure>
+</div>
+<p>The above plot contains one trajectory per herd. Variation in the starting values represents between-herd differences in intercepts, while variation in the rate of change represents between-herd differences in slopes.</p>
+<p>We have a few potential approaches for modelling these data. I will go through these belows along with their positives and negatives.</p>
+</section>
+<section id="naïve-pooling" class="level2">
+<h2 class="anchored" data-anchor-id="naïve-pooling">Naïve Pooling</h2>
+<p>One approach is to fit a single regression line through all observations:</p>
+<p><span class="math display">\[
+Y_{ij}=\beta_0+\beta_1t_{ij}+\varepsilon_{ij},
+\]</span></p>
+<p>where <span class="math inline">\(i\)</span> identifies a herd and <span class="math inline">\(j\)</span> identifies an observation within that herd.</p>
+<p>This model ignores herd groups. All differences between observations and the common regression line are assigned to the residual error term of the model, including persistent differences between herds.</p>
+<p>Naïve pooling treats the observations as independent even when the study design gives reasons to expect dependence. Ignoring grouping does not always change the estimated average slope substantially. However, it can affect its standard error, confidence interval and p-value. More importantly, the naïve pool approach leaves the between-herd variation as undescribed residual noise while the data violates the assumption on independence of errors.</p>
+</section>
+<section id="complete-pooling" class="level2">
+<h2 class="anchored" data-anchor-id="complete-pooling">Complete Pooling</h2>
+<p>Another approach is to average the observations at each time point and fit a regression to those averages:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>herd_means <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(DV <span class="sc">~</span> TIME, <span class="at">data =</span> herd_dat, <span class="at">FUN =</span> mean)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>m_herd_means <span class="ot">&lt;-</span> <span class="fu">lm</span>(DV <span class="sc">~</span> TIME, <span class="at">data =</span> herd_means)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_herd_means)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Aggregation can be useful when the mean trajectory is the object of interest. However, we are discarding information on variability. Time-point averages calculated from the same herds can also remain correlated. Averaging does not automatically make them independent.</p>
+<p>An especially smooth mean trajectory can produce a very small regression residual standard deviation. That value describes deviations of the averages from the fitted line. It should not be interpreted as the variation among individual observations or as a complete description of uncertainty in the original data.</p>
+<p>Aggregation also changes the level of the analysis. Associations between group averages need not equal associations between individuals. Inferring an individual relationship from an aggregate relationship is known as the ecological fallacy.</p>
+</section>
+<section id="no-pooling" class="level2">
+<h2 class="anchored" data-anchor-id="no-pooling">No Pooling</h2>
+<p>We can instead estimate a separate intercept for each herd:</p>
+<p><span class="math display">\[
+Y_{ij}=\alpha_i+\beta_1t_{ij}+\varepsilon_{ij}.
+\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m_herd_id <span class="ot">&lt;-</span> <span class="fu">lm</span>(DV <span class="sc">~</span> TIME <span class="sc">+</span> ID <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> herd_dat)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_herd_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <code>- 1</code> removes the overall intercept. R then estimates a coefficient for each herd intercept, rather than an intercept for a reference herd and differences from that reference.</p>
+<p>These models can describe the observed herds well. However, they do not specify a population distribution for the herd coefficients. A coefficient for a new herd is therefore not inferred from this parameterisation. Estimating many separate coefficients can also become difficult if some groups have few observations.</p>
+</section>
+<section id="partial-pooling" class="level2">
+<h2 class="anchored" data-anchor-id="partial-pooling">Partial Pooling</h2>
+<p>A mixed-effects model represents the herd coefficients as deviations from population coefficients:</p>
+<p><span class="math display">\[
+Y_{ij}=(\beta_0+b_{0i})+(\beta_1+b_{1i})t_{ij}+\varepsilon_{ij}.
+\]</span></p>
+<p>Here, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <strong>fixed effects</strong>. They describe the population intercept and slope. The <strong>random effects</strong>, <span class="math inline">\(b_{0i}\)</span> and <span class="math inline">\(b_{1i}\)</span>, describe the deviations for herd <span class="math inline">\(i\)</span>.</p>
+<p>For a conventional linear mixed-effects model, we assume:</p>
+<p><span class="math display">\[
+\begin{pmatrix}b_{0i}\\b_{1i}\end{pmatrix}
+\sim N\left(
+\begin{pmatrix}0\\0\end{pmatrix},
+\begin{pmatrix}
+\tau_0^2 &amp; \tau_{01}\\
+\tau_{01} &amp; \tau_1^2
+\end{pmatrix}
+\right),
+\qquad
+\varepsilon_{ij}\sim N(0,\sigma^2).
+\]</span></p>
+<p>The variance <span class="math inline">\(\tau_0^2\)</span> describes variation in intercepts between herds, <span class="math inline">\(\tau_1^2\)</span> describes variation in slopes, and <span class="math inline">\(\tau_{01}\)</span> describes their covariance. The residual variance <span class="math inline">\(\sigma^2\)</span> describes variation remaining around each herd’s trajectory. We assume that different herds are independent and that the residuals are independent conditional on the model’s random effects.</p>
+<p>The model estimates the fixed effects and variance components. It also predicts each herd’s random effects using both its observations and the population distribution. This “partial pooling” allows groups to share information.</p>
+<p>For a simple random-intercept model with a known common mean, equal residual variance, and <span class="math inline">\(n_i\)</span> observations in group <span class="math inline">\(i\)</span>, the idea can be illustrated by:</p>
+<p><span class="math display">\[
+\widehat{\alpha}_i\approx
+w_i\bar y_i+(1-w_i)\widehat\beta_0,
+\qquad
+w_i=\frac{\tau_0^2}{\tau_0^2+\sigma^2/n_i}.
+\]</span></p>
+<p>The group estimate lies between its observed mean and the estimated population mean. A group with many precise observations receives a larger weight on its own data. Greater residual noise or fewer observations leads to stronger shrinkage towards the population mean. The weights are more complicated for models with predictors and random slopes, but the principle is the same.</p>
+</section>
+<section id="fitting-a-mixed-effects-model-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-a-mixed-effects-model-in-r">Fitting a Mixed-Effects Model in R</h2>
+<p>The <code>lmer()</code> function in R fits linear mixed-effects models. The term before the vertical bar specifies the random coefficients, and the term after it specifies the grouping variable.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>m_herd_mixed <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  DV <span class="sc">~</span> TIME <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> TIME <span class="sc">|</span> ID),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> herd_dat,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_herd_mixed)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(m_herd_mixed)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_herd_mixed)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ranef</span>(m_herd_mixed)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(m_herd_mixed)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">isSingular</span>(m_herd_mixed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>TIME</code> gives the fixed time slope. <code>(1 + TIME | ID)</code> allows the intercept and time slope to vary between herds and estimates their correlation. The overall intercept is included by default. <code>lmerTest</code> supplies approximate fixed-effect tests, using Satterthwaite degrees of freedom by default.</p>
+<p>The output distinguishes several quantities:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Output</th>
+<th style="text-align: left;">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fixed-effect estimate</td>
+<td style="text-align: left;">Estimated population coefficient</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fixed-effect standard error</td>
+<td style="text-align: left;">Uncertainty in that estimated coefficient</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Random-effect standard deviation</td>
+<td style="text-align: left;">Estimated variation in the coefficient between groups</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Random-effect correlation</td>
+<td style="text-align: left;">Association between the groups’ intercept and slope deviations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual standard deviation</td>
+<td style="text-align: left;">Remaining variation around the conditional fitted values</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Correlation of fixed effects</td>
+<td style="text-align: left;">Correlation between coefficient estimators, rather than between individual random effects</td>
+</tr>
+</tbody>
+</table>
+<p>A random-effect standard deviation is not the standard error of the fixed effect. We can estimate the population mean precisely while individuals still vary substantially around it.</p>
+</section>
+<section id="repeated-measures-anova" class="level2">
+<h2 class="anchored" data-anchor-id="repeated-measures-anova">Repeated-Measures ANOVA</h2>
+<p>Repeated-measures ANOVA also accounts for repeated observations. It usually treats measurement occasions as categories and requires complete records.</p>
+<p>Mixed-effects models provide more flexibility for unequal observation schedules, continuous time, and differing numbers of measurements per participant. They can also use available outcome observations under appropriate assumptions about missingness. However, we still need a suitable mean model and covariance structure. Choosing a mixed-effects model does not remove those requirements.</p>
+</section>
+</section>
+<section id="l4-2-mixed-effects-modelling-and-study-design" class="level1">
+<h1>L4-2 Mixed-Effects Modelling and Study Design</h1>
+<p>The design of a study determines how observations are related and what a model can learn from them. Mixed-effects modelling is useful for longitudinal data, but also for cross-sectional data with meaningful groups.</p>
+<section id="fixed-effects-and-random-effects" class="level2">
+<h2 class="anchored" data-anchor-id="fixed-effects-and-random-effects">Fixed Effects and Random Effects</h2>
+<p>The terminology can be confusing. In this chapter, a fixed effect is a coefficient shared across the population, while a random effect is a group-specific deviation modelled as a draw from a distribution.</p>
+<p>In the lecture slides, we take. a look at an association between smoking and an inflammation biomarker. For independent observations, we could write:</p>
+<p><span class="math display">\[
+Y_i=\beta_0+\beta_1\operatorname{Smoking}_i+\varepsilon_i,
+\]</span></p>
+<p>where smoking is coded zero or one. The coefficient <span class="math inline">\(\beta_1\)</span> is the difference in expected inflammation between smokers and nonsmokers.</p>
+<p>Now consider an observational follow-up in which we measure the same people before and after they begin smoking. Their measurements are paired. A random intercept can represent persistent differences in baseline inflammation:</p>
+<p><span class="math display">\[
+Y_{ij}=\beta_0+\beta_1\operatorname{Smoking}_{ij}+b_{0i}+\varepsilon_{ij}.
+\]</span></p>
+<p>We can now distinguish variation between participants from variation around each participant’s predicted response. The model recognises that observations from one person share the same <span class="math inline">\(b_{0i}\)</span>.</p>
+</section>
+<section id="association-and-causality" class="level2">
+<h2 class="anchored" data-anchor-id="association-and-causality">Association and Causality</h2>
+<p>A statistically significant coefficient does not establish that changing the predictor would cause the estimated change in the outcome (counterfactual interpretation). Confounding, selection and the timing of observations matter.</p>
+<p>The Bradford Hill considerations discussed in the lecture include strength and consistency of association, specificity, temporality, a biological gradient, plausibility, coherence, experimental evidence and analogy. They help organise reasoning about evidence. They are not a checklist that mechanically proves causality. In particular, a cause must precede its effect.</p>
+<p>Randomisation provides a different form of evidence by making treatment assignment independent of participant characteristics in expectation. It does not guarantee exact balance in a realised sample. Fisher’s lady-tasting-tea example illustrates how a randomised experiment can compare an observed result with what chance alone would produce.</p>
+<p>For health data, we should distinguish the statistical model from the causal argument. A random intercept accounts for a pattern of dependence. It does not automatically adjust for every cause of differences between participants or hospitals.</p>
+</section>
+<section id="cross-sectional-and-real-world-data" class="level2">
+<h2 class="anchored" data-anchor-id="cross-sectional-and-real-world-data">Cross-Sectional and Real-World Data</h2>
+<p>A cross-sectional study observes a population at one time or over a short interval. It can describe prevalence and associations, but often provides limited information about the sequence of events.</p>
+<p>Even without repeated observations of each person, patients may be grouped by hospital. A model such as:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hospital_model <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  inflammation <span class="sc">~</span> treatment <span class="sc">+</span> age <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Hospital),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> hospital_data</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>allows hospital baselines to vary. This is a formula template requiring a dataset named <code>hospital_data</code>, rather than part of the simulated examples.</p>
+<p>With repeated measurements of patients within hospitals, a nested structure could be written as <code>(1 | Hospital/ID)</code>. This expands into a hospital intercept and an intercept for each hospital–patient combination. The grouping structure should reflect how the observations were collected.</p>
+<p>Retrospective healthcare data may contain irregular measurement times and unequal numbers of observations. Mixed-effects models can represent that structure, but treatment allocation and measurement frequency may themselves relate to health status. Those features need consideration when interpreting the fitted associations.</p>
+</section>
+</section>
+<section id="l4-3-developing-mixed-effects-models" class="level1">
+<h1>L4-3 Developing Mixed-Effects Models</h1>
+<p>Model development begins with the scientific question and the study design. We then choose a mean relationship, predictors and a structure for variation that the data can support.</p>
+<section id="preparing-the-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-predictors">Preparing the Predictors</h2>
+<p>As in Part Two, examine variable definitions, units, distributions and missingness before fitting a model. Consider whether time zero is meaningful and whether a linear time effect is plausible over the observed period.</p>
+<p>Highly correlated predictors can make individual coefficients difficult to estimate. Regression does not require predictors to be mutually independent. The problem is that closely related predictors supply little independent information about their separate coefficients.</p>
+<p>Centring a predictor changes the interpretation of the intercept:</p>
+<p><span class="math display">\[
+x_{ij}^{c}=x_{ij}-c.
+\]</span></p>
+<p>If <span class="math inline">\(c\)</span> is baseline time, the intercept refers to baseline. If <span class="math inline">\(c\)</span> is the mean, it refers to the mean predictor value, conditional on the other predictors. Standardising additionally divides by a standard deviation. The corresponding coefficient then describes a one-standard-deviation change.</p>
+<p>For longitudinal predictors, distinguish changes within a person from differences between people. An individual’s mean predictor value and their deviation from that mean can have different associations with the outcome. A random intercept alone does not guarantee that one common slope isolates a within-person effect.</p>
+</section>
+<section id="choosing-model-terms" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-model-terms">Choosing Model Terms</h2>
+<p>Include predictors because they help answer the research question or describe the process generating the data. Important adjustment variables may remain relevant even when their individual P-values are large. Interactions should have a scientific or design-based rationale.</p>
+<p>An unexpected coefficient sign is a reason to investigate coding, confounding, collinearity and model form. Removing a variable simply because its sign conflicts with an expectation can hide an important feature of the data. Retaining unnecessary predictors can also reduce precision, particularly in small datasets.</p>
+<p>Choose the random-effects structure alongside the fixed effects. For repeated observations over time, a random slope may be appropriate if individuals plausibly change at different rates and the observation schedule supplies enough information to estimate that variation.</p>
+</section>
+<section id="a-hormone-level-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-hormone-level-example">A Hormone-Level Example</h2>
+<p>The lecture uses a simulated treatment example with substantial differences in baseline hormone levels between participants. We will use an illustrative dataset in which each of 50 participants contributes five observations under each of two conditions. This makes the treatment indicator vary within participants and permits comparison with a model containing separate participant intercepts.</p>
+<p>The design is an educational illustration. It does not establish that treatment and control periods would be exchangeable in a clinical study. A real before-and-after or crossover analysis would also consider period effects and, where relevant, carryover.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">403</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n_patients <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>exdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">OBS =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">IV =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="fu">seq_len</span>(n_patients)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>patient_baseline <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_patients, <span class="at">mean =</span> <span class="dv">36</span>, <span class="at">sd =</span> <span class="dv">11</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>exdata<span class="sc">$</span>DV <span class="ot">&lt;-</span> patient_baseline[exdata<span class="sc">$</span>ID] <span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span> <span class="sc">*</span> exdata<span class="sc">$</span>IV <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">nrow</span>(exdata), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">3.2</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>exdata<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="fu">factor</span>(exdata<span class="sc">$</span>ID)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly remove 18% of outcome values, leaving identifiers intact.</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="fu">sample</span>(</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">seq_len</span>(<span class="fu">nrow</span>(exdata)),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">round</span>(<span class="fl">0.18</span> <span class="sc">*</span> <span class="fu">nrow</span>(exdata))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>exdata<span class="sc">$</span>DV[missing_rows] <span class="ot">&lt;-</span> <span class="cn">NA_real_</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">is.na</span>(exdata<span class="sc">$</span>DV))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(exdata)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(DV <span class="sc">~</span> ID, <span class="at">data =</span> exdata,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Participant"</span>, <span class="at">ylab =</span> <span class="st">"Hormone level (illustrative units)"</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(DV <span class="sc">~</span> IV, <span class="at">data =</span> exdata,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Condition: 0 = control, 1 = treatment"</span>, <span class="at">ylab =</span> <span class="st">"Hormone level"</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(DV <span class="sc">~</span> OBS <span class="sc">+</span> IV, <span class="at">data =</span> exdata,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Observation and condition"</span>, <span class="at">ylab =</span> <span class="st">"Hormone level"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The simulated effect is constant over the measurement occasions. Differences between participant baselines are much larger than the residual noise.</p>
+<p>Missingness should be described in relation to the relevant variable. With four columns and missing values confined to <code>DV</code>, 18% missing outcome values correspond to 4.5% missing cells in the full table. That distinction explains the two percentages discussed in the lecture.</p>
+<p>A mixed-effects model can retain a participant’s observed outcomes even when some others are missing. It does not impute the missing values. Likelihood-based inference typically relies on missing at random, conditional on the observed information used in the analysis, together with a correctly specified model. Missing outcomes depending on unobserved health changes may require sensitivity analysis.</p>
+</section>
+<section id="comparing-pooling-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-pooling-approaches">Comparing Pooling Approaches</h2>
+<p>We first restrict all models to the same complete rows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>analysis_dat <span class="ot">&lt;-</span> exdata[<span class="fu">complete.cases</span>(exdata[<span class="fu">c</span>(<span class="st">"DV"</span>, <span class="st">"IV"</span>, <span class="st">"ID"</span>)]), ]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>m_pool <span class="ot">&lt;-</span> <span class="fu">lm</span>(DV <span class="sc">~</span> IV, <span class="at">data =</span> analysis_dat)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>m_id <span class="ot">&lt;-</span> <span class="fu">lm</span>(DV <span class="sc">~</span> IV <span class="sc">+</span> ID <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> analysis_dat)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>m_null <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  DV <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data =</span> analysis_dat, <span class="at">REML =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>m_treat <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  DV <span class="sc">~</span> IV <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data =</span> analysis_dat, <span class="at">REML =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_pool)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_id)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_null)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_treat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The pooled model places baseline differences between patients into its residual error. The model with fixed participant intercepts estimates each baseline separately. The mixed-effects model estimates a population baseline and a distribution of deviations around it.</p>
+<p>Here, treatment varies within each participant. If treatment were constant within each participant in a parallel-arm study, its coefficient would be collinear with a full set of fixed participant indicators in <code>m_id</code>. That model could not estimate the treatment effect separately. A random-intercept model makes a different assumption and can estimate a between-participant treatment association, subject to the study design and its assumptions.</p>
+</section>
+<section id="interpreting-the-lecture-output" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-lecture-output">Interpreting the Lecture Output</h2>
+<p>The slide output for the treatment mixed-effects model reports approximately:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: right;">Slide estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fixed intercept</td>
+<td style="text-align: right;">36.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fixed treatment coefficient</td>
+<td style="text-align: right;">10.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Between-participant intercept standard deviation</td>
+<td style="text-align: right;">11.06</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual standard deviation</td>
+<td style="text-align: right;">3.19</td>
+</tr>
+</tbody>
+</table>
+<p>These values come from the lecture dataset, not the new simulation. The intercept represents the expected outcome under control. Treatment is associated with an increase of about 10 units. Participants vary around the population intercept, with a standard deviation of about 11 units. Their individual observations vary around the conditional model predictions, with a residual standard deviation of about 3.2 units.</p>
+<p><code>jtools::summ()</code> provides an alternative summary:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>jtools<span class="sc">::</span><span class="fu">summ</span>(m_treat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The marginal <span class="math inline">\(R^2\)</span> summarises variation accounted for by the fixed effects, while the conditional <span class="math inline">\(R^2\)</span> includes the random effects. A much higher conditional <span class="math inline">\(R^2\)</span> indicates that the grouping structure accounts for considerable variation. A high conditional <span class="math inline">\(R^2\)</span> does not by itself demonstrate accurate predictions for new participants whose random effects are unknown.</p>
+<p>For a random-intercept model, the intraclass correlation coefficient is:</p>
+<p><span class="math display">\[
+\operatorname{ICC}=\frac{\tau_0^2}{\tau_0^2+\sigma^2}.
+\]</span></p>
+<p>Using the slide variances gives <span class="math inline">\(122.4/(122.4+10.2)\approx0.92\)</span>. Conditional on the fixed predictors, this is the correlation implied for two observations from the same participant. It describes the proportion of remaining variance associated with differences between participants. With random slopes, the implied correlations also depend on predictor values.</p>
+</section>
+<section id="population-and-individual-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="population-and-individual-predictions">Population and Individual Predictions</h2>
+<p>A population prediction uses only the fixed effects. A conditional prediction also uses the estimated random effect for an observed participant:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>analysis_dat<span class="sc">$</span>population_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_treat, <span class="at">re.form =</span> <span class="cn">NA</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>analysis_dat<span class="sc">$</span>individual_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_treat, <span class="at">re.form =</span> <span class="cn">NULL</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(analysis_dat<span class="sc">$</span>population_pred, analysis_dat<span class="sc">$</span>DV,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Population prediction"</span>, <span class="at">ylab =</span> <span class="st">"Observed outcome"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(analysis_dat<span class="sc">$</span>individual_pred, analysis_dat<span class="sc">$</span>DV,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Individual prediction"</span>, <span class="at">ylab =</span> <span class="st">"Observed outcome"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Individual predictions usually fit the existing observations more closely because they use information about each participant. That is a different prediction task from predicting a new participant.</p>
+</section>
+<section id="residual-diagnostics-and-model-stability" class="level2">
+<h2 class="anchored" data-anchor-id="residual-diagnostics-and-model-stability">Residual Diagnostics and Model Stability</h2>
+<p>Examine residuals against fitted values, time, treatment and other important predictors. Look for systematic trends and changes in spread. A QQ plot helps assess whether the conditional residual distribution is reasonably compatible with a normal distribution.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(m_treat), <span class="fu">resid</span>(m_treat),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Conditional fitted value"</span>, <span class="at">ylab =</span> <span class="st">"Residual"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">resid</span>(m_treat))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">resid</span>(m_treat))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">resid</span>(m_treat) <span class="sc">~</span> analysis_dat<span class="sc">$</span>IV,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Condition"</span>, <span class="at">ylab =</span> <span class="st">"Residual"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(analysis_dat<span class="sc">$</span>OBS, <span class="fu">resid</span>(m_treat),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Observation occasion"</span>, <span class="at">ylab =</span> <span class="st">"Residual"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">isSingular</span>(m_treat)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_treat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Random effects also have distributional assumptions, although their predicted values are shrunken and should not be treated as independent raw observations for a normality test. Serial patterns remaining within participants can indicate residual autocorrelation that the random intercept does not capture.</p>
+<p>A singular fit means that an estimated random-effects covariance matrix has reduced rank. A variance near zero or an intercept–slope correlation near <span class="math inline">\(-1\)</span> or <span class="math inline">\(1\)</span> can indicate this. Consider whether the design supports the proposed random-effects structure before changing optimiser settings or removing terms.</p>
+<p>Validation should reflect the intended prediction task. To assess predictions for new patients, hold out entire patients. Randomly splitting rows can place observations from the same patient in both the training and test sets and give an optimistic assessment.</p>
+</section>
+<section id="likelihood-ratio-tests-and-information-criteria" class="level2">
+<h2 class="anchored" data-anchor-id="likelihood-ratio-tests-and-information-criteria">Likelihood-Ratio Tests and Information Criteria</h2>
+<p>For nested models fitted by ML to the same observations, the likelihood-ratio statistic is:</p>
+<p><span class="math display">\[
+D=2\left[\ell(\widehat\theta_{\text{full}})
+-\ell(\widehat\theta_{\text{reduced}})\right].
+\]</span></p>
+<p>Under suitable conditions, this is approximately chi-squared distributed with degrees of freedom equal to the number of additional parameters. We can test the addition of treatment while retaining the random-intercept structure:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m_null_ml <span class="ot">&lt;-</span> <span class="fu">update</span>(m_null, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m_treat_ml <span class="ot">&lt;-</span> <span class="fu">update</span>(m_treat, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_null_ml, m_treat_ml)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m_null_ml, m_treat_ml)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(m_null_ml, m_treat_ml)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A small P-value indicates evidence against the reduced model under the test assumptions. It does not quantify clinical importance. Tests that add or remove variance components require extra care because a variance of zero is on the boundary of its allowed values, and the usual chi-squared reference distribution may not apply.</p>
+<p>The general information-criterion formulas are:</p>
+<p><span class="math display">\[
+\operatorname{AIC}=-2\ell(\widehat\theta)+2k,
+\qquad
+\operatorname{BIC}=-2\ell(\widehat\theta)+k\log(n),
+\]</span></p>
+<p>where <span class="math inline">\(k\)</span> counts the estimated model parameters, including relevant variance and covariance parameters. Lower values indicate a better balance between fit and the corresponding complexity penalty among the models compared. The usual BIC penalty exceeds the AIC penalty when <span class="math inline">\(n&gt;e^2\)</span>. These criteria are relative measures, and comparisons require compatible likelihoods and the same response observations.</p>
+</section>
+<section id="displaying-effects-and-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="displaying-effects-and-confidence-intervals">Displaying Effects and Confidence Intervals</h2>
+<p>Predicted means and their uncertainty often communicate an effect more clearly than a coefficient table:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effects)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(m_treat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can use a parametric bootstrap to calculate confidence intervals for the fixed effects:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">404</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  m_treat,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">parm =</span> <span class="st">"beta_"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"boot"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">nsim =</span> <span class="dv">1000</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot.type =</span> <span class="st">"perc"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This simulates datasets from the fitted mixed-effects model and refits it, rather than resampling individual rows as if they were independent. Inspect warnings and failed fits. For a nonparametric bootstrap of grouped data, the resampling scheme must also preserve the relevant dependence, for example by resampling participants as whole groups.</p>
+</section>
+</section>
+<section id="l4-4-maximum-likelihood-and-reml" class="level1">
+<h1>L4-4 Maximum Likelihood and REML</h1>
+<p>Maximum likelihood underlies many models in this course. The central idea is to find parameter values that make the observed data most compatible with the specified probability model.</p>
+<section id="the-likelihood-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-likelihood-function">The Likelihood Function</h2>
+<p>For independent observations with density or probability mass function <span class="math inline">\(f(y_i\mid\theta)\)</span>, the likelihood is:</p>
+<p><span class="math display">\[
+L(\theta\mid\mathbf y)=\prod_{i=1}^{n}f(y_i\mid\theta).
+\]</span></p>
+<p>The observed data are held fixed while we vary the candidate parameter values. For continuous data, the factors are probability densities, rather than probabilities of observing an exact value. The likelihood is not a probability distribution for the parameters.</p>
+<p>We commonly maximise the log likelihood:</p>
+<p><span class="math display">\[
+\ell(\theta)=\log L(\theta\mid\mathbf y)
+=\sum_{i=1}^{n}\log f(y_i\mid\theta).
+\]</span></p>
+<p>Equivalently, an optimiser may minimise the negative log likelihood. In a mixed-effects model, the marginal likelihood accounts for the random-effects distribution. Observations from one participant are not treated as marginally independent.</p>
+</section>
+<section id="estimating-a-normal-mean-and-variance" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-a-normal-mean-and-variance">Estimating a Normal Mean and Variance</h2>
+<p>For independent observations from <span class="math inline">\(N(\mu,\sigma^2)\)</span>, the log likelihood is:</p>
+<p><span class="math display">\[
+\ell(\mu,\sigma^2)
+=-\frac n2\log(2\pi)-\frac n2\log(\sigma^2)
+-\frac{1}{2\sigma^2}\sum_{i=1}^{n}(y_i-\mu)^2.
+\]</span></p>
+<p>The ML estimates are:</p>
+<p><span class="math display">\[
+\widehat\mu=\bar y,
+\qquad
+\widehat\sigma^2_{\mathrm{ML}}
+=\frac1n\sum_{i=1}^{n}(y_i-\bar y)^2.
+\]</span></p>
+<p>We use the data to estimate the mean and then measure deviations from that estimated mean. The variance estimate therefore tends to be too small:</p>
+<p><span class="math display">\[
+E\left(\widehat\sigma^2_{\mathrm{ML}}\right)
+=\frac{n-1}{n}\sigma^2.
+\]</span></p>
+<p>The familiar sample variance uses <span class="math inline">\(n-1\)</span> in the denominator to correct this bias. This is a useful starting point for understanding REML.</p>
+</section>
+<section id="restricted-or-residual-maximum-likelihood" class="level2">
+<h2 class="anchored" data-anchor-id="restricted-or-residual-maximum-likelihood">Restricted or Residual Maximum Likelihood</h2>
+<p>REML estimates variance components while accounting for estimation of the fixed effects. In an ordinary normal linear model with <span class="math inline">\(p\)</span> fixed-effect coefficients, including the intercept, the analogous variance estimates are:</p>
+<p><span class="math display">\[
+\widehat\sigma^2_{\mathrm{ML}}=\frac{\mathrm{SSE}}{n},
+\qquad
+\widehat\sigma^2_{\mathrm{REML}}=\frac{\mathrm{SSE}}{n-p}.
+\]</span></p>
+<p>Mixed-effects models have a more complex covariance structure, so REML is not generally implemented by replacing one denominator. The underlying motivation remains to reduce bias in variance-component estimation arising from estimation of the mean structure.</p>
+<p>The ordinary normal-model example shows <strong>downward</strong> ML variance bias. Small datasets can produce unstable estimates in either direction in an individual fit, but that is different from the systematic bias illustrated above. REML does not guarantee precise or unbiased estimates of every variance component in every mixed-effects model.</p>
+</section>
+<section id="when-to-use-ml-and-reml" class="level2">
+<h2 class="anchored" data-anchor-id="when-to-use-ml-and-reml">When to Use ML and REML</h2>
+<p>For <code>lmer()</code>, REML is the default. Set the argument explicitly when comparing models:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ML for comparing models with different fixed effects.</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>m_comparison <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  DV <span class="sc">~</span> IV <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data =</span> analysis_dat, <span class="at">REML =</span> <span class="cn">FALSE</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># REML for estimating the selected model.</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>m_final <span class="ot">&lt;-</span> <span class="fu">update</span>(m_comparison, <span class="at">REML =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>REML likelihoods based on different fixed-effect structures are not directly comparable. Use ML when comparing models that add or remove fixed effects, including AIC comparisons. After selecting a model, a common approach is to refit it using REML.</p>
+<p>Models with the same fixed-effect structure can sometimes be compared using REML to investigate different covariance structures. That requires a suitable comparison method and attention to boundary issues. The restriction is therefore more specific than saying that REML can never be used for model comparison.</p>
+</section>
+</section>
+<section id="l4-5-developing-linear-mixed-effects-growth-models" class="level1">
+<h1>L4-5 Developing Linear Mixed-Effects Growth Models</h1>
+<p>The previous example assumed a constant treatment difference. We now consider an intervention whose effect develops over time.</p>
+<section id="a-paediatric-diet-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-paediatric-diet-example">A Paediatric Diet Example</h2>
+<p>Suppose we follow children receiving a control diet or an intervention diet. Each child belongs to one group and has repeated measurements of body weight. Children may differ in baseline weight and growth rate.</p>
+<p>A spaghetti plot, with one line per child, shows individual trajectories. If the group trajectories increasingly separate, a time-by-diet interaction may describe that pattern.</p>
+<p>The lecture discusses follow-up over two years. For the illustrative code below, we use 100 children measured at four occasions, producing 400 observations, matching the number of observations in the slide model output. The chosen schedule is illustrative.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">405</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>n_children <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>dietdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Months =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">24</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="fu">seq_len</span>(n_children)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>diet_assignment <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">each =</span> n_children <span class="sc">/</span> <span class="dv">2</span>))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>dietdata<span class="sc">$</span>Diet <span class="ot">&lt;-</span> diet_assignment[dietdata<span class="sc">$</span>ID]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>child_intercepts <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_children, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.94</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>child_slopes <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_children, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.075</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>dietdata<span class="sc">$</span>BW <span class="ot">&lt;-</span> <span class="fl">24.8</span> <span class="sc">+</span> child_intercepts[dietdata<span class="sc">$</span>ID] <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.14</span> <span class="sc">*</span> dietdata<span class="sc">$</span>Diet <span class="sc">+</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  (<span class="fl">0.25</span> <span class="sc">+</span> child_slopes[dietdata<span class="sc">$</span>ID]) <span class="sc">*</span> dietdata<span class="sc">$</span>Months <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.25</span> <span class="sc">*</span> dietdata<span class="sc">$</span>Diet <span class="sc">*</span> dietdata<span class="sc">$</span>Months <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">nrow</span>(dietdata), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.44</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>dietdata<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="fu">factor</span>(dietdata<span class="sc">$</span>ID)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(BW <span class="sc">~</span> Months, <span class="at">data =</span> dietdata, <span class="at">type =</span> <span class="st">"n"</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Months"</span>, <span class="at">ylab =</span> <span class="st">"Body weight (kg)"</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (id <span class="cf">in</span> <span class="fu">levels</span>(dietdata<span class="sc">$</span>ID)) {</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  one_child <span class="ot">&lt;-</span> dietdata[dietdata<span class="sc">$</span>ID <span class="sc">==</span> id, ]</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  one_child <span class="ot">&lt;-</span> one_child[<span class="fu">order</span>(one_child<span class="sc">$</span>Months), ]</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(one_child<span class="sc">$</span>Months, one_child<span class="sc">$</span>BW,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="cf">if</span> (one_child<span class="sc">$</span>Diet[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">0</span>) <span class="st">"orange"</span> <span class="cf">else</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Intervention"</span>),</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"steelblue"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The coefficients specify an illustrative growth pattern and should not be interpreted as evidence about a particular dietary intervention.</p>
+</section>
+<section id="a-conditional-growth-model" class="level2">
+<h2 class="anchored" data-anchor-id="a-conditional-growth-model">A Conditional Growth Model</h2>
+<p>We can write:</p>
+<p><span class="math display">\[
+Y_{ij}=\beta_0+b_{0i}
++\beta_1t_{ij}+b_{1i}t_{ij}
++\beta_2\operatorname{Diet}_i
++\beta_3t_{ij}\operatorname{Diet}_i
++\varepsilon_{ij}.
+\]</span></p>
+<p>The fixed effects describe average growth and the difference between diets. The random intercept and slope describe variation between children within those average patterns.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m_growth <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  BW <span class="sc">~</span> Months <span class="sc">*</span> Diet <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Months <span class="sc">|</span> ID),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> dietdata,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">REML =</span> <span class="cn">TRUE</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_growth)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_growth)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">isSingular</span>(m_growth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In an R formula, <code>Months * Diet</code> expands to <code>Months + Diet + Months:Diet</code>. The random-effect term estimates intercept variation, time-slope variation and their covariance. <code>(Months | ID)</code> also includes a random intercept by default, so it is equivalent to <code>(1 + Months | ID)</code>.</p>
+<p>Diet is constant within each child. A random time slope is identifiable from repeated time observations, whereas a random diet slope within child would not have the same interpretation or information available in this design.</p>
+</section>
+<section id="interpreting-the-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-interaction">Interpreting the Interaction</h2>
+<p>With control coded zero and intervention coded one, the fixed-effect trajectories are:</p>
+<p><span class="math display">\[
+E(Y\mid t,\operatorname{Diet}=0)=\beta_0+\beta_1t,
+\]</span></p>
+<p><span class="math display">\[
+E(Y\mid t,\operatorname{Diet}=1)
+=(\beta_0+\beta_2)+(\beta_1+\beta_3)t.
+\]</span></p>
+<p>The intervention-minus-control difference at time <span class="math inline">\(t\)</span> is:</p>
+<p><span class="math display">\[
+\Delta(t)=\beta_2+\beta_3t.
+\]</span></p>
+<p>The slide model reports approximately <span class="math inline">\(\beta_0=24.80\)</span>, <span class="math inline">\(\beta_1=0.247\)</span>, <span class="math inline">\(\beta_2=0.144\)</span> and <span class="math inline">\(\beta_3=0.254\)</span>. The interpretation is:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Coefficient</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">Expected baseline weight in the control group, about 24.80 kg</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Months</td>
+<td style="text-align: left;">Average control-group growth, about 0.247 kg per month</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Diet</td>
+<td style="text-align: left;">Intervention-minus-control baseline difference, about 0.144 kg</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Months: Diet</td>
+<td style="text-align: left;">Difference in growth rates, about 0.254 kg per month</td>
+</tr>
+</tbody>
+</table>
+<p>The intervention-group growth rate is approximately <span class="math inline">\(0.247+0.254=0.501\)</span> kg per month. At 12 months, the modelled difference is approximately <span class="math inline">\(0.144+12(0.254)=3.19\)</span> kg.</p>
+<p>A nonsignificant diet main effect refers to the difference at time zero. It does not imply that the diet groups follow the same trajectory. The interaction addresses a different hypothesis: whether their average growth rates differ.</p>
+<p>If we centre time at 12 months, the diet main effect becomes the difference at 12 months. The fitted trajectories remain the same. Interpret main effects at the reference value of the interacting predictor.</p>
+</section>
+<section id="testing-and-displaying-different-growth-rates" class="level2">
+<h2 class="anchored" data-anchor-id="testing-and-displaying-different-growth-rates">Testing and Displaying Different Growth Rates</h2>
+<p>To test the interaction, compare models with the same random-effects structure and use ML:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m_growth_additive <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  BW <span class="sc">~</span> Months <span class="sc">+</span> Diet <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Months <span class="sc">|</span> ID),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> dietdata, <span class="at">REML =</span> <span class="cn">FALSE</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>m_growth_interaction <span class="ot">&lt;-</span> <span class="fu">update</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  m_growth_additive, . <span class="sc">~</span> . <span class="sc">+</span> Months<span class="sc">:</span>Diet</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_growth_additive, m_growth_interaction)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(effects<span class="sc">::</span><span class="fu">allEffects</span>(m_growth))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m_growth)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">resid</span>(m_growth))</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">resid</span>(m_growth))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The uncertainty in the estimated difference at a selected time depends on both coefficient variances and their covariance:</p>
+<p><span class="math display">\[
+\operatorname{Var}\{\widehat\Delta(t)\}
+=\operatorname{Var}(\widehat\beta_2)
++t^2\operatorname{Var}(\widehat\beta_3)
++2t\operatorname{Cov}(\widehat\beta_2,\widehat\beta_3).
+\]</span></p>
+<p>Adding the two standard errors would not give the correct standard error of the time-specific difference.</p>
+<p>Check whether linear growth adequately describes the observed interval. A random slope accommodates variation in linear growth rates, but does not itself describe curvature. We may need a nonlinear time term or another mean function if the trajectories change shape.</p>
+</section>
+</section>
+<section id="optional-l4-6-mixed-effects-modelling-and-study-design-ii" class="level1">
+<h1>Optional: L4-6 Mixed-Effects Modelling and Study Design II</h1>
+<p>A nonlinear mixed-effects model replaces the linear mean function with a nonlinear function:</p>
+<p><span class="math display">\[
+Y_{ij}=f(t_{ij},\boldsymbol\phi_i,\mathbf x_i)+\varepsilon_{ij}.
+\]</span></p>
+<p>The individual parameters <span class="math inline">\(\boldsymbol\phi_i\)</span> vary around population parameters. For a positive parameter such as clearance, one common formulation is:</p>
+<p><span class="math display">\[
+\operatorname{CL}_i=\operatorname{CL}_{\mathrm{pop}}
+\exp(\eta_{\mathrm{CL},i}),
+\qquad
+\eta_{\mathrm{CL},i}\sim N(0,\omega_{\mathrm{CL}}^2).
+\]</span></p>
+<p>This keeps individual clearances positive. Here, <span class="math inline">\(\operatorname{CL}_{\mathrm{pop}}\)</span> is the median, or typical value, of the lognormal clearance distribution. Its arithmetic mean is <span class="math inline">\(\operatorname{CL}_{\mathrm{pop}}\exp(\omega_{\mathrm{CL}}^2/2)\)</span>.</p>
+<p>The symbol <span class="math inline">\(\eta\)</span> here is a random deviation, not a standard deviation. Its variability is described by <span class="math inline">\(\omega\)</span>. In Part Three, we used <span class="math inline">\(\eta\)</span> for a linear predictor, illustrating why the meaning of a symbol must be defined within each model.</p>
+<p>The function <span class="math inline">\(f\)</span> can be an explicit equation or the solution of differential equations. Fixed effects, between-individual variation and residual error remain distinct components.</p>
+<section id="a-paediatric-pharmacokinetic-case-study" class="level2">
+<h2 class="anchored" data-anchor-id="a-paediatric-pharmacokinetic-case-study">A Paediatric Pharmacokinetic Case Study</h2>
+<p>The final lecture describes modelling of levobupivacaine exposure in infants undergoing surgery. The questions concern the concentration–time profile, plasma protein binding, and the consequences of alternative infusion durations.</p>
+<p>Levobupivacaine binds to <span class="math inline">\(\alpha_1\)</span>-acid glycoprotein. The study distinguishes total concentration from unbound concentration, which is particularly relevant when considering toxicity. The published study reports using pharmacokinetic modelling to optimise sampling and explore the effect of protein binding on exposure (<a href="https://doi.org/10.1111/pan.13548">Vashisht et al., 2019</a>).</p>
+<p>The lecture describes combining existing information from adults, in vitro experiments and available paediatric observations to make prospective predictions. After collecting the study data, the investigators assessed those predictions and developed a population model of the observed profiles.</p>
+<p>This gives a sequence of distinct uses for modelling:</p>
+<ol type="1">
+<li>Use existing information to predict plausible profiles in the target population.</li>
+<li>Choose a feasible study and sampling schedule.</li>
+<li>Collect observations and compare them with the prospective predictions.</li>
+<li>Estimate population parameters and between-individual variation from the study data.</li>
+<li>Simulate alternative schedules and evaluate their implications within the model’s supported range.</li>
+</ol>
+<p>A model fitted to the observations and a prospective prediction made before seeing them provide different forms of evidence. Both are useful, but they answer different questions.</p>
+</section>
+<section id="mechanistic-models-and-sampling-information" class="level2">
+<h2 class="anchored" data-anchor-id="mechanistic-models-and-sampling-information">Mechanistic Models and Sampling Information</h2>
+<p>A simplified absorption-and-elimination model illustrates why sampling times matter:</p>
+<p><span class="math display">\[
+\frac{dA_{\mathrm{depot}}}{dt}=-k_aA_{\mathrm{depot}},
+\qquad
+\frac{dA_{\mathrm{central}}}{dt}
+=k_aA_{\mathrm{depot}}-\frac{\operatorname{CL}}{V}A_{\mathrm{central}},
+\qquad
+C=\frac{A_{\mathrm{central}}}{V}.
+\]</span></p>
+<p>Here, <span class="math inline">\(k_a\)</span> is an absorption rate constant, <span class="math inline">\(\operatorname{CL}\)</span> is clearance, and <span class="math inline">\(V\)</span> is the apparent distribution volume. These equations illustrate a basic model rather than reproduce the full binding-and-infusion model in the case study.</p>
+<p>Early samples may contain information about absorption. Later samples may contain more information about elimination. Several samples at times where concentrations change similarly with two parameters may provide little information for distinguishing those parameters.</p>
+<p>For unbound drug, the relation between concentration, binding and clearance must also be represented consistently. More measurements of total concentration alone may not identify every component of a binding model.</p>
+</section>
+<section id="d-optimal-study-design" class="level2">
+<h2 class="anchored" data-anchor-id="d-optimal-study-design">D-Optimal Study Design</h2>
+<p>D-optimal design chooses a design that maximises the determinant of an expected information matrix:</p>
+<p><span class="math display">\[
+\operatorname{Design}^{*}
+=\arg\max_{\operatorname{Design}}
+\det\{\mathcal I(\boldsymbol\theta;\operatorname{Design})\}.
+\]</span></p>
+<p>The information matrix describes how informative the planned observations are about the parameters under the assumed model. Its inverse approximates the covariance of the parameter estimates under suitable conditions. Maximising its determinant aims to reduce the joint uncertainty in those estimates.</p>
+<p>The design depends on assumed parameter values, variability and residual error. A design that performs well for one assumed model may be less informative if those assumptions are wrong. It is therefore useful to examine plausible alternative parameter values and to simulate the performance of candidate designs.</p>
+<p>In paediatric studies, practical constraints include the number and volume of blood samples, feasible sampling windows and the clinical workflow. Optimisation operates within those constraints. It does not replace clinical judgement or guarantee that the selected model is correct.</p>
+</section>
+<section id="prediction-uncertainty-and-study-design" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-uncertainty-and-study-design">Prediction, Uncertainty and Study Design</h2>
+<p>After estimation, we can simulate profiles for a population and study how exposure varies between individuals. Distinguish uncertainty in the estimated population parameters from actual variation between individuals and from residual measurement error.</p>
+<p>A simulated concentration below a toxicity reference is evidence about exposure under the model’s assumptions. It does not by itself establish clinical safety for every patient or for an unstudied dosing schedule. The usefulness of an extrapolation depends on the relevance of the mechanism, data and target population.</p>
+<p>The broader lesson is that study design and modelling inform one another. A model helps identify which observations are needed, while the collected observations show which features of the model can actually be estimated.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

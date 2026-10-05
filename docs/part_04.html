@@ -246,9 +246,9 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#preparing-the-predictors" id="toc-preparing-the-predictors" class="nav-link" data-scroll-target="#preparing-the-predictors">Preparing the Predictors</a></li>
   <li><a href="#choosing-model-terms" id="toc-choosing-model-terms" class="nav-link" data-scroll-target="#choosing-model-terms">Choosing Model Terms</a></li>
-  <li><a href="#a-hormone-level-example" id="toc-a-hormone-level-example" class="nav-link" data-scroll-target="#a-hormone-level-example">A Hormone-Level Example</a></li>
+  <li><a href="#the-thyroid-hormone-level-example" id="toc-the-thyroid-hormone-level-example" class="nav-link" data-scroll-target="#the-thyroid-hormone-level-example">The Thyroid Hormone-Level Example</a></li>
   <li><a href="#comparing-pooling-approaches" id="toc-comparing-pooling-approaches" class="nav-link" data-scroll-target="#comparing-pooling-approaches">Comparing Pooling Approaches</a></li>
-  <li><a href="#interpreting-the-lecture-output" id="toc-interpreting-the-lecture-output" class="nav-link" data-scroll-target="#interpreting-the-lecture-output">Interpreting the Lecture Output</a></li>
+  <li><a href="#interpreting-the-model-output" id="toc-interpreting-the-model-output" class="nav-link" data-scroll-target="#interpreting-the-model-output">Interpreting the Model Output</a></li>
   <li><a href="#population-and-individual-predictions" id="toc-population-and-individual-predictions" class="nav-link" data-scroll-target="#population-and-individual-predictions">Population and Individual Predictions</a></li>
   <li><a href="#residual-diagnostics-and-model-stability" id="toc-residual-diagnostics-and-model-stability" class="nav-link" data-scroll-target="#residual-diagnostics-and-model-stability">Residual Diagnostics and Model Stability</a></li>
   <li><a href="#likelihood-ratio-tests-and-information-criteria" id="toc-likelihood-ratio-tests-and-information-criteria" class="nav-link" data-scroll-target="#likelihood-ratio-tests-and-information-criteria">Likelihood-Ratio Tests and Information Criteria</a></li>
@@ -267,13 +267,6 @@ window.Quarto = {
   <li><a href="#a-conditional-growth-model" id="toc-a-conditional-growth-model" class="nav-link" data-scroll-target="#a-conditional-growth-model">A Conditional Growth Model</a></li>
   <li><a href="#interpreting-the-interaction" id="toc-interpreting-the-interaction" class="nav-link" data-scroll-target="#interpreting-the-interaction">Interpreting the Interaction</a></li>
   <li><a href="#testing-and-displaying-different-growth-rates" id="toc-testing-and-displaying-different-growth-rates" class="nav-link" data-scroll-target="#testing-and-displaying-different-growth-rates">Testing and Displaying Different Growth Rates</a></li>
-  </ul></li>
-  <li><a href="#optional-l4-6-mixed-effects-modelling-and-study-design-ii" id="toc-optional-l4-6-mixed-effects-modelling-and-study-design-ii" class="nav-link" data-scroll-target="#optional-l4-6-mixed-effects-modelling-and-study-design-ii">Optional: L4-6 Mixed-Effects Modelling and Study Design II</a>
-  <ul class="collapse">
-  <li><a href="#a-paediatric-pharmacokinetic-case-study" id="toc-a-paediatric-pharmacokinetic-case-study" class="nav-link" data-scroll-target="#a-paediatric-pharmacokinetic-case-study">A Paediatric Pharmacokinetic Case Study</a></li>
-  <li><a href="#mechanistic-models-and-sampling-information" id="toc-mechanistic-models-and-sampling-information" class="nav-link" data-scroll-target="#mechanistic-models-and-sampling-information">Mechanistic Models and Sampling Information</a></li>
-  <li><a href="#d-optimal-study-design" id="toc-d-optimal-study-design" class="nav-link" data-scroll-target="#d-optimal-study-design">D-Optimal Study Design</a></li>
-  <li><a href="#prediction-uncertainty-and-study-design" id="toc-prediction-uncertainty-and-study-design" class="nav-link" data-scroll-target="#prediction-uncertainty-and-study-design">Prediction, Uncertainty and Study Design</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -523,12 +516,12 @@ w_i=\frac{\tau_0^2}{\tau_0^2+\sigma^2/n_i}.
 <p>The design of a study determines how observations are related and what a model can learn from them. Mixed-effects modelling is useful for longitudinal data, but also for cross-sectional data with meaningful groups.</p>
 <section id="fixed-effects-and-random-effects" class="level2">
 <h2 class="anchored" data-anchor-id="fixed-effects-and-random-effects">Fixed Effects and Random Effects</h2>
-<p>The terminology can be confusing. In this chapter, a fixed effect is a coefficient shared across the population, while a random effect is a group-specific deviation modelled as a draw from a distribution.</p>
-<p>In the lecture slides, we take. a look at an association between smoking and an inflammation biomarker. For independent observations, we could write:</p>
+<p>The terminology can be confusing. A fixed effect is a coefficient shared across the population, while a random effect is a group-specific deviation modelled as a draw from a distribution.</p>
+<p>In the lecture video, we take a look at an association between smoking and an inflammation biomarker. For independent observations, we could write:</p>
 <p><span class="math display">\[
 Y_i=\beta_0+\beta_1\operatorname{Smoking}_i+\varepsilon_i,
 \]</span></p>
-<p>where smoking is coded zero or one. The coefficient <span class="math inline">\(\beta_1\)</span> is the difference in expected inflammation between smokers and nonsmokers.</p>
+<p>Where smoking is coded zero or one. The coefficient <span class="math inline">\(\beta_1\)</span> is the difference in expected inflammation between smokers and nonsmokers.</p>
 <p>Now consider an observational follow-up in which we measure the same people before and after they begin smoking. Their measurements are paired. A random intercept can represent persistent differences in baseline inflammation:</p>
 <p><span class="math display">\[
 Y_{ij}=\beta_0+\beta_1\operatorname{Smoking}_{ij}+b_{0i}+\varepsilon_{ij}.
@@ -538,23 +531,22 @@ Y_{ij}=\beta_0+\beta_1\operatorname{Smoking}_{ij}+b_{0i}+\varepsilon_{ij}.
 <section id="association-and-causality" class="level2">
 <h2 class="anchored" data-anchor-id="association-and-causality">Association and Causality</h2>
 <p>A statistically significant coefficient does not establish that changing the predictor would cause the estimated change in the outcome (counterfactual interpretation). Confounding, selection and the timing of observations matter.</p>
-<p>The Bradford Hill considerations discussed in the lecture include strength and consistency of association, specificity, temporality, a biological gradient, plausibility, coherence, experimental evidence and analogy. They help organise reasoning about evidence. They are not a checklist that mechanically proves causality. In particular, a cause must precede its effect.</p>
+<p>The Bradford Hill considerations discussed in the lecture include strength and consistency of association, specificity, temporality, a biological gradient, plausibility, coherence, experimental evidence and analogy. They help organise reasoning about evidence. These are not a checklist that defines causality but it does give.a good indication of some of the factors that allow us to distinquish between associations and causality. What are the implications here? Well, it turns out that time-series data is critical for determinating causality. Therefore, the mixed-effects methods are super relevant.</p>
 <p>Randomisation provides a different form of evidence by making treatment assignment independent of participant characteristics in expectation. It does not guarantee exact balance in a realised sample. Fisher’s lady-tasting-tea example illustrates how a randomised experiment can compare an observed result with what chance alone would produce.</p>
-<p>For health data, we should distinguish the statistical model from the causal argument. A random intercept accounts for a pattern of dependence. It does not automatically adjust for every cause of differences between participants or hospitals.</p>
 </section>
 <section id="cross-sectional-and-real-world-data" class="level2">
 <h2 class="anchored" data-anchor-id="cross-sectional-and-real-world-data">Cross-Sectional and Real-World Data</h2>
 <p>A cross-sectional study observes a population at one time or over a short interval. It can describe prevalence and associations, but often provides limited information about the sequence of events.</p>
-<p>Even without repeated observations of each person, patients may be grouped by hospital. A model such as:</p>
+<p>Even without repeated observations for each person, patients may be grouped by hospital. A model such as:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hospital_model <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  inflammation <span class="sc">~</span> treatment <span class="sc">+</span> age <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Hospital),</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> hospital_data</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>allows hospital baselines to vary. This is a formula template requiring a dataset named <code>hospital_data</code>, rather than part of the simulated examples.</p>
+<p>This allows hospital baselines to vary randomly.</p>
 <p>With repeated measurements of patients within hospitals, a nested structure could be written as <code>(1 | Hospital/ID)</code>. This expands into a hospital intercept and an intercept for each hospital–patient combination. The grouping structure should reflect how the observations were collected.</p>
-<p>Retrospective healthcare data may contain irregular measurement times and unequal numbers of observations. Mixed-effects models can represent that structure, but treatment allocation and measurement frequency may themselves relate to health status. Those features need consideration when interpreting the fitted associations.</p>
+<p>Retrospective healthcare data may contain irregular measurement times and unequal numbers of observations. Mixed-effects models can represent that structure.</p>
 </section>
 </section>
 <section id="l4-3-developing-mixed-effects-models" class="level1">
@@ -573,12 +565,12 @@ x_{ij}^{c}=x_{ij}-c.
 </section>
 <section id="choosing-model-terms" class="level2">
 <h2 class="anchored" data-anchor-id="choosing-model-terms">Choosing Model Terms</h2>
-<p>Include predictors because they help answer the research question or describe the process generating the data. Important adjustment variables may remain relevant even when their individual P-values are large. Interactions should have a scientific or design-based rationale.</p>
+<p>Include predictors because they help answer the research question or describe the process generating the data. Important adjustment variables may remain relevant even when their individual p-values are large. Interactions arbe best considered using a scientific or design-based rationale.</p>
 <p>An unexpected coefficient sign is a reason to investigate coding, confounding, collinearity and model form. Removing a variable simply because its sign conflicts with an expectation can hide an important feature of the data. Retaining unnecessary predictors can also reduce precision, particularly in small datasets.</p>
 <p>Choose the random-effects structure alongside the fixed effects. For repeated observations over time, a random slope may be appropriate if individuals plausibly change at different rates and the observation schedule supplies enough information to estimate that variation.</p>
 </section>
-<section id="a-hormone-level-example" class="level2">
-<h2 class="anchored" data-anchor-id="a-hormone-level-example">A Hormone-Level Example</h2>
+<section id="the-thyroid-hormone-level-example" class="level2">
+<h2 class="anchored" data-anchor-id="the-thyroid-hormone-level-example">The Thyroid Hormone-Level Example</h2>
 <p>The lecture uses a simulated treatment example with substantial differences in baseline hormone levels between participants. We will use an illustrative dataset in which each of 50 participants contributes five observations under each of two conditions. This makes the treatment indicator vary within participants and permits comparison with a model containing separate participant intercepts.</p>
 <p>The design is an educational illustration. It does not establish that treatment and control periods would be exchangeable in a clinical study. A real before-and-after or crossover analysis would also consider period effects and, where relevant, carryover.</p>
 <div class="cell">
@@ -616,8 +608,6 @@ x_{ij}^{c}=x_{ij}-c.
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Observation and condition"</span>, <span class="at">ylab =</span> <span class="st">"Hormone level"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The simulated effect is constant over the measurement occasions. Differences between participant baselines are much larger than the residual noise.</p>
-<p>Missingness should be described in relation to the relevant variable. With four columns and missing values confined to <code>DV</code>, 18% missing outcome values correspond to 4.5% missing cells in the full table. That distinction explains the two percentages discussed in the lecture.</p>
-<p>A mixed-effects model can retain a participant’s observed outcomes even when some others are missing. It does not impute the missing values. Likelihood-based inference typically relies on missing at random, conditional on the observed information used in the analysis, together with a correctly specified model. Missing outcomes depending on unobserved health changes may require sensitivity analysis.</p>
 </section>
 <section id="comparing-pooling-approaches" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-pooling-approaches">Comparing Pooling Approaches</h2>
@@ -643,9 +633,9 @@ x_{ij}^{c}=x_{ij}-c.
 <p>The pooled model places baseline differences between patients into its residual error. The model with fixed participant intercepts estimates each baseline separately. The mixed-effects model estimates a population baseline and a distribution of deviations around it.</p>
 <p>Here, treatment varies within each participant. If treatment were constant within each participant in a parallel-arm study, its coefficient would be collinear with a full set of fixed participant indicators in <code>m_id</code>. That model could not estimate the treatment effect separately. A random-intercept model makes a different assumption and can estimate a between-participant treatment association, subject to the study design and its assumptions.</p>
 </section>
-<section id="interpreting-the-lecture-output" class="level2">
-<h2 class="anchored" data-anchor-id="interpreting-the-lecture-output">Interpreting the Lecture Output</h2>
-<p>The slide output for the treatment mixed-effects model reports approximately:</p>
+<section id="interpreting-the-model-output" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-model-output">Interpreting the Model Output</h2>
+<p>The model output for the treatment mixed-effects model reports approximately:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -672,7 +662,7 @@ x_{ij}^{c}=x_{ij}-c.
 </tr>
 </tbody>
 </table>
-<p>These values come from the lecture dataset, not the new simulation. The intercept represents the expected outcome under control. Treatment is associated with an increase of about 10 units. Participants vary around the population intercept, with a standard deviation of about 11 units. Their individual observations vary around the conditional model predictions, with a residual standard deviation of about 3.2 units.</p>
+<p>The intercept represents the expected outcome under control. Treatment is associated with an increase of about 10 units. Participants vary around the population intercept, with a standard deviation of about 11 units. Their individual observations vary around the conditional model predictions, with a residual standard deviation of about 3.2 units.</p>
 <p><code>jtools::summ()</code> provides an alternative summary:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>jtools<span class="sc">::</span><span class="fu">summ</span>(m_treat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -682,11 +672,11 @@ x_{ij}^{c}=x_{ij}-c.
 <p><span class="math display">\[
 \operatorname{ICC}=\frac{\tau_0^2}{\tau_0^2+\sigma^2}.
 \]</span></p>
-<p>Using the slide variances gives <span class="math inline">\(122.4/(122.4+10.2)\approx0.92\)</span>. Conditional on the fixed predictors, this is the correlation implied for two observations from the same participant. It describes the proportion of remaining variance associated with differences between participants. With random slopes, the implied correlations also depend on predictor values.</p>
+<p>Using the variances gives <span class="math inline">\(122.4/(122.4+10.2)\approx0.92\)</span>. Conditional on the fixed predictors, this is the correlation implied for two observations from the same participant. It describes the proportion of remaining variance associated with differences between participants. With random slopes, the implied correlations also depend on predictor values.</p>
 </section>
 <section id="population-and-individual-predictions" class="level2">
 <h2 class="anchored" data-anchor-id="population-and-individual-predictions">Population and Individual Predictions</h2>
-<p>A population prediction uses only the fixed effects. A conditional prediction also uses the estimated random effect for an observed participant:</p>
+<p>A population prediction uses only the fixed effects. A conditional (e.g., individual) prediction also uses the estimated random effect for an observed participant:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>analysis_dat<span class="sc">$</span>population_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_treat, <span class="at">re.form =</span> <span class="cn">NA</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>analysis_dat<span class="sc">$</span>individual_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_treat, <span class="at">re.form =</span> <span class="cn">NULL</span>)</span>
@@ -981,71 +971,6 @@ E(Y\mid t,\operatorname{Diet}=1)
 \]</span></p>
 <p>Adding the two standard errors would not give the correct standard error of the time-specific difference.</p>
 <p>Check whether linear growth adequately describes the observed interval. A random slope accommodates variation in linear growth rates, but does not itself describe curvature. We may need a nonlinear time term or another mean function if the trajectories change shape.</p>
-</section>
-</section>
-<section id="optional-l4-6-mixed-effects-modelling-and-study-design-ii" class="level1">
-<h1>Optional: L4-6 Mixed-Effects Modelling and Study Design II</h1>
-<p>A nonlinear mixed-effects model replaces the linear mean function with a nonlinear function:</p>
-<p><span class="math display">\[
-Y_{ij}=f(t_{ij},\boldsymbol\phi_i,\mathbf x_i)+\varepsilon_{ij}.
-\]</span></p>
-<p>The individual parameters <span class="math inline">\(\boldsymbol\phi_i\)</span> vary around population parameters. For a positive parameter such as clearance, one common formulation is:</p>
-<p><span class="math display">\[
-\operatorname{CL}_i=\operatorname{CL}_{\mathrm{pop}}
-\exp(\eta_{\mathrm{CL},i}),
-\qquad
-\eta_{\mathrm{CL},i}\sim N(0,\omega_{\mathrm{CL}}^2).
-\]</span></p>
-<p>This keeps individual clearances positive. Here, <span class="math inline">\(\operatorname{CL}_{\mathrm{pop}}\)</span> is the median, or typical value, of the lognormal clearance distribution. Its arithmetic mean is <span class="math inline">\(\operatorname{CL}_{\mathrm{pop}}\exp(\omega_{\mathrm{CL}}^2/2)\)</span>.</p>
-<p>The symbol <span class="math inline">\(\eta\)</span> here is a random deviation, not a standard deviation. Its variability is described by <span class="math inline">\(\omega\)</span>. In Part Three, we used <span class="math inline">\(\eta\)</span> for a linear predictor, illustrating why the meaning of a symbol must be defined within each model.</p>
-<p>The function <span class="math inline">\(f\)</span> can be an explicit equation or the solution of differential equations. Fixed effects, between-individual variation and residual error remain distinct components.</p>
-<section id="a-paediatric-pharmacokinetic-case-study" class="level2">
-<h2 class="anchored" data-anchor-id="a-paediatric-pharmacokinetic-case-study">A Paediatric Pharmacokinetic Case Study</h2>
-<p>The final lecture describes modelling of levobupivacaine exposure in infants undergoing surgery. The questions concern the concentration–time profile, plasma protein binding, and the consequences of alternative infusion durations.</p>
-<p>Levobupivacaine binds to <span class="math inline">\(\alpha_1\)</span>-acid glycoprotein. The study distinguishes total concentration from unbound concentration, which is particularly relevant when considering toxicity. The published study reports using pharmacokinetic modelling to optimise sampling and explore the effect of protein binding on exposure (<a href="https://doi.org/10.1111/pan.13548">Vashisht et al., 2019</a>).</p>
-<p>The lecture describes combining existing information from adults, in vitro experiments and available paediatric observations to make prospective predictions. After collecting the study data, the investigators assessed those predictions and developed a population model of the observed profiles.</p>
-<p>This gives a sequence of distinct uses for modelling:</p>
-<ol type="1">
-<li>Use existing information to predict plausible profiles in the target population.</li>
-<li>Choose a feasible study and sampling schedule.</li>
-<li>Collect observations and compare them with the prospective predictions.</li>
-<li>Estimate population parameters and between-individual variation from the study data.</li>
-<li>Simulate alternative schedules and evaluate their implications within the model’s supported range.</li>
-</ol>
-<p>A model fitted to the observations and a prospective prediction made before seeing them provide different forms of evidence. Both are useful, but they answer different questions.</p>
-</section>
-<section id="mechanistic-models-and-sampling-information" class="level2">
-<h2 class="anchored" data-anchor-id="mechanistic-models-and-sampling-information">Mechanistic Models and Sampling Information</h2>
-<p>A simplified absorption-and-elimination model illustrates why sampling times matter:</p>
-<p><span class="math display">\[
-\frac{dA_{\mathrm{depot}}}{dt}=-k_aA_{\mathrm{depot}},
-\qquad
-\frac{dA_{\mathrm{central}}}{dt}
-=k_aA_{\mathrm{depot}}-\frac{\operatorname{CL}}{V}A_{\mathrm{central}},
-\qquad
-C=\frac{A_{\mathrm{central}}}{V}.
-\]</span></p>
-<p>Here, <span class="math inline">\(k_a\)</span> is an absorption rate constant, <span class="math inline">\(\operatorname{CL}\)</span> is clearance, and <span class="math inline">\(V\)</span> is the apparent distribution volume. These equations illustrate a basic model rather than reproduce the full binding-and-infusion model in the case study.</p>
-<p>Early samples may contain information about absorption. Later samples may contain more information about elimination. Several samples at times where concentrations change similarly with two parameters may provide little information for distinguishing those parameters.</p>
-<p>For unbound drug, the relation between concentration, binding and clearance must also be represented consistently. More measurements of total concentration alone may not identify every component of a binding model.</p>
-</section>
-<section id="d-optimal-study-design" class="level2">
-<h2 class="anchored" data-anchor-id="d-optimal-study-design">D-Optimal Study Design</h2>
-<p>D-optimal design chooses a design that maximises the determinant of an expected information matrix:</p>
-<p><span class="math display">\[
-\operatorname{Design}^{*}
-=\arg\max_{\operatorname{Design}}
-\det\{\mathcal I(\boldsymbol\theta;\operatorname{Design})\}.
-\]</span></p>
-<p>The information matrix describes how informative the planned observations are about the parameters under the assumed model. Its inverse approximates the covariance of the parameter estimates under suitable conditions. Maximising its determinant aims to reduce the joint uncertainty in those estimates.</p>
-<p>The design depends on assumed parameter values, variability and residual error. A design that performs well for one assumed model may be less informative if those assumptions are wrong. It is therefore useful to examine plausible alternative parameter values and to simulate the performance of candidate designs.</p>
-<p>In paediatric studies, practical constraints include the number and volume of blood samples, feasible sampling windows and the clinical workflow. Optimisation operates within those constraints. It does not replace clinical judgement or guarantee that the selected model is correct.</p>
-</section>
-<section id="prediction-uncertainty-and-study-design" class="level2">
-<h2 class="anchored" data-anchor-id="prediction-uncertainty-and-study-design">Prediction, Uncertainty and Study Design</h2>
-<p>After estimation, we can simulate profiles for a population and study how exposure varies between individuals. Distinguish uncertainty in the estimated population parameters from actual variation between individuals and from residual measurement error.</p>
-<p>A simulated concentration below a toxicity reference is evidence about exposure under the model’s assumptions. It does not by itself establish clinical safety for every patient or for an unstudied dosing schedule. The usefulness of an extrapolation depends on the relevance of the mechanism, data and target population.</p>
-<p>The broader lesson is that study design and modelling inform one another. A model helps identify which observations are needed, while the collected observations show which features of the model can actually be estimated.</p>
 
 
 </section>

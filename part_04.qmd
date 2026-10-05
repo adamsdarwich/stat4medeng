@@ -187,15 +187,15 @@ Mixed-effects models provide more flexibility for unequal observation schedules,
 The design of a study determines how observations are related and what a model can learn from them. Mixed-effects modelling is useful for longitudinal data, but also for cross-sectional data with meaningful groups.
 
 ## Fixed Effects and Random Effects
-The terminology can be confusing. In this chapter, a fixed effect is a coefficient shared across the population, while a random effect is a group-specific deviation modelled as a draw from a distribution.
+The terminology can be confusing. A fixed effect is a coefficient shared across the population, while a random effect is a group-specific deviation modelled as a draw from a distribution.
 
-In the lecture slides, we take. a look at an association between smoking and an inflammation biomarker. For independent observations, we could write:
+In the lecture video, we take a look at an association between smoking and an inflammation biomarker. For independent observations, we could write:
 
 $$
 Y_i=\beta_0+\beta_1\operatorname{Smoking}_i+\varepsilon_i,
 $$
 
-where smoking is coded zero or one. The coefficient $\beta_1$ is the difference in expected inflammation between smokers and nonsmokers.
+Where smoking is coded zero or one. The coefficient $\beta_1$ is the difference in expected inflammation between smokers and nonsmokers.
 
 Now consider an observational follow-up in which we measure the same people before and after they begin smoking. Their measurements are paired. A random intercept can represent persistent differences in baseline inflammation:
 
@@ -208,16 +208,14 @@ We can now distinguish variation between participants from variation around each
 ## Association and Causality
 A statistically significant coefficient does not establish that changing the predictor would cause the estimated change in the outcome (counterfactual interpretation). Confounding, selection and the timing of observations matter.
 
-The Bradford Hill considerations discussed in the lecture include strength and consistency of association, specificity, temporality, a biological gradient, plausibility, coherence, experimental evidence and analogy. They help organise reasoning about evidence. They are not a checklist that mechanically proves causality. In particular, a cause must precede its effect.
+The Bradford Hill considerations discussed in the lecture include strength and consistency of association, specificity, temporality, a biological gradient, plausibility, coherence, experimental evidence and analogy. They help organise reasoning about evidence. These are not a checklist that defines causality but it does give.a good indication of some of the factors that allow us to distinquish between associations and causality. What are the implications here? Well, it turns out that time-series data is critical for determinating causality. Therefore, the mixed-effects methods are super relevant. 
 
 Randomisation provides a different form of evidence by making treatment assignment independent of participant characteristics in expectation. It does not guarantee exact balance in a realised sample. Fisher's lady-tasting-tea example illustrates how a randomised experiment can compare an observed result with what chance alone would produce.
-
-For health data, we should distinguish the statistical model from the causal argument. A random intercept accounts for a pattern of dependence. It does not automatically adjust for every cause of differences between participants or hospitals.
 
 ## Cross-Sectional and Real-World Data
 A cross-sectional study observes a population at one time or over a short interval. It can describe prevalence and associations, but often provides limited information about the sequence of events.
 
-Even without repeated observations of each person, patients may be grouped by hospital. A model such as:
+Even without repeated observations for each person, patients may be grouped by hospital. A model such as:
 
 ```{r}
 #| eval: false
@@ -227,11 +225,11 @@ hospital_model <- lmerTest::lmer(
 )
 ```
 
-allows hospital baselines to vary. This is a formula template requiring a dataset named `hospital_data`, rather than part of the simulated examples.
+This allows hospital baselines to vary randomly.
 
 With repeated measurements of patients within hospitals, a nested structure could be written as `(1 | Hospital/ID)`. This expands into a hospital intercept and an intercept for each hospital–patient combination. The grouping structure should reflect how the observations were collected.
 
-Retrospective healthcare data may contain irregular measurement times and unequal numbers of observations. Mixed-effects models can represent that structure, but treatment allocation and measurement frequency may themselves relate to health status. Those features need consideration when interpreting the fitted associations.
+Retrospective healthcare data may contain irregular measurement times and unequal numbers of observations. Mixed-effects models can represent that structure.
 
 # L4-3 Developing Mixed-Effects Models
 Model development begins with the scientific question and the study design. We then choose a mean relationship, predictors and a structure for variation that the data can support.
@@ -252,13 +250,13 @@ If $c$ is baseline time, the intercept refers to baseline. If $c$ is the mean, i
 For longitudinal predictors, distinguish changes within a person from differences between people. An individual's mean predictor value and their deviation from that mean can have different associations with the outcome. A random intercept alone does not guarantee that one common slope isolates a within-person effect.
 
 ## Choosing Model Terms
-Include predictors because they help answer the research question or describe the process generating the data. Important adjustment variables may remain relevant even when their individual P-values are large. Interactions should have a scientific or design-based rationale.
+Include predictors because they help answer the research question or describe the process generating the data. Important adjustment variables may remain relevant even when their individual p-values are large. Interactions arbe best considered using a scientific or design-based rationale.
 
 An unexpected coefficient sign is a reason to investigate coding, confounding, collinearity and model form. Removing a variable simply because its sign conflicts with an expectation can hide an important feature of the data. Retaining unnecessary predictors can also reduce precision, particularly in small datasets.
 
 Choose the random-effects structure alongside the fixed effects. For repeated observations over time, a random slope may be appropriate if individuals plausibly change at different rates and the observation schedule supplies enough information to estimate that variation.
 
-## A Hormone-Level Example
+## The Thyroid Hormone-Level Example
 The lecture uses a simulated treatment example with substantial differences in baseline hormone levels between participants. We will use an illustrative dataset in which each of 50 participants contributes five observations under each of two conditions. This makes the treatment indicator vary within participants and permits comparison with a model containing separate participant intercepts.
 
 The design is an educational illustration. It does not establish that treatment and control periods would be exchangeable in a clinical study. A real before-and-after or crossover analysis would also consider period effects and, where relevant, carryover.
@@ -301,10 +299,6 @@ boxplot(DV ~ OBS + IV, data = exdata,
 
 The simulated effect is constant over the measurement occasions. Differences between participant baselines are much larger than the residual noise.
 
-Missingness should be described in relation to the relevant variable. With four columns and missing values confined to `DV`, 18% missing outcome values correspond to 4.5% missing cells in the full table. That distinction explains the two percentages discussed in the lecture.
-
-A mixed-effects model can retain a participant's observed outcomes even when some others are missing. It does not impute the missing values. Likelihood-based inference typically relies on missing at random, conditional on the observed information used in the analysis, together with a correctly specified model. Missing outcomes depending on unobserved health changes may require sensitivity analysis.
-
 ## Comparing Pooling Approaches
 We first restrict all models to the same complete rows:
 
@@ -332,8 +326,8 @@ The pooled model places baseline differences between patients into its residual 
 
 Here, treatment varies within each participant. If treatment were constant within each participant in a parallel-arm study, its coefficient would be collinear with a full set of fixed participant indicators in `m_id`. That model could not estimate the treatment effect separately. A random-intercept model makes a different assumption and can estimate a between-participant treatment association, subject to the study design and its assumptions.
 
-## Interpreting the Lecture Output
-The slide output for the treatment mixed-effects model reports approximately:
+## Interpreting the Model Output
+The model output for the treatment mixed-effects model reports approximately:
 
 | Quantity | Slide estimate |
 |:---|---:|
@@ -342,7 +336,7 @@ The slide output for the treatment mixed-effects model reports approximately:
 | Between-participant intercept standard deviation | 11.06 |
 | Residual standard deviation | 3.19 |
 
-These values come from the lecture dataset, not the new simulation. The intercept represents the expected outcome under control. Treatment is associated with an increase of about 10 units. Participants vary around the population intercept, with a standard deviation of about 11 units. Their individual observations vary around the conditional model predictions, with a residual standard deviation of about 3.2 units.
+The intercept represents the expected outcome under control. Treatment is associated with an increase of about 10 units. Participants vary around the population intercept, with a standard deviation of about 11 units. Their individual observations vary around the conditional model predictions, with a residual standard deviation of about 3.2 units.
 
 `jtools::summ()` provides an alternative summary:
 
@@ -359,10 +353,10 @@ $$
 \operatorname{ICC}=\frac{\tau_0^2}{\tau_0^2+\sigma^2}.
 $$
 
-Using the slide variances gives $122.4/(122.4+10.2)\approx0.92$. Conditional on the fixed predictors, this is the correlation implied for two observations from the same participant. It describes the proportion of remaining variance associated with differences between participants. With random slopes, the implied correlations also depend on predictor values.
+Using the variances gives $122.4/(122.4+10.2)\approx0.92$. Conditional on the fixed predictors, this is the correlation implied for two observations from the same participant. It describes the proportion of remaining variance associated with differences between participants. With random slopes, the implied correlations also depend on predictor values.
 
 ## Population and Individual Predictions
-A population prediction uses only the fixed effects. A conditional prediction also uses the estimated random effect for an observed participant:
+A population prediction uses only the fixed effects. A conditional (e.g., individual) prediction also uses the estimated random effect for an observed participant:
 
 ```{r}
 #| eval: false
@@ -687,82 +681,3 @@ $$
 Adding the two standard errors would not give the correct standard error of the time-specific difference.
 
 Check whether linear growth adequately describes the observed interval. A random slope accommodates variation in linear growth rates, but does not itself describe curvature. We may need a nonlinear time term or another mean function if the trajectories change shape.
-
-# Optional: L4-6 Mixed-Effects Modelling and Study Design II
-A nonlinear mixed-effects model replaces the linear mean function with a nonlinear function:
-
-$$
-Y_{ij}=f(t_{ij},\boldsymbol\phi_i,\mathbf x_i)+\varepsilon_{ij}.
-$$
-
-The individual parameters $\boldsymbol\phi_i$ vary around population parameters. For a positive parameter such as clearance, one common formulation is:
-
-$$
-\operatorname{CL}_i=\operatorname{CL}_{\mathrm{pop}}
-\exp(\eta_{\mathrm{CL},i}),
-\qquad
-\eta_{\mathrm{CL},i}\sim N(0,\omega_{\mathrm{CL}}^2).
-$$
-
-This keeps individual clearances positive. Here, $\operatorname{CL}_{\mathrm{pop}}$ is the median, or typical value, of the lognormal clearance distribution. Its arithmetic mean is $\operatorname{CL}_{\mathrm{pop}}\exp(\omega_{\mathrm{CL}}^2/2)$.
-
-The symbol $\eta$ here is a random deviation, not a standard deviation. Its variability is described by $\omega$. In Part Three, we used $\eta$ for a linear predictor, illustrating why the meaning of a symbol must be defined within each model.
-
-The function $f$ can be an explicit equation or the solution of differential equations. Fixed effects, between-individual variation and residual error remain distinct components.
-
-## A Paediatric Pharmacokinetic Case Study
-The final lecture describes modelling of levobupivacaine exposure in infants undergoing surgery. The questions concern the concentration–time profile, plasma protein binding, and the consequences of alternative infusion durations.
-
-Levobupivacaine binds to $\alpha_1$-acid glycoprotein. The study distinguishes total concentration from unbound concentration, which is particularly relevant when considering toxicity. The published study reports using pharmacokinetic modelling to optimise sampling and explore the effect of protein binding on exposure ([Vashisht et al., 2019](https://doi.org/10.1111/pan.13548)).
-
-The lecture describes combining existing information from adults, in vitro experiments and available paediatric observations to make prospective predictions. After collecting the study data, the investigators assessed those predictions and developed a population model of the observed profiles.
-
-This gives a sequence of distinct uses for modelling:
-
-1. Use existing information to predict plausible profiles in the target population.
-2. Choose a feasible study and sampling schedule.
-3. Collect observations and compare them with the prospective predictions.
-4. Estimate population parameters and between-individual variation from the study data.
-5. Simulate alternative schedules and evaluate their implications within the model's supported range.
-
-A model fitted to the observations and a prospective prediction made before seeing them provide different forms of evidence. Both are useful, but they answer different questions.
-
-## Mechanistic Models and Sampling Information
-A simplified absorption-and-elimination model illustrates why sampling times matter:
-
-$$
-\frac{dA_{\mathrm{depot}}}{dt}=-k_aA_{\mathrm{depot}},
-\qquad
-\frac{dA_{\mathrm{central}}}{dt}
-=k_aA_{\mathrm{depot}}-\frac{\operatorname{CL}}{V}A_{\mathrm{central}},
-\qquad
-C=\frac{A_{\mathrm{central}}}{V}.
-$$
-
-Here, $k_a$ is an absorption rate constant, $\operatorname{CL}$ is clearance, and $V$ is the apparent distribution volume. These equations illustrate a basic model rather than reproduce the full binding-and-infusion model in the case study.
-
-Early samples may contain information about absorption. Later samples may contain more information about elimination. Several samples at times where concentrations change similarly with two parameters may provide little information for distinguishing those parameters.
-
-For unbound drug, the relation between concentration, binding and clearance must also be represented consistently. More measurements of total concentration alone may not identify every component of a binding model.
-
-## D-Optimal Study Design
-D-optimal design chooses a design that maximises the determinant of an expected information matrix:
-
-$$
-\operatorname{Design}^{*}
-=\arg\max_{\operatorname{Design}}
-\det\{\mathcal I(\boldsymbol\theta;\operatorname{Design})\}.
-$$
-
-The information matrix describes how informative the planned observations are about the parameters under the assumed model. Its inverse approximates the covariance of the parameter estimates under suitable conditions. Maximising its determinant aims to reduce the joint uncertainty in those estimates.
-
-The design depends on assumed parameter values, variability and residual error. A design that performs well for one assumed model may be less informative if those assumptions are wrong. It is therefore useful to examine plausible alternative parameter values and to simulate the performance of candidate designs.
-
-In paediatric studies, practical constraints include the number and volume of blood samples, feasible sampling windows and the clinical workflow. Optimisation operates within those constraints. It does not replace clinical judgement or guarantee that the selected model is correct.
-
-## Prediction, Uncertainty and Study Design
-After estimation, we can simulate profiles for a population and study how exposure varies between individuals. Distinguish uncertainty in the estimated population parameters from actual variation between individuals and from residual measurement error.
-
-A simulated concentration below a toxicity reference is evidence about exposure under the model's assumptions. It does not by itself establish clinical safety for every patient or for an unstudied dosing schedule. The usefulness of an extrapolation depends on the relevance of the mechanism, data and target population.
-
-The broader lesson is that study design and modelling inform one another. A model helps identify which observations are needed, while the collected observations show which features of the model can actually be estimated.

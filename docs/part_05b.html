@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adam S. Darwich">
+<meta name="dcterms.date" content="2026-08-06">
+
+<title>Part Five B – Statistics for Medical Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_05b.html">Part Five B</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for Medical Engineers</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part One</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Two</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Three</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Four</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_05a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Five A</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_05b.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Part Five B</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#l5b-diagnostic-tests" id="toc-l5b-diagnostic-tests" class="nav-link active" data-scroll-target="#l5b-diagnostic-tests">L5B Diagnostic Tests</a>
+  <ul class="collapse">
+  <li><a href="#prevalence-and-incidence" id="toc-prevalence-and-incidence" class="nav-link" data-scroll-target="#prevalence-and-incidence">Prevalence and Incidence</a></li>
+  <li><a href="#the-confusion-matrix" id="toc-the-confusion-matrix" class="nav-link" data-scroll-target="#the-confusion-matrix">The Confusion Matrix</a>
+  <ul class="collapse">
+  <li><a href="#a-diagnostic-test-example" id="toc-a-diagnostic-test-example" class="nav-link" data-scroll-target="#a-diagnostic-test-example">A Diagnostic Test Example</a></li>
+  </ul></li>
+  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy">Accuracy</a></li>
+  <li><a href="#sensitivity-and-specificity" id="toc-sensitivity-and-specificity" class="nav-link" data-scroll-target="#sensitivity-and-specificity">Sensitivity and Specificity</a>
+  <ul class="collapse">
+  <li><a href="#sensitivity" id="toc-sensitivity" class="nav-link" data-scroll-target="#sensitivity">Sensitivity</a></li>
+  <li><a href="#specificity" id="toc-specificity" class="nav-link" data-scroll-target="#specificity">Specificity</a></li>
+  </ul></li>
+  <li><a href="#positive-and-negative-predictive-values" id="toc-positive-and-negative-predictive-values" class="nav-link" data-scroll-target="#positive-and-negative-predictive-values">Positive and Negative Predictive Values</a>
+  <ul class="collapse">
+  <li><a href="#positive-predictive-value" id="toc-positive-predictive-value" class="nav-link" data-scroll-target="#positive-predictive-value">Positive Predictive Value</a></li>
+  <li><a href="#negative-predictive-value" id="toc-negative-predictive-value" class="nav-link" data-scroll-target="#negative-predictive-value">Negative Predictive Value</a></li>
+  </ul></li>
+  <li><a href="#generating-a-confusion-matrix-in-r" id="toc-generating-a-confusion-matrix-in-r" class="nav-link" data-scroll-target="#generating-a-confusion-matrix-in-r">Generating a Confusion Matrix in R</a></li>
+  <li><a href="#what-happens-when-disease-is-less-common" id="toc-what-happens-when-disease-is-less-common" class="nav-link" data-scroll-target="#what-happens-when-disease-is-less-common">What Happens When Disease Is Less Common?</a></li>
+  <li><a href="#likelihood-ratios-odds-and-log-odds" id="toc-likelihood-ratios-odds-and-log-odds" class="nav-link" data-scroll-target="#likelihood-ratios-odds-and-log-odds">Likelihood Ratios, Odds and Log Odds</a></li>
+  <li><a href="#clinical-thresholds" id="toc-clinical-thresholds" class="nav-link" data-scroll-target="#clinical-thresholds">Clinical Thresholds</a></li>
+  <li><a href="#roc-curves" id="toc-roc-curves" class="nav-link" data-scroll-target="#roc-curves">ROC Curves</a></li>
+  <li><a href="#other-terms" id="toc-other-terms" class="nav-link" data-scroll-target="#other-terms">Other Terms</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Part Five B</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adam S. Darwich </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 6, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>A confusion matrix compares test results with the actual condition, showing true positives, false positives, true negatives and false negatives.</p></li>
+<li><p>Sensitivity describes how well a test detects people with disease. Specificity describes how well the test identifies people without disease.</p></li>
+<li><p>Positive predictive value describes the probability of disease given a positive test. Negative predictive value describes the probability of being disease-free given a negative test. These values depend on disease prevalence.</p></li>
+<li><p>Clinical decisions depend on the benefits and harms of acting on a result. ROC curves help us assess how well a test or classifier distinguishes between the two groups.</p></li>
+</ul>
+</div>
+</div>
+<section id="l5b-diagnostic-tests" class="level1">
+<h1>L5B Diagnostic Tests</h1>
+<p>Diagnostic testing is a major part of healthcare, and much of its development comes from engineering and technology research. Diagnostic tools include imaging methods such as X-rays, computed tomography and magnetic resonance imaging, as well as biochemical, protein and genetic analyses. We often use these tools to investigate the presence or absence of disease.</p>
+<p>A diagnostic tool provides information at an important decision point. A clinician orders an investigation, interprets the result and uses it to inform a diagnosis or treatment decision. Errors can arise throughout this process, so we need to understand the variability and performance of the test. The same applies to classification models, including models developed using machine learning.</p>
+<section id="prevalence-and-incidence" class="level2">
+<h2 class="anchored" data-anchor-id="prevalence-and-incidence">Prevalence and Incidence</h2>
+<p><strong>Prevalence</strong> describes the proportion of a population that has a disease at a particular point in time. If we observe ten people and four have influenza, the prevalence is <span class="math inline">\(4/10=40\%\)</span>.</p>
+<p><strong>Incidence</strong> describes new cases arising during a specified time period. For example, if ten people are initially flu-free and two develop influenza during follow-up, 20% develop the disease over that period (<em>e.g.</em>, cases per 10 people per week).</p>
+<p>For the diagnostic calculations below, prevalence is particularly relevant. We will see that how common a disease is affects how we interpret a test result.</p>
+</section>
+<section id="the-confusion-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="the-confusion-matrix">The Confusion Matrix</h2>
+<p>A contingency table summarises the frequencies for combinations of categorical variables. A <strong>confusion matrix</strong> compares predicted classes with the actual or reference classes. For a binary diagnostic test, we compare positive and negative test results with disease present and disease absent.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Actual condition</th>
+<th style="text-align: left;">Positive test</th>
+<th style="text-align: left;">Negative test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Disease present</td>
+<td style="text-align: left;">True positive (TP)</td>
+<td style="text-align: left;">False negative (FN)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Disease absent</td>
+<td style="text-align: left;">False positive (FP)</td>
+<td style="text-align: left;">True negative (TN)</td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>true positive</strong> is a positive result in someone who has the disease. A <strong>false positive</strong> is a positive result in someone who does not. A <strong>false negative</strong> is a negative result in someone who has the disease, while a <strong>true negative</strong> is a negative result in someone who does not.</p>
+<p>The positions of the cells can differ between software packages. Always read the row and column labels and check which class is considered positive.</p>
+<section id="a-diagnostic-test-example" class="level3">
+<h3 class="anchored" data-anchor-id="a-diagnostic-test-example">A Diagnostic Test Example</h3>
+<p>Suppose we test 150 people. Thirty have the disease and 120 do not:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Actual condition</th>
+<th style="text-align: right;">Positive test</th>
+<th style="text-align: right;">Negative test</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Disease present</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Disease absent</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">150</td>
+</tr>
+</tbody>
+</table>
+<p>We can use these four cells to calculate several measures of performance. Each measure answers a different question.</p>
+</section>
+</section>
+<section id="accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="accuracy">Accuracy</h2>
+<p><strong>How often is the test correct?</strong> Accuracy is the proportion of all results that are true positives or true negatives:</p>
+<p><span class="math display">\[
+\text{Accuracy}=\frac{TP+TN}{TP+FN+FP+TN}
+=\frac{25+105}{150}\approx87\%.
+\]</span></p>
+<p>Accuracy can be misleading when the classes are unbalanced. If most people do not have the disease, a classifier can achieve high accuracy simply by classifying everyone as negative. We therefore need to examine how the test performs within each group.</p>
+</section>
+<section id="sensitivity-and-specificity" class="level2">
+<h2 class="anchored" data-anchor-id="sensitivity-and-specificity">Sensitivity and Specificity</h2>
+<section id="sensitivity" class="level3">
+<h3 class="anchored" data-anchor-id="sensitivity">Sensitivity</h3>
+<p><strong>How likely is a person with disease to be correctly classified?</strong> Sensitivity is the probability of a positive test given that the person has the disease:</p>
+<p><span class="math display">\[
+\text{Sensitivity}=\frac{TP}{TP+FN}
+=\frac{25}{30}\approx83\%.
+\]</span></p>
+<p>The test identifies 25 of the 30 people with disease and misses five.</p>
+</section>
+<section id="specificity" class="level3">
+<h3 class="anchored" data-anchor-id="specificity">Specificity</h3>
+<p><strong>How likely is a person without disease to be correctly classified?</strong> Specificity is the probability of a negative test given that the person does not have the disease:</p>
+<p><span class="math display">\[
+\text{Specificity}=\frac{TN}{TN+FP}
+=\frac{105}{120}\approx88\%.
+\]</span></p>
+<p>The test correctly identifies 105 of the 120 people without disease. The remaining 15 receive false positive results.</p>
+<p>Sensitivity and specificity start with the person’s actual condition and describe the likely test result. We can also ask the question in the other direction: given a test result, how likely is the person to have the disease?</p>
+</section>
+</section>
+<section id="positive-and-negative-predictive-values" class="level2">
+<h2 class="anchored" data-anchor-id="positive-and-negative-predictive-values">Positive and Negative Predictive Values</h2>
+<section id="positive-predictive-value" class="level3">
+<h3 class="anchored" data-anchor-id="positive-predictive-value">Positive Predictive Value</h3>
+<p><strong>How likely is someone with a positive test to actually have the disease?</strong> This is the <strong>positive predictive value</strong>, or <strong>PPV</strong>:</p>
+<p><span class="math display">\[
+\text{PPV}=\frac{TP}{TP+FP}
+=\frac{25}{40}\approx63\%.
+\]</span></p>
+<p>Of the 40 people with positive results, 25 have the disease. So, approximately 63% of positive results represent disease, even though sensitivity is approximately 83%.</p>
+<p>We can also calculate PPV from sensitivity, specificity and prevalence (based on Bayes’ theorem):</p>
+<p><span class="math display">\[
+\text{PPV}=
+\frac{\text{Sensitivity}\times\text{Prevalence}}
+{\text{Sensitivity}\times\text{Prevalence}
++(1-\text{Specificity})\times(1-\text{Prevalence})}.
+\]</span></p>
+<p>The numerator represents true positives as a proportion of the population. The denominator includes both true positives and false positives. This is the same calculation as dividing the number of true positives by all positive results.</p>
+</section>
+<section id="negative-predictive-value" class="level3">
+<h3 class="anchored" data-anchor-id="negative-predictive-value">Negative Predictive Value</h3>
+<p><strong>How likely is someone with a negative test to actually be disease-free?</strong> This is the <strong>negative predictive value</strong>, or <strong>NPV</strong>:</p>
+<p><span class="math display">\[
+\text{NPV}=\frac{TN}{TN+FN}
+=\frac{105}{110}\approx95\%.
+\]</span></p>
+<p>Of the 110 people with negative results, 105 do not have the disease.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Keeping the Questions Separate
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Sensitivity:</strong> among people with disease, how many test positive?</li>
+<li><strong>Specificity:</strong> among people without disease, how many test negative?</li>
+<li><strong>PPV:</strong> among people with a positive test, how many have disease?</li>
+<li><strong>NPV:</strong> among people with a negative test, how many are disease-free?</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="generating-a-confusion-matrix-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="generating-a-confusion-matrix-in-r">Generating a Confusion Matrix in R</h2>
+<p>We can construct a hypothetical dataset using sensitivity, specificity and the numbers of people with and without disease. In this example, sensitivity is 0.98 and specificity is 0.95, with 1,000 people in each group:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sens <span class="ot">&lt;-</span> <span class="fl">0.98</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n_diseased <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>n_healthy <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>TP <span class="ot">&lt;-</span> <span class="fu">round</span>(sens <span class="sc">*</span> n_diseased)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>FN <span class="ot">&lt;-</span> n_diseased <span class="sc">-</span> TP</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>TN <span class="ot">&lt;-</span> <span class="fu">round</span>(spec <span class="sc">*</span> n_healthy)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>FP <span class="ot">&lt;-</span> n_healthy <span class="sc">-</span> TN</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, TP), <span class="fu">rep</span>(<span class="dv">1</span>, FN), <span class="fu">rep</span>(<span class="dv">0</span>, TN), <span class="fu">rep</span>(<span class="dv">0</span>, FP)))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, TP), <span class="fu">rep</span>(<span class="dv">0</span>, FN), <span class="fu">rep</span>(<span class="dv">0</span>, TN), <span class="fu">rep</span>(<span class="dv">1</span>, FP)))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> predicted,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">reference =</span> actual,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">positive =</span> <span class="st">"1"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction   0   1
+         0 950  20
+         1  50 980
+                                         
+               Accuracy : 0.965          
+                 95% CI : (0.956, 0.9726)
+    No Information Rate : 0.5            
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16      
+                                         
+                  Kappa : 0.93           
+                                         
+ Mcnemar's Test P-Value : 0.0005279      
+                                         
+            Sensitivity : 0.9800         
+            Specificity : 0.9500         
+         Pos Pred Value : 0.9515         
+         Neg Pred Value : 0.9794         
+             Prevalence : 0.5000         
+         Detection Rate : 0.4900         
+   Detection Prevalence : 0.5150         
+      Balanced Accuracy : 0.9650         
+                                         
+       'Positive' Class : 1              
+                                         </code></pre>
+</div>
+</div>
+<p>Here, <code>1</code> indicates disease or a positive result, and <code>0</code> indicates disease absence or a negative result. The <code>positive</code> argument tells R which class we consider positive.</p>
+<p>This gives 980 true positives, 20 false negatives, 950 true negatives and 50 false positives. The output includes sensitivity, specificity, accuracy and predictive values. Notice that <code>caret</code> places predictions in rows and the reference condition in columns.</p>
+</section>
+<section id="what-happens-when-disease-is-less-common" class="level2">
+<h2 class="anchored" data-anchor-id="what-happens-when-disease-is-less-common">What Happens When Disease Is Less Common?</h2>
+<p>Return to our original example. Suppose we keep the number of people with disease unchanged but multiply the number without disease by ten:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Actual condition</th>
+<th style="text-align: right;">Positive test</th>
+<th style="text-align: right;">Negative test</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Disease present</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Disease absent</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">1,050</td>
+<td style="text-align: right;">1,200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">1,055</td>
+<td style="text-align: right;">1,230</td>
+</tr>
+</tbody>
+</table>
+<p>Sensitivity remains <span class="math inline">\(25/30\approx83\%\)</span>, and specificity remains <span class="math inline">\(1050/1200\approx88\%\)</span>. However, prevalence has fallen from 20% to approximately 2.4%.</p>
+<p>The positive predictive value is now:</p>
+<p><span class="math display">\[
+\text{PPV}=\frac{25}{175}\approx14\%.
+\]</span></p>
+<p>The test still detects the same proportion of disease cases. However, the much larger group without disease produces many more false positives. Most positive results now come from people without disease.</p>
+<p>The negative predictive value increases:</p>
+<p><span class="math display">\[
+\text{NPV}=\frac{1050}{1055}\approx99.5\%.
+\]</span></p>
+<p><strong>Predictive values depend on disease prevalence.</strong> In this example, sensitivity and specificity remain unchanged because we have kept the same proportions within the disease and disease-free groups.</p>
+</section>
+<section id="likelihood-ratios-odds-and-log-odds" class="level2">
+<h2 class="anchored" data-anchor-id="likelihood-ratios-odds-and-log-odds">Likelihood Ratios, Odds and Log Odds</h2>
+<p>A <strong>positive likelihood ratio</strong> describes how much more likely a positive test is in someone with disease than in someone without disease:</p>
+<p><span class="math display">\[
+LR+=\frac{\text{Sensitivity}}{1-\text{Specificity}}.
+\]</span></p>
+<p>A <strong>negative likelihood ratio</strong> compares the probability of a negative test in someone with disease with that in someone without disease:</p>
+<p><span class="math display">\[
+LR-=\frac{1-\text{Sensitivity}}{\text{Specificity}}.
+\]</span></p>
+<p>For a useful test, a positive result increases our assessment of the probability of disease, while a negative result decreases it.</p>
+<p>In the lecture I also describe this using <strong>odds</strong>. A probability <span class="math inline">\(p\)</span> corresponds to odds of <span class="math inline">\(p/(1-p)\)</span>. On the odds scale, the test result multiplies the pre-test odds by the relevant likelihood ratio. For a useful test, this multiplier is above one for a positive result and below one for a negative result.</p>
+<p>On the <strong>log-odds</strong> scale, these changes become additive. A positive result moves the log odds upwards and a negative result moves them downwards. This resembles logistic regression, where each term contributes a change on the log-odds scale.</p>
+</section>
+<section id="clinical-thresholds" class="level2">
+<h2 class="anchored" data-anchor-id="clinical-thresholds">Clinical Thresholds</h2>
+<p>A test result informs a decision, but the decision also depends on its consequences. Treatment may benefit someone with disease, while also causing adverse effects. We therefore need to weigh the expected benefits against the harms.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data:image/gif;base64,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" class="img-fluid figure-img" style="width:65.0%" alt="Utility of treatment and no treatment across disease probabilities, intersecting at a treatment threshold."></p>
+<figcaption><strong>Figure 5B.1</strong> A schematic treatment threshold where the utility of treating and not treating are equal. Reproduced from the lecture slides, which attribute the figure to McPhee and Papadakis, <em>Current Medical Diagnosis and Treatment</em> (2011).</figcaption>
+</figure>
+</div>
+<p>If the harms of treatment become more severe, we would generally require a higher probability of disease before treating. If the treatment benefit becomes greater, treatment may be justified at a lower probability. The treatment threshold therefore depends on the clinical situation.</p>
+</section>
+<section id="roc-curves" class="level2">
+<h2 class="anchored" data-anchor-id="roc-curves">ROC Curves</h2>
+<p>Diagnostic tests and classification models may produce a continuous measurement or score. We choose a cutoff to classify the result as positive or negative. Changing this cutoff changes sensitivity and specificity.</p>
+<p>A <strong>receiver operating characteristic</strong>, or <strong>ROC</strong>, curve plots sensitivity against <span class="math inline">\(1-\text{specificity}\)</span> across different cutoffs. The horizontal axis therefore shows the proportion of people without disease who receive a positive result.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data:image/png;base64,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" class="img-fluid figure-img" style="width:65.0%" alt="ROC curves with sensitivity on the vertical axis and false positive rate on the horizontal axis. Better curves approach the top-left corner."></p>
+<figcaption><strong>Figure 5B.2</strong> Schematic ROC curves illustrating different degrees of discrimination. Reproduced from the lecture slides, which identify Wikipedia, <em>Receiver operating characteristic</em>, as the source.</figcaption>
+</figure>
+</div>
+<p>A curve closer to the top-left corner indicates better performance: high sensitivity with few false positives. The diagonal represents performance no better than chance.</p>
+<p>The <strong>area under the ROC curve</strong>, or <strong>AUROC</strong>, summarises how well the test distinguishes between people with and without disease. An area of 1 indicates perfect separation, while 0.5 indicates performance no better than chance. It does not tell us the probability of disease after a positive result; that is the PPV.</p>
+<p>We will examine ROC curves in more detail later in the course.</p>
+</section>
+<section id="other-terms" class="level2">
+<h2 class="anchored" data-anchor-id="other-terms">Other Terms</h2>
+<p>In machine learning, <strong>sensitivity</strong> is often called <strong>recall</strong>, and <strong>positive predictive value</strong> is called <strong>precision</strong>. They are the same measures under different names.</p>
+<p>In the video I also introduce <strong>Youden’s index</strong>. This can help select a cut-off by maximising sensitivity and specificity.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

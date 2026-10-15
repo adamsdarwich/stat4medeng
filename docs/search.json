@@ -1268,5 +1268,235 @@
     "crumbs": [
       "Part Five A"
     ]
+  },
+  {
+    "objectID": "part_05b.html",
+    "href": "part_05b.html",
+    "title": "Part Five B",
+    "section": "",
+    "text": "NoteKey Takeaways\n\n\n\n\nA confusion matrix compares test results with the actual condition, showing true positives, false positives, true negatives and false negatives.\nSensitivity describes how well a test detects people with disease. Specificity describes how well the test identifies people without disease.\nPositive predictive value describes the probability of disease given a positive test. Negative predictive value describes the probability of being disease-free given a negative test. These values depend on disease prevalence.\nClinical decisions depend on the benefits and harms of acting on a result. ROC curves help us assess how well a test or classifier distinguishes between the two groups.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#the-diagnostic-process",
+    "href": "part_05b.html#the-diagnostic-process",
+    "title": "Part Five B",
+    "section": "The Diagnostic Process",
+    "text": "The Diagnostic Process\nA diagnostic tool provides information at an important decision point in healthcare. However, the test itself forms only one part of a larger process. A clinician identifies a question, orders an investigation, and uses the result to inform a diagnosis or a decision about treatment. For a laboratory investigation, the process also includes collecting and handling the specimen, performing the analysis, and reporting the result.\nThe lecture illustrates this with the brain-to-brain loop: the process starts with a clinical question and ends when the clinician interprets and acts on the result. Errors can arise at different points in that loop. A technically accurate measurement may still lead to a poor decision if the wrong test was ordered, the specimen was unsuitable, or the result was interpreted incorrectly.\nSo, when assessing diagnostics, we need to understand both their variability and their performance in the intended setting. This becomes relevant when AI models support healthcare decisions as well. A model may classify observations successfully in a development dataset, but we still need to assess what its predictions mean for the patients and decisions encountered in practice.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#prevalence-and-incidence",
+    "href": "part_05b.html#prevalence-and-incidence",
+    "title": "Part Five B",
+    "section": "Prevalence and Incidence",
+    "text": "Prevalence and Incidence\nPrevalence describes the proportion of a population that has a disease at a particular point in time. If we observe ten people and four have influenza, the prevalence is \\(4/10=40\\%\\).\nIncidence describes new cases arising during a specified time period. For example, if ten people are initially flu-free and two develop influenza during follow-up, 20% develop the disease over that period (e.g., cases per 10 people per week).\nFor the diagnostic calculations below, prevalence is particularly relevant. We will see that how common a disease is affects how we interpret a test result.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#the-confusion-matrix",
+    "href": "part_05b.html#the-confusion-matrix",
+    "title": "Part Five B",
+    "section": "The Confusion Matrix",
+    "text": "The Confusion Matrix\nA contingency table summarises the frequencies for combinations of categorical variables. A confusion matrix compares predicted classes with the actual or reference classes. For a binary diagnostic test, we compare positive and negative test results with disease present and disease absent.\n\n\n\nActual condition\nPositive test\nNegative test\n\n\n\n\nDisease present\nTrue positive (TP)\nFalse negative (FN)\n\n\nDisease absent\nFalse positive (FP)\nTrue negative (TN)\n\n\n\nA true positive is a positive result in someone who has the disease. A false positive is a positive result in someone who does not. A false negative is a negative result in someone who has the disease, while a true negative is a negative result in someone who does not.\nThe positions of the cells can differ between software packages. Always read the row and column labels and check which class is considered positive.\n\nA Diagnostic Test Example\nSuppose we test 150 people. Thirty have the disease and 120 do not:\n\n\n\nActual condition\nPositive test\nNegative test\nTotal\n\n\n\n\nDisease present\n25\n5\n30\n\n\nDisease absent\n15\n105\n120\n\n\nTotal\n40\n110\n150\n\n\n\nWe can use these four cells to calculate several measures of performance. Each measure answers a different question.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#accuracy-how-often-is-the-test-correct",
+    "href": "part_05b.html#accuracy-how-often-is-the-test-correct",
+    "title": "Part Five B",
+    "section": "Accuracy: How Often Is the Test Correct?",
+    "text": "Accuracy: How Often Is the Test Correct?\nA straightforward question is: how often does the test produce the correct classification? Accuracy is the proportion of all results that are true positives or true negatives:\n\\[\n\\text{Accuracy}=P(\\text{Test}=\\text{Reference})\n=\\frac{TP+TN}{TP+FN+FP+TN}.\n\\]\nFor our example:\n\\[\n\\text{Accuracy}=\\frac{25+105}{150}=0.867\\approx87\\%.\n\\]\nThis looks encouraging, but accuracy alone does not tell us how well the test detects disease. It is sensitive to the balance between the classes. If 99% of a population does not have the disease, a classifier that labels everyone negative achieves 99% accuracy while detecting none of the disease cases.\nIn our example, classifying everyone as negative would already give \\(120/150=80\\%\\) accuracy. The observed accuracy of 87% needs to be understood alongside how the test performs within each group.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#sensitivity-and-specificity",
+    "href": "part_05b.html#sensitivity-and-specificity",
+    "title": "Part Five B",
+    "section": "Sensitivity and Specificity",
+    "text": "Sensitivity and Specificity\n\nSensitivity\nHow likely is a person with disease to be correctly classified? Sensitivity is the probability of a positive test given that the person has the disease:\n\\[\n\\text{Sensitivity}=\\frac{TP}{TP+FN}\n=\\frac{25}{30}\\approx83\\%.\n\\]\nThe test identifies 25 of the 30 people with disease and misses five.\n\n\nSpecificity\nHow likely is a person without disease to be correctly classified? Specificity is the probability of a negative test given that the person does not have the disease:\n\\[\n\\text{Specificity}=\\frac{TN}{TN+FP}\n=\\frac{105}{120}\\approx88\\%.\n\\]\nThe test correctly identifies 105 of the 120 people without disease. The remaining 15 receive false positive results.\nSensitivity and specificity start with the person’s actual condition and describe the likely test result. We can also ask the question in the other direction: given a test result, how likely is the person to have the disease?",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#bayes-theorem",
+    "href": "part_05b.html#bayes-theorem",
+    "title": "Part Five B",
+    "section": "Bayes’ Theorem",
+    "text": "Bayes’ Theorem\nBayes’ theorem allows us to calculate a probability in this reverse direction:\n\\[\nP(A\\mid B)=\\frac{P(B\\mid A)P(A)}{P(B)}.\n\\]\nThe vertical line means given. So, \\(P(A\\mid B)\\) means the probability of \\(A\\) given that \\(B\\) has occurred. Here, \\(P(A)\\) is the prior probability, before considering the new information. \\(P(A\\mid B)\\) is the posterior probability, after considering it.\nFor a diagnostic test, we start with a probability of disease and update it using the result. The probability of a positive test in someone with disease is different from the probability of disease in someone with a positive test. The latter also depends on how common the disease is and how often false positives occur.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#positive-predictive-value",
+    "href": "part_05b.html#positive-predictive-value",
+    "title": "Part Five B",
+    "section": "Positive Predictive Value",
+    "text": "Positive Predictive Value\nHow big is the probability that a person with a positive test actually has the disease? The positive predictive value, or PPV, is:\n\\[\n\\text{PPV}=P(D\\mid T+)=\\frac{TP}{TP+FP}.\n\\]\nFor our data:\n\\[\n\\text{PPV}=\\frac{25}{25+15}=0.625\\approx63\\%.\n\\]\nThere are 40 positive results, but only 25 come from people with disease. So, approximately 63% of the people with positive results have the disease, even though sensitivity is approximately 83%.\n\nCalculating PPV Using Bayes’ Theorem\nLet \\(\\pi=P(D)\\) denote disease prevalence. Applying Bayes’ theorem:\n\\[\nP(D\\mid T+)=\\frac{P(T+\\mid D)P(D)}{P(T+)}.\n\\]\nA positive result can arise from a person with disease or a person without disease. The law of total probability gives:\n\\[\nP(T+)=P(T+\\mid D)P(D)\n+P(T+\\mid\\overline D)P(\\overline D).\n\\]\nSubstituting sensitivity, specificity and prevalence:\n\\[\n\\text{PPV}=\n\\frac{\\text{Sensitivity}\\times\\pi}\n{\\text{Sensitivity}\\times\\pi+\n(1-\\text{Specificity})(1-\\pi)}.\n\\]\nIn the lecture example, the probability of a true positive in the entire sample is \\((25/30)(30/150)=25/150\\). The probability of any positive result is \\(40/150\\). Their ratio is \\(25/40=0.625\\), as before.\nThe false positive contribution in the denominator explains why specificity and prevalence matter. Even a modest false positive rate can produce many positive results when the number of people without disease is large.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#negative-predictive-value",
+    "href": "part_05b.html#negative-predictive-value",
+    "title": "Part Five B",
+    "section": "Negative Predictive Value",
+    "text": "Negative Predictive Value\nWe can ask the corresponding question for a negative result: how big is the probability that someone with a negative test does not have the disease? The negative predictive value, or NPV, is:\n\\[\n\\text{NPV}=P(\\overline D\\mid T-)\n=\\frac{TN}{TN+FN}.\n\\]\nFor our example:\n\\[\n\\text{NPV}=\\frac{105}{105+5}=0.955\\approx95\\%.\n\\]\nThe test gives 110 negative results, of which 105 come from people without disease. The probability of disease after a negative result is the complement:\n\\[\nP(D\\mid T-)=1-\\text{NPV}=\\frac{5}{110}\\approx4.5\\%.\n\\]\nUsing Bayes’ theorem, NPV can also be expressed as:\n\\[\n\\text{NPV}=\n\\frac{\\text{Specificity}(1-\\pi)}\n{\\text{Specificity}(1-\\pi)+\n(1-\\text{Sensitivity})\\pi}.\n\\]\n\n\n\n\n\n\nNoteWhich Group Is in the Denominator?\n\n\n\n\nSensitivity: among people with disease, how many test positive?\nSpecificity: among people without disease, how many test negative?\nPPV: among people with a positive test, how many have disease?\nNPV: among people with a negative test, how many are disease-free?",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#calculating-the-measures-in-r",
+    "href": "part_05b.html#calculating-the-measures-in-r",
+    "title": "Part Five B",
+    "section": "Calculating the Measures in R",
+    "text": "Calculating the Measures in R\nWe can calculate the measures directly from the four cells. This also helps us check what a software package reports.\n\nTP &lt;- 25\nFN &lt;- 5\nFP &lt;- 15\nTN &lt;- 105\n\nn_total &lt;- TP + FN + FP + TN\nsensitivity &lt;- TP / (TP + FN)\nspecificity &lt;- TN / (TN + FP)\n\nmeasures &lt;- c(\n  Prevalence = (TP + FN) / n_total,\n  Accuracy = (TP + TN) / n_total,\n  Sensitivity = sensitivity,\n  Specificity = specificity,\n  PPV = TP / (TP + FP),\n  NPV = TN / (TN + FN)\n)\nround(measures, 3)\n\n Prevalence    Accuracy Sensitivity Specificity         PPV         NPV \n      0.200       0.867       0.833       0.875       0.625       0.955 \n\n\nThe expected values are prevalence 0.200, accuracy 0.867, sensitivity 0.833, specificity 0.875, PPV 0.625 and NPV 0.955. We retain the unrounded values when carrying out subsequent calculations.\n\nUsing caret::confusionMatrix()\nThe caret package takes the predicted classifications as data and the reference classifications as reference. We specify the positive class explicitly. The following vectors reconstruct the lecture example:\n\nreference_5b &lt;- factor(\n  c(rep(\"1\", 25), rep(\"1\", 5), rep(\"0\", 105), rep(\"0\", 15)),\n  levels = c(\"0\", \"1\")\n)\npredicted_5b &lt;- factor(\n  c(rep(\"1\", 25), rep(\"0\", 5), rep(\"0\", 105), rep(\"1\", 15)),\n  levels = c(\"0\", \"1\")\n)\n\ncaret::confusionMatrix(\n  data = predicted_5b,\n  reference = reference_5b,\n  positive = \"1\"\n)\n\nConfusion Matrix and Statistics\n\n          Reference\nPrediction   0   1\n         0 105   5\n         1  15  25\n                                          \n               Accuracy : 0.8667          \n                 95% CI : (0.8016, 0.9166)\n    No Information Rate : 0.8             \n    P-Value [Acc &gt; NIR] : 0.02236         \n                                          \n                  Kappa : 0.6296          \n                                          \n Mcnemar's Test P-Value : 0.04417         \n                                          \n            Sensitivity : 0.8333          \n            Specificity : 0.8750          \n         Pos Pred Value : 0.6250          \n         Neg Pred Value : 0.9545          \n             Prevalence : 0.2000          \n         Detection Rate : 0.1667          \n   Detection Prevalence : 0.2667          \n      Balanced Accuracy : 0.8542          \n                                          \n       'Positive' Class : 1               \n                                          \n\n\nHere, \"1\" means disease present or test positive, and \"0\" means disease absent or test negative. The output places predictions in rows and the reference classes in columns, so it is transposed relative to our earlier table.\nThe output includes the main measures above and additional statistics. We should choose the measures that address our question rather than treating every reported number as equally informative. The accuracy confidence interval, for example, describes uncertainty about overall accuracy, while sensitivity and PPV answer different questions.\n\n\nConstructing a Hypothetical Dataset\nThe slides also use a test with sensitivity 0.98 and specificity 0.95 in a population containing 1,000 people with disease and 1,000 without disease. We can construct the four cells from this information:\n\nsens_1 &lt;- 0.98\nspec_1 &lt;- 0.95\nn_diseased &lt;- 1000\nn_healthy &lt;- 1000\nn_tot &lt;- n_diseased + n_healthy\nprevalence_1 &lt;- n_diseased / n_tot\n\nTP_1 &lt;- sens_1 * n_diseased\nFN_1 &lt;- (1 - sens_1) * n_diseased\nTN_1 &lt;- spec_1 * n_healthy\nFP_1 &lt;- (1 - spec_1) * n_healthy\n\n# These particular inputs give whole-number counts.\ncounts_1 &lt;- as.integer(round(c(TP_1, FN_1, TN_1, FP_1)))\ny1_obs &lt;- factor(\n  rep(c(\"1\", \"1\", \"0\", \"0\"), times = counts_1),\n  levels = c(\"0\", \"1\")\n)\ny2_pred &lt;- factor(\n  rep(c(\"1\", \"0\", \"0\", \"1\"), times = counts_1),\n  levels = c(\"0\", \"1\")\n)\n\ncaret::confusionMatrix(\n  data = y2_pred, reference = y1_obs, positive = \"1\"\n)\n\nConfusion Matrix and Statistics\n\n          Reference\nPrediction   0   1\n         0 950  20\n         1  50 980\n                                         \n               Accuracy : 0.965          \n                 95% CI : (0.956, 0.9726)\n    No Information Rate : 0.5            \n    P-Value [Acc &gt; NIR] : &lt; 2.2e-16      \n                                         \n                  Kappa : 0.93           \n                                         \n Mcnemar's Test P-Value : 0.0005279      \n                                         \n            Sensitivity : 0.9800         \n            Specificity : 0.9500         \n         Pos Pred Value : 0.9515         \n         Neg Pred Value : 0.9794         \n             Prevalence : 0.5000         \n         Detection Rate : 0.4900         \n   Detection Prevalence : 0.5150         \n      Balanced Accuracy : 0.9650         \n                                         \n       'Positive' Class : 1              \n                                         \n\n\nThis gives 980 true positives, 20 false negatives, 950 true negatives and 50 false positives. Accuracy is 0.965, PPV approximately 0.951 and NPV approximately 0.979.\nThis is a deterministic construction of a hypothetical dataset. We have specified the performance rather than estimated it from a new experiment. For arbitrary sensitivity, specificity and sample-size values, the expected counts may be fractional. We can use those expected counts for probability calculations, but patient-level vectors require integer counts. Rounding small counts can noticeably change the resulting measures.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#what-happens-when-disease-is-less-common",
+    "href": "part_05b.html#what-happens-when-disease-is-less-common",
+    "title": "Part Five B",
+    "section": "What Happens When Disease Is Less Common?",
+    "text": "What Happens When Disease Is Less Common?\nReturn to our original example. Suppose we keep the number of people with disease unchanged but multiply the number without disease by ten:\n\n\n\nActual condition\nPositive test\nNegative test\nTotal\n\n\n\n\nDisease present\n25\n5\n30\n\n\nDisease absent\n150\n1,050\n1,200\n\n\nTotal\n175\n1,055\n1,230\n\n\n\nSensitivity remains \\(25/30\\approx83\\%\\), and specificity remains \\(1050/1200\\approx88\\%\\). However, prevalence has fallen from 20% to approximately 2.4%.\nThe positive predictive value is now:\n\\[\n\\text{PPV}=\\frac{25}{175}\\approx14\\%.\n\\]\nThe test still detects the same proportion of disease cases. However, the much larger group without disease produces many more false positives. Most positive results now come from people without disease.\nThe negative predictive value increases:\n\\[\n\\text{NPV}=\\frac{1050}{1055}\\approx99.5\\%.\n\\]\nPredictive values depend on disease prevalence. In this example, sensitivity and specificity remain unchanged because we have kept the same proportions within the disease and disease-free groups.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#likelihood-ratios",
+    "href": "part_05b.html#likelihood-ratios",
+    "title": "Part Five B",
+    "section": "Likelihood Ratios",
+    "text": "Likelihood Ratios\nAnother useful way to describe a test is to compare how likely a result is among people with disease and among people without disease.\nThe positive likelihood ratio, \\(LR+\\), is:\n\\[\nLR+=\\frac{P(T+\\mid D)}{P(T+\\mid\\overline D)}\n=\\frac{\\text{Sensitivity}}{1-\\text{Specificity}}.\n\\]\nIn our example:\n\\[\nLR+=\\frac{25/30}{15/120}=6.67.\n\\]\nA positive result is approximately 6.7 times as likely in someone with disease as in someone without disease. This compares probabilities of the result within the two reference groups. It is not itself the probability of disease after a positive result.\nThe conventional negative likelihood ratio, \\(LR-\\), is:\n\\[\nLR-=\\frac{P(T-\\mid D)}{P(T-\\mid\\overline D)}\n=\\frac{1-\\text{Sensitivity}}{\\text{Specificity}}.\n\\]\nFor our example:\n\\[\nLR-=\\frac{5/30}{105/120}=0.190.\n\\]\nA negative result is approximately 0.19 times as likely in someone with disease as in someone without disease. An informative negative result therefore reduces the odds of disease. Larger \\(LR+\\) and smaller \\(LR-\\) provide stronger evidence in their respective directions. A likelihood ratio of one leaves the odds unchanged.\nThe expression \\(\\text{Specificity}/(1-\\text{Sensitivity})\\) is the reciprocal of the conventional \\(LR-\\). Using that reciprocal as an odds multiplier would reverse the intended update, so we use the conventional definition throughout this chapter.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#updating-odds-and-log-odds",
+    "href": "part_05b.html#updating-odds-and-log-odds",
+    "title": "Part Five B",
+    "section": "Updating Odds and Log Odds",
+    "text": "Updating Odds and Log Odds\nProbability and odds express the same information on different scales. For a probability \\(p\\):\n\\[\n\\text{Odds}=\\frac{p}{1-p},\n\\qquad\np=\\frac{\\text{Odds}}{1+\\text{Odds}}.\n\\]\nA probability of 20% corresponds to odds of \\(0.20/0.80=0.25\\). Bayes’ theorem has a particularly straightforward form on this scale:\n\\[\n\\text{Post-test odds}=\\text{Pre-test odds}\\times LR.\n\\]\nFor a positive result, use \\(LR+\\). For a negative result, use \\(LR-\\).\n\nPositive and Negative Results in the Lecture Example\nWith pre-test probability 0.20, the pre-test odds are 0.25. Following a positive result:\n\\[\n\\text{Post-test odds}=0.25\\times6.67\\approx1.667,\n\\]\n\\[\nP(D\\mid T+)=\\frac{1.667}{1+1.667}=0.625.\n\\]\nThis recovers the PPV. Following a negative result:\n\\[\n\\text{Post-test odds}=0.25\\times0.190\\approx0.0476,\n\\]\n\\[\nP(D\\mid T-)=\\frac{0.0476}{1+0.0476}\\approx0.0455.\n\\]\nThis is the probability of disease after a negative result. Its complement, approximately 95.5%, is the NPV.\n\npretest_probability_5b &lt;- 0.20\npretest_odds_5b &lt;- pretest_probability_5b /\n  (1 - pretest_probability_5b)\n\nLR_positive_5b &lt;- (25 / 30) / (1 - 105 / 120)\nLR_negative_5b &lt;- (1 - 25 / 30) / (105 / 120)\n\nposttest_odds_5b &lt;- pretest_odds_5b *\n  c(Positive = LR_positive_5b, Negative = LR_negative_5b)\nposttest_probability_5b &lt;- posttest_odds_5b /\n  (1 + posttest_odds_5b)\nround(posttest_probability_5b, 4)\n\nPositive Negative \n  0.6250   0.0455 \n\n\n\n\nThe Connection to Logistic Regression\nTaking natural logarithms turns the multiplication into addition:\n\\[\n\\log\\left(\\frac{p_{\\text{post}}}{1-p_{\\text{post}}}\\right)\n=\n\\log\\left(\\frac{p_{\\text{pre}}}{1-p_{\\text{pre}}}\\right)+\\log(LR).\n\\]\nFor this test, a positive result adds \\(\\log(6.67)\\approx1.90\\) to the log odds, while a negative result adds \\(\\log(0.190)\\approx-1.66\\). The update is a fixed distance on the log-odds scale when the likelihood ratio is fixed. The change in probability depends on the starting probability.\nA log odds of zero corresponds to a probability of 0.5. Positive log odds correspond to probabilities above 0.5, and negative log odds correspond to probabilities below 0.5.\nThis resembles logistic regression, where the predictor terms contribute additively to the log odds:\n\\[\n\\log\\left(\\frac{p_i}{1-p_i}\\right)\n=\\beta_0+\\beta_1X_{i1}+\\cdots+\\beta_kX_{ik}.\n\\]\nThe connection concerns the scale and the additive contributions. We should not automatically equate a diagnostic likelihood ratio with a fitted regression coefficient. Likewise, multiplying likelihood ratios from several tests requires appropriate conditional independence assumptions or likelihood ratios conditional on the earlier evidence.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#clinical-decision-thresholds",
+    "href": "part_05b.html#clinical-decision-thresholds",
+    "title": "Part Five B",
+    "section": "Clinical Decision Thresholds",
+    "text": "Clinical Decision Thresholds\nA test changes our assessment of disease probability. What we do with that information depends on the consequences of the decision.\nAt a sufficiently low probability, we may decide to exclude the condition or avoid further investigation. At an intermediate probability, further testing may be useful. At a sufficiently high probability, treatment or another action may be justified. These boundaries are clinical decision thresholds.\nThe lecture illustrates this using the utility of treatment and the utility of not treating. Treatment may provide benefit when disease is present, but may also cause adverse effects or other costs. Not treating avoids those harms but may leave disease untreated.\n\n\n\nFigure 5B.1 A schematic treatment threshold where the utility of treating and not treating are equal. Reproduced from the lecture slides, which attribute the figure to McPhee and Papadakis, Current Medical Diagnosis and Treatment (2011).\n\n\nIf the harms of treatment become more severe, we would generally require a higher probability of disease before treating. If the benefit of treatment becomes greater, treatment may be justified at a lower probability. So, the threshold depends on the balance of benefits and risks.\nWe can express a simplified decision using expected utility. If \\(p\\) is the probability of disease and \\(U\\) denotes utility:\n\\[\nEU(\\text{treat})=pU(\\text{treat},D)\n+(1-p)U(\\text{treat},\\overline D),\n\\]\n\\[\nEU(\\text{do not treat})=pU(\\text{do not treat},D)\n+(1-p)U(\\text{do not treat},\\overline D).\n\\]\nThe preferred action is the one with the higher expected utility under the specified assumptions. The point where these values are equal gives a treatment threshold in this simplified model. Actual decisions also depend on the patient, the available alternatives and uncertainty about the consequences.\nA test cutoff and a clinical decision threshold are related but different. A test cutoff converts a measurement or score into a positive or negative classification. A clinical decision threshold concerns the probability at which an action is worthwhile. Choosing a cutoff for a classifier does not, by itself, establish that treatment should follow every positive result.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#roc-curves",
+    "href": "part_05b.html#roc-curves",
+    "title": "Part Five B",
+    "section": "ROC Curves",
+    "text": "ROC Curves\nDiagnostic tests and classification models may produce a continuous measurement or score. We choose a cutoff to classify the result as positive or negative. Changing this cutoff changes sensitivity and specificity.\nA receiver operating characteristic, or ROC, curve plots sensitivity against \\(1-\\text{specificity}\\) across different cutoffs. The horizontal axis therefore shows the proportion of people without disease who receive a positive result.\n\n\n\nFigure 5B.2 Schematic ROC curves illustrating different degrees of discrimination. Reproduced from the lecture slides, which identify Wikipedia, Receiver operating characteristic, as the source.\n\n\nA curve closer to the top-left corner indicates better performance: high sensitivity with few false positives. The diagonal represents performance no better than chance.\nThe area under the ROC curve, or AUROC, summarises how well the test distinguishes between people with and without disease. An area of 1 indicates perfect separation, while 0.5 indicates performance no better than chance. It does not tell us the probability of disease after a positive result; that is the PPV.\nWe will examine ROC curves in more detail later in the course.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#other-measures-and-machine-learning-terminology",
+    "href": "part_05b.html#other-measures-and-machine-learning-terminology",
+    "title": "Part Five B",
+    "section": "Other Measures and Machine Learning Terminology",
+    "text": "Other Measures and Machine Learning Terminology\nDiagnostic testing and machine learning often use different names for the same quantities. The reference class and the definition of a positive result still need to be specified.\n\n\n\n\n\n\n\n\nMeasure\nFormula\nInterpretation\n\n\n\n\nSensitivity, recall or true positive rate\n\\(TP/(TP+FN)\\)\nFraction of disease cases detected\n\n\nSpecificity or true negative rate\n\\(TN/(TN+FP)\\)\nFraction of disease-free people correctly classified\n\n\nFalse positive rate\n\\(FP/(FP+TN)\\)\nFraction of disease-free people testing positive\n\n\nFalse negative rate\n\\(FN/(TP+FN)\\)\nFraction of disease cases missed\n\n\nPPV or precision\n\\(TP/(TP+FP)\\)\nFraction of positive results that represent disease\n\n\nNPV\n\\(TN/(TN+FN)\\)\nFraction of negative results that represent disease absence\n\n\nAccuracy\n\\((TP+TN)/(TP+FN+FP+TN)\\)\nFraction of all classifications that are correct\n\n\nYouden’s index\n\\(\\text{Sensitivity}+\\text{Specificity}-1\\)\nSummary of sensitivity and specificity at a cutoff\n\n\nF1 score\n\\(2TP/(2TP+FP+FN)\\)\nHarmonic mean of precision and recall\n\n\n\nYouden’s index is one approach to selecting a cutoff from a ROC curve. Maximising it favours a combination of sensitivity and specificity, but it does not explicitly incorporate disease prevalence or the clinical costs of errors. Its maximum need not identify the best clinical decision rule.\nThe F1 score combines precision and recall:\n\\[\nF_1=2\\frac{\\text{Precision}\\times\\text{Recall}}\n{\\text{Precision}+\\text{Recall}}\n=\\frac{2TP}{2TP+FP+FN}.\n\\]\nFor binary sets, this is also the Dice similarity coefficient. In our original example, \\(F_1=50/(50+15+5)\\approx0.714\\). The formula does not include true negatives, and its interpretation differs from accuracy. As it includes precision, it also changes with prevalence when sensitivity and specificity are held fixed.\nNo single measure gives a complete description of a diagnostic test or classification model. We need to connect the measures to the question: are we interested in detecting disease, avoiding unnecessary investigations, interpreting a result, or choosing an action? The confusion matrix provides the common starting point, and Bayes’ theorem explains how test performance and the starting probability combine to inform the result.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#accuracy",
+    "href": "part_05b.html#accuracy",
+    "title": "Part Five B",
+    "section": "Accuracy",
+    "text": "Accuracy\nHow often is the test correct? Accuracy is the proportion of all results that are true positives or true negatives:\n\\[\n\\text{Accuracy}=\\frac{TP+TN}{TP+FN+FP+TN}\n=\\frac{25+105}{150}\\approx87\\%.\n\\]\nAccuracy can be misleading when the classes are unbalanced. If most people do not have the disease, a classifier can achieve high accuracy simply by classifying everyone as negative. We therefore need to examine how the test performs within each group.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#positive-and-negative-predictive-values",
+    "href": "part_05b.html#positive-and-negative-predictive-values",
+    "title": "Part Five B",
+    "section": "Positive and Negative Predictive Values",
+    "text": "Positive and Negative Predictive Values\n\nPositive Predictive Value\nHow likely is someone with a positive test to actually have the disease? This is the positive predictive value, or PPV:\n\\[\n\\text{PPV}=\\frac{TP}{TP+FP}\n=\\frac{25}{40}\\approx63\\%.\n\\]\nOf the 40 people with positive results, 25 have the disease. So, approximately 63% of positive results represent disease, even though sensitivity is approximately 83%.\nWe can also calculate PPV from sensitivity, specificity and prevalence (based on Bayes’ theorem):\n\\[\n\\text{PPV}=\n\\frac{\\text{Sensitivity}\\times\\text{Prevalence}}\n{\\text{Sensitivity}\\times\\text{Prevalence}\n+(1-\\text{Specificity})\\times(1-\\text{Prevalence})}.\n\\]\nThe numerator represents true positives as a proportion of the population. The denominator includes both true positives and false positives. This is the same calculation as dividing the number of true positives by all positive results.\n\n\nNegative Predictive Value\nHow likely is someone with a negative test to actually be disease-free? This is the negative predictive value, or NPV:\n\\[\n\\text{NPV}=\\frac{TN}{TN+FN}\n=\\frac{105}{110}\\approx95\\%.\n\\]\nOf the 110 people with negative results, 105 do not have the disease.\n\n\n\n\n\n\nNoteKeeping the Questions Separate\n\n\n\n\nSensitivity: among people with disease, how many test positive?\nSpecificity: among people without disease, how many test negative?\nPPV: among people with a positive test, how many have disease?\nNPV: among people with a negative test, how many are disease-free?",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#generating-a-confusion-matrix-in-r",
+    "href": "part_05b.html#generating-a-confusion-matrix-in-r",
+    "title": "Part Five B",
+    "section": "Generating a Confusion Matrix in R",
+    "text": "Generating a Confusion Matrix in R\nWe can construct a hypothetical dataset using sensitivity, specificity and the numbers of people with and without disease. In this example, sensitivity is 0.98 and specificity is 0.95, with 1,000 people in each group:\n\nsens &lt;- 0.98\nspec &lt;- 0.95\nn_diseased &lt;- 1000\nn_healthy &lt;- 1000\n\nTP &lt;- round(sens * n_diseased)\nFN &lt;- n_diseased - TP\nTN &lt;- round(spec * n_healthy)\nFP &lt;- n_healthy - TN\n\nactual &lt;- factor(c(rep(1, TP), rep(1, FN), rep(0, TN), rep(0, FP)))\npredicted &lt;- factor(c(rep(1, TP), rep(0, FN), rep(0, TN), rep(1, FP)))\n\ncaret::confusionMatrix(\n  data = predicted,\n  reference = actual,\n  positive = \"1\"\n)\n\nConfusion Matrix and Statistics\n\n          Reference\nPrediction   0   1\n         0 950  20\n         1  50 980\n                                         \n               Accuracy : 0.965          \n                 95% CI : (0.956, 0.9726)\n    No Information Rate : 0.5            \n    P-Value [Acc &gt; NIR] : &lt; 2.2e-16      \n                                         \n                  Kappa : 0.93           \n                                         \n Mcnemar's Test P-Value : 0.0005279      \n                                         \n            Sensitivity : 0.9800         \n            Specificity : 0.9500         \n         Pos Pred Value : 0.9515         \n         Neg Pred Value : 0.9794         \n             Prevalence : 0.5000         \n         Detection Rate : 0.4900         \n   Detection Prevalence : 0.5150         \n      Balanced Accuracy : 0.9650         \n                                         \n       'Positive' Class : 1              \n                                         \n\n\nHere, 1 indicates disease or a positive result, and 0 indicates disease absence or a negative result. The positive argument tells R which class we consider positive.\nThis gives 980 true positives, 20 false negatives, 950 true negatives and 50 false positives. The output includes sensitivity, specificity, accuracy and predictive values. Notice that caret places predictions in rows and the reference condition in columns.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#likelihood-ratios-odds-and-log-odds",
+    "href": "part_05b.html#likelihood-ratios-odds-and-log-odds",
+    "title": "Part Five B",
+    "section": "Likelihood Ratios, Odds and Log Odds",
+    "text": "Likelihood Ratios, Odds and Log Odds\nA positive likelihood ratio describes how much more likely a positive test is in someone with disease than in someone without disease:\n\\[\nLR+=\\frac{\\text{Sensitivity}}{1-\\text{Specificity}}.\n\\]\nA negative likelihood ratio compares the probability of a negative test in someone with disease with that in someone without disease:\n\\[\nLR-=\\frac{1-\\text{Sensitivity}}{\\text{Specificity}}.\n\\]\nFor a useful test, a positive result increases our assessment of the probability of disease, while a negative result decreases it.\nIn the lecture I also describe this using odds. A probability \\(p\\) corresponds to odds of \\(p/(1-p)\\). On the odds scale, the test result multiplies the pre-test odds by the relevant likelihood ratio. For a useful test, this multiplier is above one for a positive result and below one for a negative result.\nOn the log-odds scale, these changes become additive. A positive result moves the log odds upwards and a negative result moves them downwards. This resembles logistic regression, where each term contributes a change on the log-odds scale.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#clinical-thresholds",
+    "href": "part_05b.html#clinical-thresholds",
+    "title": "Part Five B",
+    "section": "Clinical Thresholds",
+    "text": "Clinical Thresholds\nA test result informs a decision, but the decision also depends on its consequences. Treatment may benefit someone with disease, while also causing adverse effects. We therefore need to weigh the expected benefits against the harms.\n\n\n\nFigure 5B.1 A schematic treatment threshold where the utility of treating and not treating are equal. Reproduced from the lecture slides, which attribute the figure to McPhee and Papadakis, Current Medical Diagnosis and Treatment (2011).\n\n\nIf the harms of treatment become more severe, we would generally require a higher probability of disease before treating. If the treatment benefit becomes greater, treatment may be justified at a lower probability. The treatment threshold therefore depends on the clinical situation.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#alternative-terms",
+    "href": "part_05b.html#alternative-terms",
+    "title": "Part Five B",
+    "section": "Alternative Terms",
+    "text": "Alternative Terms\nIn machine learning, sensitivity is often called recall, and positive predictive value is called precision. They are the same measures under different names.\nThe lecture also briefly introduces Youden’s index, which can help select a cutoff, and the F1 score, which combines precision and recall. For now, the main focus is understanding the confusion matrix, the questions answered by the main performance measures, and the effect of prevalence on predictive values.",
+    "crumbs": [
+      "Part Five B"
+    ]
+  },
+  {
+    "objectID": "part_05b.html#other-terms",
+    "href": "part_05b.html#other-terms",
+    "title": "Part Five B",
+    "section": "Other Terms",
+    "text": "Other Terms\nIn machine learning, sensitivity is often called recall, and positive predictive value is called precision. They are the same measures under different names.\nIn the video I also introduce Youden’s index. This can help select a cut-off by maximising sensitivity and specificity.",
+    "crumbs": [
+      "Part Five B"
+    ]
   }
 ]

@@ -18,6 +18,8 @@ website:
       - part_04.qmd
       - part_05a.qmd
       - part_05b.qmd
+      - part_06.qmd
+      - part_07.qmd
       - summary.qmd
       - references.qmd
 

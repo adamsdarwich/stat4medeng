@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adam S. Darwich">
+<meta name="dcterms.date" content="2026-08-06">
+
+<title>Part Seven – Statistics for Medical Engineers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part_07.html">Part Seven</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for Medical Engineers</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part One</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Two</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Three</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Four</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_05a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Five A</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_05b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Five B</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part Six</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part_07.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Part Seven</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#l7-resampling-and-course-summary" id="toc-l7-resampling-and-course-summary" class="nav-link active" data-scroll-target="#l7-resampling-and-course-summary">L7 Resampling and Course Summary</a>
+  <ul class="collapse">
+  <li><a href="#resampling-statistics" id="toc-resampling-statistics" class="nav-link" data-scroll-target="#resampling-statistics">Resampling Statistics</a>
+  <ul class="collapse">
+  <li><a href="#confidence-intervals-and-the-delta-method" id="toc-confidence-intervals-and-the-delta-method" class="nav-link" data-scroll-target="#confidence-intervals-and-the-delta-method">Confidence Intervals and the Delta Method</a></li>
+  <li><a href="#resampling-methods" id="toc-resampling-methods" class="nav-link" data-scroll-target="#resampling-methods">Resampling Methods</a></li>
+  <li><a href="#the-jackknife" id="toc-the-jackknife" class="nav-link" data-scroll-target="#the-jackknife">The Jackknife</a></li>
+  <li><a href="#bootstrapping" id="toc-bootstrapping" class="nav-link" data-scroll-target="#bootstrapping">Bootstrapping</a></li>
+  <li><a href="#non-parametric-bootstrapping-the-procedure" id="toc-non-parametric-bootstrapping-the-procedure" class="nav-link" data-scroll-target="#non-parametric-bootstrapping-the-procedure">Non-Parametric Bootstrapping: The Procedure</a></li>
+  <li><a href="#using-bootstrapping" id="toc-using-bootstrapping" class="nav-link" data-scroll-target="#using-bootstrapping">Using Bootstrapping</a></li>
+  <li><a href="#permutation-tests" id="toc-permutation-tests" class="nav-link" data-scroll-target="#permutation-tests">Permutation Tests</a></li>
+  <li><a href="#permutation-tests-in-r" id="toc-permutation-tests-in-r" class="nav-link" data-scroll-target="#permutation-tests-in-r">Permutation Tests in R</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Part Seven</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Adam S. Darwich </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 6, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Standard errors and confidence intervals describe the precision of parameter estimates. When a standard error is difficult to obtain directly, we can consider the delta method or resampling.</li>
+<li>The jackknife repeatedly leaves out one observation and recalculates the statistic. For a given dataset and statistic, it is a deterministic procedure.</li>
+<li>The bootstrap repeatedly samples from the observed data with replacement. The resulting distribution of estimates can be used to obtain standard errors and confidence intervals.</li>
+<li>Permutation tests generate a reference distribution under the null hypothesis by rearranging the data in ways allowed by the study design. They require exchangeability.</li>
+<li>The type of outcome, the study design and the question we want to answer should guide the choice of statistical method.</li>
+</ul>
+</div>
+</div>
+<section id="l7-resampling-and-course-summary" class="level1">
+<h1>L7 Resampling and Course Summary</h1>
+<section id="resampling-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="resampling-statistics">Resampling Statistics</h2>
+<p>This final lecture gives a brief introduction to resampling statistics. When would we make use of these methods?</p>
+<p>When reporting an estimate of a parameter, which we can call <span class="math inline">\(\hat\theta\)</span>, we often also report its standard error or confidence interval as a measure of the precision of that estimate. We can approximate a confidence interval using the standard error. Sometimes, however, the standard error is difficult to obtain, or the estimate has a less common sampling distribution. We then need another way to work out its uncertainty.</p>
+<section id="confidence-intervals-and-the-delta-method" class="level3">
+<h3 class="anchored" data-anchor-id="confidence-intervals-and-the-delta-method">Confidence Intervals and the Delta Method</h3>
+<p>Using a normal approximation, a 95% confidence interval takes the form:</p>
+<p><span class="math display">\[
+\hat\theta\pm1.96\,\mathrm{SE}(\hat\theta).
+\]</span></p>
+<p>More generally, a <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval is:</p>
+<p><span class="math display">\[
+\hat\theta\pm z_{1-\alpha/2}\,\mathrm{SE}(\hat\theta),
+\]</span></p>
+<p>where <span class="math inline">\(z_{1-\alpha/2}\)</span> is the corresponding standard normal quantile.</p>
+<p>What can we do when the standard error is not known? A traditional solution is the <strong>delta method</strong>. This uses a Taylor expansion to approximate the standard error of a function of parameter estimates. We use the estimates together with their covariance matrix to obtain an approximate standard error for the transformed quantity.</p>
+<p>The <code>msm</code> package, which also deals with Markov modelling, includes the function <code>deltamethod()</code> for this purpose.</p>
+</section>
+<section id="resampling-methods" class="level3">
+<h3 class="anchored" data-anchor-id="resampling-methods">Resampling Methods</h3>
+<p>An alternative is to use resampling methods. These provide ways of obtaining or approximating sampling distributions of statistics, from which we can estimate standard errors and confidence intervals or carry out hypothesis tests.</p>
+<p>We will briefly consider three types:</p>
+<ul>
+<li>Jackknife.</li>
+<li>Bootstrap.</li>
+<li>Permutation tests, which we encountered in the first lecture series.</li>
+</ul>
+</section>
+<section id="the-jackknife" class="level3">
+<h3 class="anchored" data-anchor-id="the-jackknife">The Jackknife</h3>
+<p>The <strong>jackknife</strong> is one of the early approaches to resampling. It uses a leave-one-out approach, similar to leave-one-out validation in machine learning.</p>
+<p>For each resample, we leave out one observation and calculate the statistic using the remaining observations. We repeat this for every observation in the dataset. For a dataset of size <span class="math inline">\(n\)</span>, this gives <span class="math inline">\(n\)</span> leave-one-out estimates.</p>
+<p>This is a deterministic process: for the same data and statistic, we obtain the same results each time. We can use the leave-one-out estimates to estimate the standard error and construct a confidence interval for the statistic of interest.</p>
+<div id="fig-jackknife-7" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-jackknife-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="data:image/jpeg;base64,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" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-jackknife-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Leave-one-out resampling in the jackknife, reproduced from the lecture slides.
+</figcaption>
+</figure>
+</div>
+<p>In R, we can use the <code>bootstrap</code> package. The following follows the lecture example, using a simulated normally distributed dataset and the mean as the statistic:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>population_mean <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>population_sd <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> population_mean, <span class="at">sd =</span> population_sd)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="cf">function</span>(dat) <span class="fu">mean</span>(dat)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>x_jk <span class="ot">&lt;-</span> bootstrap<span class="sc">::</span><span class="fu">jackknife</span>(dat, theta)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>x_jk<span class="sc">$</span>jack.se</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1917614</code></pre>
+</div>
+</div>
+<p>The simulation values are illustrative. The jackknife procedure itself is deterministic once <code>dat</code> has been generated.</p>
+<p>Using the jackknife standard error, we can calculate an approximate normal-based confidence interval:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>theta_hat <span class="ot">&lt;-</span> <span class="fu">theta</span>(dat)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>theta_hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fl">1.96</span> <span class="sc">*</span> x_jk<span class="sc">$</span>jack.se</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  9.901541 10.653246</code></pre>
+</div>
+</div>
+</section>
+<section id="bootstrapping" class="level3">
+<h3 class="anchored" data-anchor-id="bootstrapping">Bootstrapping</h3>
+<p>A more flexible approach is <strong>bootstrapping</strong>. It is more computationally demanding, although this is usually less of an issue with modern computing. It can be adapted to many types of estimation problem.</p>
+<p>The basic principle is to treat the observed dataset as an empirical population and repeatedly sample from it <strong>with replacement</strong>. Sampling with replacement means that an observation can appear more than once in a resampled dataset, while some observations may not appear at all.</p>
+<p>For each resampled dataset, we calculate the statistic of interest. This gives a bootstrap distribution of the estimates, which we can use to calculate a standard error or confidence interval.</p>
+<p>Unlike the jackknife, the bootstrap involves random sampling, so results vary slightly between runs. We usually use many resamples, for example 1,000 to 10,000, to make the results more stable. Setting a random seed allows us to reproduce a particular run.</p>
+<p>Using the same data and statistic as above:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nboot <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>boot1 <span class="ot">&lt;-</span> bootstrap<span class="sc">::</span><span class="fu">bootstrap</span>(dat, nboot, theta)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap standard error.</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(boot1<span class="sc">$</span>thetastar)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1895927</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentile-based 95% confidence interval.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ci95 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot1<span class="sc">$</span>thetastar, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ci95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     2.5%     97.5% 
+ 9.904601 10.650016 </code></pre>
+</div>
+</div>
+<p>The <code>thetastar</code> component contains the statistic calculated for each bootstrap resample. Here, each value is the mean of one resampled dataset. The main point is that we can use the same principle for many other statistics.</p>
+</section>
+<section id="non-parametric-bootstrapping-the-procedure" class="level3">
+<h3 class="anchored" data-anchor-id="non-parametric-bootstrapping-the-procedure">Non-Parametric Bootstrapping: The Procedure</h3>
+<p>We can summarise the procedure as follows:</p>
+<ol type="1">
+<li>Start with a dataset <span class="math inline">\(D\)</span> containing <span class="math inline">\(n\)</span> observations.</li>
+<li>Compute the estimate <span class="math inline">\(\hat\theta\)</span> of the parameter <span class="math inline">\(\theta\)</span> from <span class="math inline">\(D\)</span>.</li>
+<li>Make a bootstrap dataset <span class="math inline">\(B_1\)</span> of size <span class="math inline">\(n\)</span> by resampling <span class="math inline">\(D\)</span> with replacement.</li>
+<li>Repeat this to produce <span class="math inline">\(b\)</span> bootstrap datasets, <span class="math inline">\(B_1,B_2,\ldots,B_b\)</span>.</li>
+<li>Calculate the estimate <span class="math inline">\(\hat\theta_i^*\)</span> for each bootstrap dataset <span class="math inline">\(B_i\)</span>.</li>
+<li>Use the resulting bootstrap distribution to estimate uncertainty.</li>
+</ol>
+<p>For a percentile-based 95% confidence interval, we take the 2.5th and 97.5th percentiles of the bootstrap estimates. In R, this is the <code>quantile()</code> calculation above.</p>
+<p>Packages for bootstrap calculations include <code>bootstrap</code>, <code>boot</code> and <code>bcaboot</code>.</p>
+</section>
+<section id="using-bootstrapping" class="level3">
+<h3 class="anchored" data-anchor-id="using-bootstrapping">Using Bootstrapping</h3>
+<p>Bootstrapping can help us obtain confidence intervals for common statistics with unusual sampling distributions, or for functions of regression coefficients.</p>
+<p>The slides give an example from radiological imaging. A contrast-to-noise ratio (CNR) is described by a parabola:</p>
+<p><span class="math display">\[
+y=b_0+b_1x+b_2x^2.
+\]</span></p>
+<p>For a downward-opening parabola, the maximum occurs at:</p>
+<p><span class="math display">\[
+x_{\max}=-\frac{b_1}{2b_2}.
+\]</span></p>
+<p>We may be interested in a confidence interval for the location of this maximum. The slide example obtains this using <code>bcaboot</code>. The delta method provides an alternative way to approximate the uncertainty of this function of the regression coefficients.</p>
+</section>
+<section id="permutation-tests" class="level3">
+<h3 class="anchored" data-anchor-id="permutation-tests">Permutation Tests</h3>
+<p>Another type of resampling method is the <strong>permutation test</strong>, which we discussed in the first lecture series.</p>
+<p>The idea is to assume that the null hypothesis is true and rearrange the observed data to establish a reference distribution for a test statistic. An exact procedure considers all permitted rearrangements. This can be computationally demanding, particularly for large datasets.</p>
+<p>Permutation tests do not require normally distributed observations, but they do require <strong>exchangeability</strong> under the null hypothesis. This means that the rearrangements must be valid for the study design. For example, randomisation in an experiment can justify exchanging treatment labels.</p>
+<p>One special case is <strong>Fisher’s exact test</strong>, which we can use for categorical data represented in a contingency table. For a reminder of the underlying principle, see the first lecture series on non-parametric statistical tests.</p>
+<p>The slides also mention exact logistic regression as an option for small datasets where the usual large-sample approximations may be unsuitable.</p>
+</section>
+<section id="permutation-tests-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="permutation-tests-in-r">Permutation Tests in R</h3>
+<p>Permutation methods can provide an alternative to linear models and standard non-parametric tests when the distribution is uncertain. With the <code>lmPerm</code> package, <code>lmp()</code> uses a formula in much the same way as <code>lm()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y and x are the outcome and explanatory variable from the study.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lmPerm<span class="sc">::</span><span class="fu">lmp</span>(y <span class="sc">~</span> x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Exact computation works well for small datasets. The important consideration is whether the observations are exchangeable in the way required by the analysis.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
